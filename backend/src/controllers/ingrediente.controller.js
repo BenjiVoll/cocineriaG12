@@ -1,5 +1,7 @@
 "use strict";
-import { crearIngrediente, actualizarIngrediente, obtenerIngredientes } from "../services/ingredienteService.js";
+import { crearIngrediente, 
+  actualizarIngrediente,
+   obtenerIngredientes } from "../services/ingrediente.service.js";
 
 export const crearIngredienteController = async (req, res) => {
   try {

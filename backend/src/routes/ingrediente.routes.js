@@ -2,14 +2,13 @@
 import { Router } from "express";
 import { crearIngredienteController, 
     actualizarIngredienteController, 
-    obtenerIngredientesController } from "../controllers/ingredienteController.js";
-import authMiddleware from "../middlewares/authMiddleware.js";
+    obtenerIngredientesController } from "../controllers/ingrediente.controller.js";
 
 const router = Router();
 
-router.post("/ingredientes", authMiddleware, crearIngredienteController);
-router.put("/ingredientes/:id", authMiddleware, actualizarIngredienteController);
-router.get("/ingredientes", authMiddleware, obtenerIngredientesController);
+router.post("/ingredientes", crearIngredienteController);
+router.put("/ingredientes/:id", actualizarIngredienteController);
+router.get("/ingredientes", obtenerIngredientesController);
 
 export default router;
 
