@@ -1,7 +1,7 @@
 "use strict";
 import { crearPlato,
      actualizarPlato, 
-     obtenerPlatosDisponibles } from "../services/platoService.js";
+     obtenerPlatosDisponibles } from "../services/plato.service.js";
 
 export const crearPlatoController = async (req, res) => {
   try {
