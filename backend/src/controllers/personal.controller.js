@@ -1,6 +1,6 @@
 "use strict";
 import User_personal from '../entity/user.entity.personal.js';
-import { AppDataSource } from '../config/configDB.js';
+import { AppDataSource } from '../config/configDb.js';
 
 export async function createUser(req, res) {
     try {
