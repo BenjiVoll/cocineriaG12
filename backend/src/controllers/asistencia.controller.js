@@ -1,13 +1,13 @@
 // asistencia.controller.js
 import AsistenciaSchema from "../entity/asistencia.entity.js";
-import { AppDataSource } from "../config/configDB.js";
-import User_personal from "../entity/user.entity.personal.js"; 
+import { AppDataSource } from "../config/configDb.js";
+import Personal from "../entity/user.entity.personal.js"; 
 export const marcarAsistencia = async (req, res) => {
     const { personalId, estado, justificativo } = req.body;
 
     try {
         // Verificar si el usuario existe
-        const personal = await AppDataSource.getRepository(User_personal).findOneBy({ id: personalId });
+        const personal = await AppDataSource.getRepository(Personal).findOneBy({ id: personalId });
         if (!personal) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }

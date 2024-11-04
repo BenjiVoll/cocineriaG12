@@ -19,7 +19,7 @@ const UserSchema = new EntitySchema({
     nombreCompleto: {
       type: "varchar",
       length: 255,
-      nullable: false,
+      nullable: true,
     },
  
     email: {

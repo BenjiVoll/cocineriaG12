@@ -29,7 +29,7 @@ const AsistenciaSchema = new EntitySchema({
     relations: {
         personal: {
             type: "many-to-one",
-            target: "User_personal", // Asegúrate de que el nombre coincida con el nombre de la entidad `UserSchema`
+            target: "Personal", 
             joinColumn: {
                 name: "personal_id" // Este es el nombre de la columna FK en la tabla `asistencias`
             },
