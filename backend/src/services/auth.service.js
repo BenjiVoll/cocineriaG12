@@ -1,7 +1,7 @@
 "use strict";
 import User from "../entity/user.entity.js";
 import jwt from "jsonwebtoken";
-import { AppDataSource } from "../config/configDb.js";
+import { AppDataSource } from "../config/configDB.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 import { ACCESS_TOKEN_SECRET } from "../config/configEnv.js";
 

@@ -1,9 +1,9 @@
 "use strict";
 import { EntitySchema } from "typeorm";
 
-const User_personal = new EntitySchema({
-    name: "User_personal",
-    tableName: "Personal",
+const PersonalSchema = new EntitySchema({
+    name: "Personal",
+    tableName: "personals",
     columns: {
         id: {
             type: "int",
@@ -52,4 +52,4 @@ const User_personal = new EntitySchema({
     }
 });
 
-export default User_personal;
+export default PersonalSchema;
