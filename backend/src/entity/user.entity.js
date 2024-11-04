@@ -13,29 +13,29 @@ const UserSchema = new EntitySchema({
     rut: {
       type: "varchar",
       length: 12,
-      nullable: false,
+      nullable: true,
       unique: true,
     },
     nombreCompleto: {
       type: "varchar",
       length: 255,
-      nullable: false,
+      nullable: true,
     },
  
     email: {
       type: "varchar",
       length: 255,
-      nullable: false,
+      nullable: true,
       unique: true,
     },
     rol: {
       type: "varchar",
       length: 50,
-      nullable: false,
+      nullable: true,
     },
     password: {
       type: "varchar",
-      nullable: false,
+      nullable: true,
     },
     createdAt: {
       type: "timestamp with time zone",

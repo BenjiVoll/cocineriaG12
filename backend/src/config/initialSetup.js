@@ -2,7 +2,7 @@
 import User from "../entity/user.entity.js";
 import Ingrediente from "../entity/ingrediente.entity.js";
 import Plato from "../entity/plato.entity.js";
-import { AppDataSource } from "./configDB.js";
+import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 
 async function createInitialData() {
