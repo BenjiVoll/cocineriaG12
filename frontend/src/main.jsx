@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
 import Home from '@pages/Home';
 import Users from '@pages/Users';
+import Pedidos from '@pages/Pedidos';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home/>
+      },
+      {
+        path: '/users',
+        element: <Users/>
+      },
+      {
+        path: '/orders',
+        element: <Pedidos/>
       },
       {
         path: '/users',

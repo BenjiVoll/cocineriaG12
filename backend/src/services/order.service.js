@@ -2,14 +2,12 @@
 import Order from "../entity/order.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
-export async function getOrderService(query) {
+export async function getOrderService(id) {
   try {
-    const { id, estado } = query;
-
     const orderRepository = AppDataSource.getRepository(Order);
 
     const orderFound = await orderRepository.findOne({
-      where: [{ id: id }, { estado: estado }],
+      where: { id },
     });
 
     if (!orderFound) return [null, "Pedido no encontrado"];
@@ -20,6 +18,7 @@ export async function getOrderService(query) {
     return [null, "Error interno del servidor"];
   }
 }
+
 
 export async function getOrdersService() {
   try {
@@ -36,15 +35,11 @@ export async function getOrdersService() {
   }
 }
 
-export async function updateOrderService(query, body) {
+export async function updateOrderService(id, body) {
   try {
-    const { id, estado } = query;
-
     const orderRepository = AppDataSource.getRepository(Order);
 
-    const orderFound = await orderRepository.findOne({
-      where: [{ id: id }, { estado: estado }],
-    });
+    const orderFound = await orderRepository.findOne({ where: { id } });
 
     if (!orderFound) return [null, "Pedido no encontrado"];
 
@@ -57,15 +52,9 @@ export async function updateOrderService(query, body) {
       updatedAt: new Date(),
     };
 
-    await orderRepository.update({ id: orderFound.id }, dataOrderUpdate);
+    await orderRepository.update(id, dataOrderUpdate);
 
-    const orderData = await orderRepository.findOne({
-      where: { id: orderFound.id },
-    });
-
-    if (!orderData) {
-      return [null, "Pedido no encontrado después de actualizar"];
-    }
+    const orderData = await orderRepository.findOne({ where: { id } });
 
     return [orderData, null];
   } catch (error) {
@@ -74,21 +63,17 @@ export async function updateOrderService(query, body) {
   }
 }
 
-export async function deleteOrderService(query) {
+export async function deleteOrderService(id) {
   try {
-    const { id, estado } = query;
-
     const orderRepository = AppDataSource.getRepository(Order);
 
-    const orderFound = await orderRepository.findOne({
-      where: [{ id: id }, { estado: estado }],
-    });
+    const orderFound = await orderRepository.findOne({ where: { id } });
 
     if (!orderFound) return [null, "Pedido no encontrado"];
 
-    const orderDeleted = await orderRepository.remove(orderFound);
+    await orderRepository.remove(orderFound);
 
-    return [orderDeleted, null];
+    return [orderFound, null];
   } catch (error) {
     console.error("Error al eliminar el pedido:", error);
     return [null, "Error interno del servidor"];

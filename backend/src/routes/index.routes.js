@@ -12,7 +12,7 @@ const router = Router();
 router
     .use("/auth", authRoutes)
     .use("/user", userRoutes)
-    .use("/api/order", orderRoutes)
+    .use("/order", orderRoutes)
     .use("/api/platos", platoRoutes)
     .use("/api/ingredientes", ingredienteRoutes);
 

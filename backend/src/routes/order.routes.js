@@ -9,11 +9,10 @@ import {
 
 const router = Router();
 
-
 router
-  .get("/orders/", getOrders)           // Obtener todos los pedidos
-  .get("/orders/detail/", getOrder)      // Obtener un pedido específico
-  .patch("/orders/detail/", updateOrder) // Actualizar un pedido
-  .delete("/orders/detail/", deleteOrder); // Eliminar un pedido
+  .get("/", getOrders)                   // Obtener todos los pedidos
+  .get("/detail/:id", getOrder)          // Obtener un pedido
+  .patch("/detail/:id", updateOrder)     // Actualizar un pedido
+  .delete("/detail/:id", deleteOrder);   // Eliminar un pedido
 
 export default router;
