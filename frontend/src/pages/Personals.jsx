@@ -36,9 +36,9 @@ const Personals = () => {
 
   const columns = [
     { title: "Nombre", field: "nombreCompleto", width: 350, responsive: 0 },
-    { title: "Correo electrónico", field: "email", width: 300, responsive: 3 },
-    { title: "Rut", field: "rut", width: 150, responsive: 2 },
-    { title: "Rol", field: "rol", width: 200, responsive: 2 },
+    { title: "fechaIncorporacion", field: "fechaIncorporacion", width: 300, responsive: 3 },
+    { title: "telefono", field: "telefono", width: 150, responsive: 2 },
+    { title: "cargo", field: "cargo", width: 200, responsive: 2 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
   ];
 
@@ -48,7 +48,7 @@ const Personals = () => {
         <div className='top-table'>
           <h1 className='title-table'>Personal</h1>
           <div className='filter-actions'>
-            <Search value={filterRut} onChange={handleRutFilterChange} placeholder={'Filtrar por rut'} />
+            <Search value={filterRut} onChange={handleRutFilterChange} placeholder={'Filtrar por telefono'} />
             <button onClick={handleClickUpdate} disabled={dataUser.length === 0}>
               {dataUser.length === 0 ? (
                 <img src={UpdateIconDisable} alt="edit-disabled" />
@@ -69,7 +69,7 @@ const Personals = () => {
           data={personals}
           columns={columns}
           filter={filterRut}
-          dataToFilter={'rut'}
+          dataToFilter={'telefono'}
           initialSortName={'nombreCompleto'}
           onSelectionChange={handleSelectionChange}
         />
