@@ -61,8 +61,15 @@ async function setupServer() {
 
     app.use("/api", indexRoutes);
 
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, HOST, () => {
       console.log(`=> Servidor corriendo en ${HOST}:${PORT}/api`);
+    });
+
+    server.on('error', (error) => {
+      if (error.code === 'EADDRINUSE') {
+        console.error(`El puerto ${PORT} está en uso, intentando otro puerto.`);
+        server.listen(PORT + 1, HOST);
+      }
     });
   } catch (error) {
     console.log("Error en index.js -> setupServer(), el error es: ", error);
