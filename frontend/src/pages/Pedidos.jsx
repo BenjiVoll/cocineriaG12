@@ -49,7 +49,7 @@ const Orders = () => {
 
   const columns = [
     { title: "ID", field: "id", width: 100, responsive: 0 },
-    { title: "Productos", field: "productos", width: 200, responsive: 2 },
+    { title: "Producto", field: "productos", width: 200, responsive: 2 },
     { title: "Estado", field: "estado", width: 200, responsive: 2 },
     { title: "Entrega Pedido", field: "fechaEntrega", width: 200, responsive: 2 },
     { title: "Método de Pago", field: "metodoPago", width: 200, responsive: 2 },

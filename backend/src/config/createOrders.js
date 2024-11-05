@@ -7,60 +7,52 @@ async function createOrders() {
     const orderRepository = AppDataSource.getRepository(Order);
 
     const count = await orderRepository.count();
-    if (count > 0) return;
+    if (count > 0) return; // Si ya hay órdenes, no crear más
 
-    await Promise.all([
-      orderRepository.save(
-        orderRepository.create({
-          userId: 1,
-          orderDetails: "Pedido de 3 unidades de producto A",
-          status: "pendiente",
-          totalAmount: 150.00,
-          orderDate: new Date("2024-01-15"),
-          deliveryDate: new Date("2024-01-20"),
-        })
-      ),
-      orderRepository.save(
-        orderRepository.create({
-          userId: 2,
-          orderDetails: "Pedido de 5 unidades de producto B",
-          status: "enviado",
-          totalAmount: 250.00,
-          orderDate: new Date("2024-02-10"),
-          deliveryDate: new Date("2024-02-15"),
-        })
-      ),
-      orderRepository.save(
-        orderRepository.create({
-          userId: 3,
-          orderDetails: "Pedido de 2 unidades de producto C",
-          status: "completado",
-          totalAmount: 100.00,
-          orderDate: new Date("2024-03-05"),
-          deliveryDate: new Date("2024-03-10"),
-        })
-      ),
-      orderRepository.save(
-        orderRepository.create({
-          userId: 4,
-          orderDetails: "Pedido de 4 unidades de producto D",
-          status: "pendiente",
-          totalAmount: 200.00,
-          orderDate: new Date("2024-03-20"),
-          deliveryDate: new Date("2024-03-25"),
-        })
-      ),
-      orderRepository.save(
-        orderRepository.create({
-          userId: 5,
-          orderDetails: "Pedido de 1 unidad de producto E",
-          status: "cancelado",
-          totalAmount: 50.00,
-          orderDate: new Date("2024-04-01"),
-          deliveryDate: new Date("2024-04-05"),
-        })
-      ),
-    ]);
+    // Define un array con las órdenes que deseas crear
+    const ordersToCreate = [
+      {
+        productos: "Producto A", // Solo el nombre del producto como string
+        precioTotal: 150.00,
+        estado: "pendiente",
+        metodoPago: "tarjeta de crédito",
+        fechaEntrega: new Date("2024-01-20"),
+      },
+      {
+        productos: "Producto B", // Solo el nombre del producto como string
+        precioTotal: 250.00,
+        estado: "en proceso",
+        metodoPago: "PayPal",
+        fechaEntrega: new Date("2024-02-15"),
+      },
+      {
+        productos: "Producto C", // Solo el nombre del producto como string
+        precioTotal: 100.00,
+        estado: "completado",
+        metodoPago: "transferencia bancaria",
+        fechaEntrega: new Date("2024-03-10"),
+      },
+      {
+        productos: "Producto D", // Solo el nombre del producto como string
+        precioTotal: 200.00,
+        estado: "pendiente",
+        metodoPago: "tarjeta de débito",
+        fechaEntrega: new Date("2024-03-25"),
+      },
+      {
+        productos: "Producto E", // Solo el nombre del producto como string
+        precioTotal: 50.00,
+        estado: "cancelado",
+        metodoPago: "efectivo",
+        fechaEntrega: new Date("2024-04-05"),
+      },
+    ];
+
+    // Guardar todas las órdenes
+    await Promise.all(ordersToCreate.map(orderData => {
+      const order = orderRepository.create(orderData);
+      return orderRepository.save(order);
+    }));
 
     console.log("* => Pedidos creados exitosamente");
   } catch (error) {
