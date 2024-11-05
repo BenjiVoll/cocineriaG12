@@ -76,6 +76,14 @@ async function createUsers() {
       ),
     ]);
     console.log("* => Usuarios creados exitosamente");
+
+    try {
+      await createOrders();
+      console.log("* => Ordenes creadas exitosamente");
+    } catch (error) {
+      console.error("Error en await createOrders():", error);
+    }
+
   } catch (error) {
     console.error("Error al crear usuarios:", error);
   }
