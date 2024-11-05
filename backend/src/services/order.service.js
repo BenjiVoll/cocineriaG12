@@ -19,7 +19,6 @@ export async function getOrderService(id) {
   }
 }
 
-
 export async function getOrdersService() {
   try {
     const orderRepository = AppDataSource.getRepository(Order);
@@ -35,6 +34,21 @@ export async function getOrdersService() {
   }
 }
 
+export async function addOrderService(orderData) {
+  try {
+    const orderRepository = AppDataSource.getRepository(Order);
+
+    const newOrder = orderRepository.create(orderData);
+    
+    await orderRepository.save(newOrder);
+
+    return [newOrder, null];
+  } catch (error) {
+    console.error("Error al agregar el pedido:", error);
+    return [null, "Error interno del servidor"];
+  }
+}
+
 export async function updateOrderService(id, body) {
   try {
     const orderRepository = AppDataSource.getRepository(Order);
@@ -44,10 +58,7 @@ export async function updateOrderService(id, body) {
     if (!orderFound) return [null, "Pedido no encontrado"];
 
     const dataOrderUpdate = {
-      productos: body.productos,
-      precioTotal: body.precioTotal,
       estado: body.estado,
-      metodoPago: body.metodoPago,
       fechaEntrega: body.fechaEntrega,
       updatedAt: new Date(),
     };

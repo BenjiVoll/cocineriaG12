@@ -11,9 +11,19 @@ export async function getOrders() {
     }
 }
 
+export async function addOrder(newOrderData) {
+    try {
+        const { data } = await axios.post('/order/', newOrderData); 
+        return data.data;
+    } catch (error) {
+        console.error("Error al añadir el pedido:", error);
+        return error.response.data;
+    }
+}
+
 export async function updateOrder(data, id) {
     try {
-        const response = await axios.patch(`/order/detail/?id=${id}`, data);
+        const response = await axios.patch(`/order/?id=${id}`, data);
         console.log(response);
         return response.data.data;
     } catch (error) {
@@ -24,7 +34,7 @@ export async function updateOrder(data, id) {
 
 export async function deleteOrder(id) {
     try {
-        const response = await axios.delete(`/order/detail/?id=${id}`);
+        const response = await axios.delete(`/order/?id=${id}`);
         return response.data;
     } catch (error) {
         return error.response.data;

@@ -1,5 +1,6 @@
 "use strict";
 import {
+  addOrderService,
   deleteOrderService,
   getOrderService,
   getOrdersService,
@@ -47,14 +48,38 @@ export async function getOrders(req, res) {
   }
 }
 
+export async function addOrder(req, res) {
+  try {
+    const { body } = req;
+
+    // Validar el cuerpo de la solicitud
+    const { error: bodyError } = orderBodyValidation.validate(body);
+
+    if (bodyError)
+      return handleErrorClient(
+        res,
+        400,
+        "Error de validación en los datos enviados",
+        bodyError.message,
+      );
+
+    // Llama al servicio para agregar la orden
+    const [newOrder, orderError] = await addOrderService(body);
+
+    if (orderError) return handleErrorClient(res, 400, "Error agregando el pedido", orderError);
+
+    handleSuccess(res, 201, "Pedido creado correctamente", newOrder);
+  } catch (error) {
+    handleErrorServer(res, 500, error.message);
+  }
+}
+
 export async function updateOrder(req, res) {
   try {
     const { id } = req.query;
     const { body } = req;
 
-    const { error: queryError } = orderQueryValidation.validate({
-      id
-    });
+    const { error: queryError } = orderQueryValidation.validate({ id });
 
     if (queryError) {
       return handleErrorClient(
@@ -89,9 +114,7 @@ export async function deleteOrder(req, res) {
   try {
     const { id } = req.query;
 
-    const { error: queryError } = orderQueryValidation.validate({
-      id
-    });
+    const { error: queryError } = orderQueryValidation.validate({ id });
 
     if (queryError) {
       return handleErrorClient(
@@ -102,9 +125,7 @@ export async function deleteOrder(req, res) {
       );
     }
 
-    const [orderDelete, errorOrderDelete] = await deleteOrderService({
-      id
-    });
+    const [orderDelete, errorOrderDelete] = await deleteOrderService({ id });
 
     if (errorOrderDelete) return handleErrorClient(res, 404, "Error eliminando el pedido", errorOrderDelete);
 
