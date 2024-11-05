@@ -1,5 +1,5 @@
 import Table from '@components/Table';
-import useUsers from '@hooks/users/useGetUsers.jsx';
+import useAsistencia from '@hooks/users/useGetAsistencia.jsx';
 import Search from '../components/Search';
 import Popup from '../components/Popup';
 import DeleteIcon from '../assets/deleteIcon.svg';
@@ -8,11 +8,15 @@ import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import { useCallback, useState } from 'react';
 import '@styles/users.css';
-import useEditUser from '@hooks/users/useEditUser';
-import useDeleteUser from '@hooks/users/useDeleteUser';
+import useEditUser from '@hooks/users/useEditUser'; 
+import useDeleteUser from '@hooks/users/useDeleteUser'; 
 
 const Asistencia = () => {
-  const { asistencia, fetchUsers, setUsers } = useUsers();
+  const { asistencia, fetchAsistencia, setAsistencia } = useAsistencia();
+  
+  
+  console.log('Datos de asistencia:', asistencia); 
+
   const [filterRut, setFilterRut] = useState('');
 
   const {
@@ -22,10 +26,9 @@ const Asistencia = () => {
     setIsPopupOpen,
     dataUser,
     setDataUser
-  } = useEditUser(setUsers);
+  } = useEditUser(setAsistencia); 
 
-  const { handleDelete } = useDeleteUser(fetchUsers, setDataUser);
-
+  const { handleDelete } = useDeleteUser(fetchAsistencia, setDataUser); 
   const handleRutFilterChange = (e) => {
     setFilterRut(e.target.value);
   };
@@ -36,9 +39,8 @@ const Asistencia = () => {
 
   const columns = [
     { title: "Nombre", field: "nombreCompleto", width: 350, responsive: 0 },
-    { title: "Correo electrónico", field: "email", width: 300, responsive: 3 },
-    { title: "Rut", field: "rut", width: 150, responsive: 2 },
-    { title: "Rol", field: "rol", width: 200, responsive: 2 },
+    { title: "Fecha", field: "fecha", width: 200, responsive: 2 },
+    { title: "Estado", field: "estado", width: 200, responsive: 2 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
   ];
 
