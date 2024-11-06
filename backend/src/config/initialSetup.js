@@ -11,7 +11,7 @@ async function createInitialData() {
     const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
     const platoRepository = AppDataSource.getRepository(Plato);
 
-    // Crear usuarios iniciales
+    // Crear usuarios
     const userCount = await userRepository.count();
     if (userCount === 0) {
       await Promise.all([
@@ -82,7 +82,7 @@ async function createInitialData() {
       console.log("* => Usuarios creados exitosamente");
     }
 
-    // Crear ingredientes iniciales
+    // Crear ingredientes
     const ingredienteCount = await ingredienteRepository.count();
     if (ingredienteCount === 0) {
       const ingredientes = [
@@ -99,25 +99,31 @@ async function createInitialData() {
       console.log("* => Ingredientes creados exitosamente");
     }
 
-    // Crear platos iniciales
+    // Crear platos
     const platoCount = await platoRepository.count();
     if (platoCount === 0) {
+      const ingredientes = await ingredienteRepository.find();
+
       const platos = [
         {
           nombre: "Hamburguesa",
           descripcion: "Hamburguesa con queso, tomate y lechuga",
-          precio: 5.99,
-          disponible: true,
-          ingredientes: [1, 2, 3, 4, 5],
+          precio: 5000,
+          disponible: ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].every(nombre => 
+            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
+          ),
+          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].includes(ing.nombre)),
         },
         {
           nombre: "Ensalada",
           descripcion: "Ensalada fresca con tomate y lechuga",
-          precio: 3.99,
-          disponible: true,
-          ingredientes: [1, 2],
+          precio: 4500,
+          disponible: ["Tomate", "Lechuga"].every(nombre => 
+            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
+          ),
+          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga"].includes(ing.nombre)),
         },
-      ];
+      ];      
 
       for (const platoData of platos) {
         const plato = platoRepository.create({
@@ -127,11 +133,8 @@ async function createInitialData() {
           disponible: platoData.disponible,
         });
         await platoRepository.save(plato);
-
-        // Asignar ingredientes al plato
-        for (const ingredienteId of platoData.ingredientes) {
-          const ingrediente = await ingredienteRepository.findOneBy({ id: ingredienteId });
-        }
+        plato.ingredientes = platoData.ingredientes;
+        await platoRepository.save(plato);
       }
       console.log("* => Platos creados exitosamente");
     }

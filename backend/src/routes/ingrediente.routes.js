@@ -1,14 +1,26 @@
 "use strict";
 import { Router } from "express";
-import { crearIngredienteController, 
-    actualizarIngredienteController, 
-    obtenerIngredientesController } from "../controllers/ingrediente.controller.js";
+import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
+import { 
+    createIngredienteController,
+    deleteIngredienteController,
+    getIngredienteController,
+    getIngredientesController,
+    updateIngredienteController,
+} from "../controllers/ingrediente.controller.js";
 
 const router = Router();
 
-router.post("/ingredientes", crearIngredienteController);
-router.put("/ingredientes/:id", actualizarIngredienteController);
-router.get("/ingredientes", obtenerIngredientesController);
+router
+  .use(authenticateJwt)
+  .use(isAdmin);
+
+router
+  .post("/", createIngredienteController)
+  .put("/update/:id", updateIngredienteController)
+  .get("/search/:id", getIngredientesController)
+  .get("/", getIngredienteController)
+  .delete("/delete/:id", deleteIngredienteController);
 
 export default router;
-
