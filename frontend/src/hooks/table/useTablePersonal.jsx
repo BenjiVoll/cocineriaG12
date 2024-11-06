@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { TabulatorFull as Tabulator } from 'tabulator-tables';
 import "tabulator-tables/dist/css/tabulator.min.css";
-import '@styles/asistencias.css';
+import '@styles/personals.css';
 
-function useTableAsistencia({ data, columns, filter, dataToFilter, initialSortName, onSelectionChange }) {
+function useTablePersonal({ data, columns, filter, dataToFilter, initialSortName, onSelectionChange }) {
     const tableRef = useRef(null);
     const [table, setTable] = useState(null);
     const [isTableBuilt, setIsTableBuilt] = useState(false);
@@ -81,4 +81,4 @@ function useTableAsistencia({ data, columns, filter, dataToFilter, initialSortNa
 
     return { tableRef };
 }
-export default useTableAsistencia;
+export default useTablePersonal;

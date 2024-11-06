@@ -53,7 +53,9 @@ const Asistencias = () => {
     { title: "justificativo", field: "justificativo", width: 200, responsive: 2 },
     { title: "fecha", field: "fecha", width: 200, responsive: 2 },
     { title: "personal id", field: "personal_id", width: 200, responsive: 2 },
-     
+    { title: "nombre completo", field: "nombreCompleto", width: 200, responsive: 2 }, // Nuevo campo
+    { title: "telefono", field: "telefono", width: 200, responsive: 2 },             // Nuevo campo
+    { title: "cargo", field: "cargo", width: 200, responsive: 2 }                    // Nuevo campo
   ];
   
 

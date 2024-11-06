@@ -7,6 +7,9 @@ export function formatAsistenciaData(asistencia) {
         estado: startCase(asistencia.estado), 
         justificativo: asistencia.justificativo || null, 
         fecha: formatTempo(asistencia.fecha, 'YYYY-MM-DD'), 
-        personal_id: asistencia.personal_id
+        personal_id: asistencia.personal.id, // Extrae el ID 'personal'
+        nombreCompleto: asistencia.personal.nombreCompleto, 
+        telefono: asistencia.personal.telefono,              
+        cargo: asistencia.personal.cargo                     
     };
 }

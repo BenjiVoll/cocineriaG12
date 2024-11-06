@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
 import Home from '@pages/Home';
 import Asistencia from '@pages/Asistencia';
+import Personal from '@pages/Personal';
 import Users from '@pages/Users';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/asistencia',
         element: <Asistencia/>
+      },
+      {
+        path: '/personal',
+        element: <Personal/>
       },
       {
         path: '/users',
