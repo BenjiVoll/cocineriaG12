@@ -14,7 +14,16 @@ export async function createUser(req, res) {
             });
         }
 
-        // Validación del número de teléfono
+      
+        const validCargos = ['cocinero', 'administrador', 'garzon'];
+        if (!validCargos.includes(user.cargo.toLowerCase())) {
+            return res.status(400).json({
+                message: "El cargo debe ser uno de los siguientes: 'cocinero', 'administrador', 'garzon'.",
+                data: null
+            });
+        }
+
+        
         const telefonoRegex = /^[0-9]{9}$/; // Solo acepta 9 dígitos numéricos
         if (!telefonoRegex.test(user.telefono)) {
             return res.status(400).json({
@@ -117,7 +126,16 @@ export async function updateUser(req, res) {
             });
         }
 
-        // Validación del número de teléfono
+        // Validación del campo cargo
+        const validCargos = ['cocinero', 'administrador', 'garzon'];
+        if (cargo && !validCargos.includes(cargo.toLowerCase())) {
+            return res.status(400).json({
+                message: "El cargo debe ser uno de los siguientes: 'cocinero', 'administrador', 'garzon'.",
+                data: null
+            });
+        }
+
+        
         const telefonoRegex = /^[0-9]{9}$/; // Solo acepta 9 dígitos numéricos
         if (telefono && !telefonoRegex.test(telefono)) {
             return res.status(400).json({
