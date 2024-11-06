@@ -8,7 +8,7 @@ import passport from "passport";
 import express, { json, urlencoded } from "express";
 import { cookieKey, HOST, PORT } from "./config/configEnv.js";
 import { connectDB } from "./config/configDb.js";
-import { createUsers } from "./config/initialSetup.js";
+import { createInitialData } from "./config/initialSetup.js";
 import { passportJwtSetup } from "./auth/passport.auth.js";
 
 async function setupServer() {
@@ -61,15 +61,8 @@ async function setupServer() {
 
     app.use("/api", indexRoutes);
 
-    const server = app.listen(PORT, HOST, () => {
+    app.listen(PORT, () => {
       console.log(`=> Servidor corriendo en ${HOST}:${PORT}/api`);
-    });
-
-    server.on('error', (error) => {
-      if (error.code === 'EADDRINUSE') {
-        console.error(`El puerto ${PORT} está en uso, intentando otro puerto.`);
-        server.listen(PORT + 1, HOST);
-      }
     });
   } catch (error) {
     console.log("Error en index.js -> setupServer(), el error es: ", error);
@@ -80,7 +73,7 @@ async function setupAPI() {
   try {
     await connectDB();
     await setupServer();
-    await createUsers();
+    await createInitialData();
   } catch (error) {
     console.log("Error en index.js -> setupAPI(), el error es: ", error);
   }
