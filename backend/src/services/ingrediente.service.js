@@ -66,8 +66,7 @@ export async function updateIngredienteService(id, body) {
     });
 
     if (!ingredienteFound) return [null, "Ingrediente no encontrado"];
-
-    // Verificar si ya existe un ingrediente con el mismo nombre (excluyendo el actual)
+    
     if (body.nombre) {
       const existingIngrediente = await ingredienteRepository.findOne({
         where: { nombre: body.nombre },
@@ -78,7 +77,6 @@ export async function updateIngredienteService(id, body) {
       }
     }
 
-    // Solo actualizar los campos proporcionados en el cuerpo
     const dataIngredienteUpdate = {};
     if (body.nombre) dataIngredienteUpdate.nombre = body.nombre;
     if (body.cantidad) dataIngredienteUpdate.cantidad = body.cantidad;
