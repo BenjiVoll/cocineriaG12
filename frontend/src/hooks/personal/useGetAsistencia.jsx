@@ -1,10 +1,10 @@
 import Table from '@components/Table';
-import useGetPersonal from '@hooks/personal/useGetPersonal'; // Este hook necesita ser creado
-import Search from '../components/Search';
+import useGetPersonal from '@hooks/asistencias/useGetPersonal'; // Este hook necesita ser creado
+import Search from '@components/Search';
 import '@styles/personal.css'; // Asegúrate de tener estilos adecuados para Personal
 
 const Personal = () => {
-    const { personal, loading } = useGetPersonal();
+    const { asistencias, loading } = useGetPersonal();
 
     const columns = [
         { title: "Nombre Completo", field: "nombreCompleto", width: 200, responsive: 0 },
@@ -25,7 +25,7 @@ const Personal = () => {
                     <Search placeholder='Buscar por nombre'/>
                 </div>
                 <Table
-                    data={personal}
+                    data={asistencias}
                     columns={columns}
                     initialSortName={'nombreCompleto'}
                 />

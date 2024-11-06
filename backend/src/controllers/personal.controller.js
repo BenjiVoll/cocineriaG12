@@ -104,8 +104,8 @@ export async function getUsers(req, res) {
 
 export async function updateUser(req, res) {
     try {
-        const id = req.params.id; // Obtener el ID del usuario de los parámetros de la ruta
-        const { nombreCompleto, telefono, fechaIncorporacion, cargo } = req.body; // Obtener los datos del cuerpo de la solicitud
+        const id = req.params.id; 
+        const { nombreCompleto, telefono, fechaIncorporacion, cargo } = req.body;
 
         const userRepository = AppDataSource.getRepository(User_personal);
         const user = await userRepository.findOne({ where: { id } });
@@ -149,7 +149,7 @@ export async function updateUser(req, res) {
 
 export async function deleteUser(req, res) {
     try {
-        const id = req.params.id; // Obtener el ID del usuario de los parámetros de la ruta
+        const id = req.params.id; 
 
         const userRepository = AppDataSource.getRepository(User_personal);
         const user = await userRepository.findOne({ where: { id } });
@@ -161,8 +161,7 @@ export async function deleteUser(req, res) {
             });
         }
 
-        await userRepository.remove(user); // Eliminar el usuario
-
+        await userRepository.remove(user); 
         res.status(200).json({
             message: "Usuario eliminado correctamente",
             data: user
