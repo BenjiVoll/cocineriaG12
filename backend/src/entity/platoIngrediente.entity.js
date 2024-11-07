@@ -7,11 +7,11 @@ const PlatoIngredienteSchema = new EntitySchema({
   columns: {
     platoId: {
       type: "int",
-      primary: true, // Configura como parte de la clave primaria
+      primary: true,
     },
     ingredienteId: {
       type: "int",
-      primary: true, // Configura como parte de la clave primaria
+      primary: true,
     },
     createdAt: {
       type: "timestamp with time zone",

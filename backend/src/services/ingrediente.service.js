@@ -42,17 +42,21 @@ export async function getIngredienteService() {
   }
 }
 
-export async function getIngredientesService() {
+export async function getIngredientesService(id) {
   try {
     const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
 
-    const ingredientes = await ingredienteRepository.find();
+    const ingrediente = await ingredienteRepository.findOne({
+      where: { id: id },
+    });
 
-    if (!ingredientes || ingredientes.length === 0) return [null, "No hay ingredientes"];
+    if (!ingrediente) {
+      return [null, "Ingrediente no encontrado"];
+    }
 
-    return [ingredientes, null];
+    return [ingrediente, null];
   } catch (error) {
-    console.error("Error al obtener los ingredientes:", error);
+    console.error("Error al obtener el ingrediente:", error);
     return [null, "Error interno del servidor"];
   }
 }

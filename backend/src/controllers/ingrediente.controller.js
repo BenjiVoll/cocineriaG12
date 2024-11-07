@@ -8,7 +8,6 @@ import {
 } from "../services/ingrediente.service.js";
 import{
   ingredienteBodyValidation,
-  ingredienteQueryValidation,
   ingredienteUpdateValidation,
 } from "../validations/ingrediente.validation.js";
 import { 
@@ -56,12 +55,21 @@ export async function getIngredienteController(req, res) {
   }
 }
 
-export async function getIngredientesController (req, res) {
+export async function getIngredientesController(req, res) {
   try {
-    const ingredientes = await getIngredientesService();
-    handleSuccess(res, ingredientes);
+    const { id } = req.params;
+    const [ingrediente, errorIngrediente] = await getIngredientesService(id);
+
+    if (errorIngrediente) {
+      console.log("Error al obtener el ingrediente:", errorIngrediente);
+      return handleErrorClient(res, 404, errorIngrediente);
+    }
+
+    console.log("Ingrediente obtenido exitosamente:", ingrediente);
+    handleSuccess(res, 200, "Ingrediente obtenido exitosamente", ingrediente);
   } catch (error) {
-    handleErrorServer(res, error);
+    console.error("Error al obtener el ingrediente:", error.message);
+    handleErrorServer(res, 500, error.message);
   }
 }
 
