@@ -86,7 +86,9 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
+                    {(userRole === 'administrador') && (
                     <li>
+                        
                         <NavLink 
                             to="/asistencia" 
                             onClick={() => { 
@@ -98,6 +100,8 @@ const Navbar = () => {
                             Asistencia
                         </NavLink>
                     </li>
+                    )}
+                    {(userRole === 'administrador') && (
                     <li>
                         <NavLink 
                             to="/personal" 
@@ -110,6 +114,7 @@ const Navbar = () => {
                             Personal
                         </NavLink>
                     </li>
+                    )}
                 </>
             )}
             <li>
