@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getPersonals } from '@services/personal.service.js'; // Asegúrate de tener este servicio
+import { getPersonals } from '@services/personal.service.js';
 
-const useGetPersonals = () => {
+const usePersonals = () => {
     const [personals, setPersonals] = useState([]);
 
     const fetchPersonals = async () => {
@@ -16,6 +16,7 @@ const useGetPersonals = () => {
                 creado: personal.createdAt,
                 actualizado: personal.updatedAt
             }));
+            dataLogged(formattedData);
             setPersonals(formattedData);
         } catch (error) {
             console.error("Error: ", error);
@@ -26,9 +27,21 @@ const useGetPersonals = () => {
         fetchPersonals();
     }, []);
 
-
+    const dataLogged = (formattedData) => {
+        try {
+            const { rut } = JSON.parse(sessionStorage.getItem('usuario'));
+            for(let i = 0; i < formattedData.length ; i++) {
+                if(formattedData[i].rut === rut) {
+                    formattedData.splice(i, 1);
+                    break;
+                }
+            }
+        } catch (error) {
+            console.error("Error: ", error)
+        }
+    };
 
     return { personals, fetchPersonals, setPersonals };
 };
 
-export default useGetPersonals;
+export default usePersonals;
