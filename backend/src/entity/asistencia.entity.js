@@ -5,11 +5,7 @@ import { EntitySchema } from "typeorm";
 const AsistenciaSchema = new EntitySchema({
     name: "Asistencia",
     tableName: "asistencias",
-<<<<<<< HEAD
     columns: { 
-=======
-    columns: { // Asegúrate de que las columnas estén dentro de la clave `columns`
->>>>>>> rama_cocina_3
         id: {
             type: "int",
             primary: true,
@@ -35,11 +31,7 @@ const AsistenciaSchema = new EntitySchema({
             type: "many-to-one",
             target: "Personal", 
             joinColumn: {
-<<<<<<< HEAD
                 name: "personal_id" 
-=======
-                name: "personal_id" // Este es el nombre de la columna FK en la tabla `asistencias`
->>>>>>> rama_cocina_3
             },
             cascade: true,
             onDelete: "CASCADE"

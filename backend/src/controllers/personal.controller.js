@@ -14,7 +14,6 @@ export async function createUser(req, res) {
             });
         }
 
-<<<<<<< HEAD
       
         const validCargos = ['cocinero', 'administrador', 'garzon'];
         if (!validCargos.includes(user.cargo.toLowerCase())) {
@@ -25,9 +24,6 @@ export async function createUser(req, res) {
         }
 
         
-=======
-        // Validación del número de teléfono
->>>>>>> rama_cocina_3
         const telefonoRegex = /^[0-9]{9}$/; // Solo acepta 9 dígitos numéricos
         if (!telefonoRegex.test(user.telefono)) {
             return res.status(400).json({
@@ -117,13 +113,8 @@ export async function getUsers(req, res) {
 
 export async function updateUser(req, res) {
     try {
-<<<<<<< HEAD
         const id = req.params.id; 
         const { nombreCompleto, telefono, fechaIncorporacion, cargo } = req.body;
-=======
-        const id = req.params.id; // Obtener el ID del usuario de los parámetros de la ruta
-        const { nombreCompleto, telefono, fechaIncorporacion, cargo } = req.body; // Obtener los datos del cuerpo de la solicitud
->>>>>>> rama_cocina_3
 
         const userRepository = AppDataSource.getRepository(User_personal);
         const user = await userRepository.findOne({ where: { id } });
@@ -135,7 +126,6 @@ export async function updateUser(req, res) {
             });
         }
 
-<<<<<<< HEAD
         // Validación del campo cargo
         const validCargos = ['cocinero', 'administrador', 'garzon'];
         if (cargo && !validCargos.includes(cargo.toLowerCase())) {
@@ -146,9 +136,6 @@ export async function updateUser(req, res) {
         }
 
         
-=======
-        // Validación del número de teléfono
->>>>>>> rama_cocina_3
         const telefonoRegex = /^[0-9]{9}$/; // Solo acepta 9 dígitos numéricos
         if (telefono && !telefonoRegex.test(telefono)) {
             return res.status(400).json({
@@ -180,11 +167,7 @@ export async function updateUser(req, res) {
 
 export async function deleteUser(req, res) {
     try {
-<<<<<<< HEAD
         const id = req.params.id; 
-=======
-        const id = req.params.id; // Obtener el ID del usuario de los parámetros de la ruta
->>>>>>> rama_cocina_3
 
         const userRepository = AppDataSource.getRepository(User_personal);
         const user = await userRepository.findOne({ where: { id } });
@@ -196,12 +179,7 @@ export async function deleteUser(req, res) {
             });
         }
 
-<<<<<<< HEAD
         await userRepository.remove(user); 
-=======
-        await userRepository.remove(user); // Eliminar el usuario
-
->>>>>>> rama_cocina_3
         res.status(200).json({
             message: "Usuario eliminado correctamente",
             data: user
