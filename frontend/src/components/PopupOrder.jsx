@@ -35,16 +35,7 @@ export default function OrderPopup({ show, setShow, data, action }) {
                                     ],
                                     required: true,
                                     defaultValue: orderData.estado || "",
-                                },
-                                {
-                                    label: "Fecha de Entrega",
-                                    name: "fechaEntrega",
-                                    defaultValue: orderData.fechaEntrega || "",
-                                    placeholder: 'DD-MM-YYYY',
-                                    fieldType: 'input',
-                                    type: "date",
-                                    required: true,
-                                },
+                                }
                             ]}
                             onSubmit={handleSubmit}
                             buttonText="Guardar Pedido"

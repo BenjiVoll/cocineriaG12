@@ -11,6 +11,7 @@ async function createInitialData() {
     const userRepository = AppDataSource.getRepository(User);
     const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
     const platoRepository = AppDataSource.getRepository(Plato);
+    
 
     // Crear usuarios iniciales
     const userCount = await userRepository.count();

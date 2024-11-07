@@ -58,9 +58,7 @@ export async function updateOrderService(id, body) {
     if (!orderFound) return [null, "Pedido no encontrado"];
 
     const dataOrderUpdate = {
-      estado: body.estado,
-      fechaEntrega: body.fechaEntrega,
-      updatedAt: new Date(),
+      estado: body.estado
     };
 
     await orderRepository.update(id, dataOrderUpdate);

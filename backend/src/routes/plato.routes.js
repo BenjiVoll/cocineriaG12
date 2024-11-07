@@ -1,7 +1,7 @@
 "use strict";
 import { Router } from "express";
-import { crearPlatoController, 
-    actualizarPlatoController, 
+import { actualizarPlatoController, 
+    crearPlatoController, 
     obtenerPlatosDisponiblesController } from "../controllers/plato.controller.js";
 
 const router = Router();
