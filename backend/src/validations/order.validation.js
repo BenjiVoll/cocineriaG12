@@ -17,8 +17,8 @@ export const orderQueryValidation = Joi.object({
       "any.only": "El estado debe ser 'pendiente', 'en proceso', 'completado' o 'cancelado'.",
     }),
 })
-  .or("id", "estado")
-  .unknown(false)
+  .or("id","estado")
+  .unknown(true)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
     "object.missing": "Debes proporcionar al menos un parámetro: id o estado.",
@@ -34,12 +34,21 @@ export const orderBodyValidation = Joi.object({
           "number.positive": "El productoId debe ser un número positivo.",
           "any.required": "El productoId es requerido en cada producto.",
         }),
+        nombre: Joi.string().required().messages({
+          "string.base": "El nombre debe ser de tipo string.",
+          "any.required": "El nombre del producto es requerido.",
+        }),
         cantidad: Joi.number().integer().positive().required().messages({
           "number.base": "La cantidad debe ser un número.",
           "number.integer": "La cantidad debe ser un número entero.",
           "number.positive": "La cantidad debe ser un número positivo.",
           "any.required": "La cantidad es requerida en cada producto.",
         }),
+        precioUnitario: Joi.number().precision(2).positive().required().messages({
+          "number.base": "El precioUnitario debe ser un número.",
+          "number.positive": "El precioUnitario debe ser un número positivo.",
+          "any.required": "El precioUnitario es requerido en cada producto.",
+        })
       })
     )
     .min(1)
@@ -79,7 +88,7 @@ export const orderBodyValidation = Joi.object({
       "date.base": "La fecha de entrega debe ser una fecha válida en formato ISO.",
     }),
 })
-  .unknown(false)
+  .unknown(true)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
     "object.missing": "Debes proporcionar los campos requeridos del pedido.",
