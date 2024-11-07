@@ -10,7 +10,7 @@ export async function login(dataUser) {
             password: dataUser.password
         });
         const { status, data } = response;
-        if (status === 200) {
+        if (status === 200) {  
             const { nombreCompleto, email, rut, rol } = jwtDecode(data.data.token);
             const userData = { nombreCompleto, email, rut, rol };
             sessionStorage.setItem('usuario', JSON.stringify(userData));

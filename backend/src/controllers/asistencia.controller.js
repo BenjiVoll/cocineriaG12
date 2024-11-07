@@ -1,6 +1,6 @@
 import AsistenciaSchema from "../entity/asistencia.entity.js";
 import { AppDataSource } from "../config/configDb.js";
-import Personal from "../entity/user.entity.personal.js";
+import Personal from "../entity/personal.entity.js";
 
 export const marcarAsistencia = async (req, res) => {
     const { personalId, estado, justificativo } = req.body;
