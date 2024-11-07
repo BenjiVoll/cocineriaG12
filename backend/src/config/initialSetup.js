@@ -137,9 +137,10 @@ async function createInitialData() {
         await platoRepository.save(plato);
 
         // Asignar ingredientes al plato
+        /*
         for (const ingredienteId of platoData.ingredientes) {
           const ingrediente = await ingredienteRepository.findOneBy({ id: ingredienteId });
-        }
+        }*/
       }
       console.log("* => Platos creados exitosamente");
     }
