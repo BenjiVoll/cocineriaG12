@@ -12,35 +12,45 @@ async function createOrders() {
     // Define un array con las órdenes que deseas crear
     const ordersToCreate = [
       {
-        productos: "Producto A", // Solo el nombre del producto como string
+        productos: [
+          { productoId: 1, nombre: "Producto A", cantidad: 1, precioUnitario: 150.00 }
+        ],
         precioTotal: 150.00,
         estado: "pendiente",
         metodoPago: "tarjeta de crédito",
         fechaEntrega: new Date("2024-01-20"),
       },
       {
-        productos: "Producto B", // Solo el nombre del producto como string
+        productos: [
+          { productoId: 2, nombre: "Producto B", cantidad: 1, precioUnitario: 250.00 }
+        ],
         precioTotal: 250.00,
         estado: "en proceso",
         metodoPago: "PayPal",
         fechaEntrega: new Date("2024-02-15"),
       },
       {
-        productos: "Producto C", // Solo el nombre del producto como string
+        productos: [
+          { productoId: 3, nombre: "Producto C", cantidad: 1, precioUnitario: 100.00 }
+        ],
         precioTotal: 100.00,
         estado: "completado",
         metodoPago: "transferencia bancaria",
         fechaEntrega: new Date("2024-03-10"),
       },
       {
-        productos: "Producto D", // Solo el nombre del producto como string
+        productos: [
+          { productoId: 4, nombre: "Producto D", cantidad: 1, precioUnitario: 200.00 }
+        ],
         precioTotal: 200.00,
         estado: "pendiente",
         metodoPago: "tarjeta de débito",
         fechaEntrega: new Date("2024-03-25"),
       },
       {
-        productos: "Producto E", // Solo el nombre del producto como string
+        productos: [
+          { productoId: 5, nombre: "Producto E", cantidad: 1, precioUnitario: 50.00 }
+        ],
         precioTotal: 50.00,
         estado: "cancelado",
         metodoPago: "efectivo",

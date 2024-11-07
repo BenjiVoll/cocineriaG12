@@ -10,14 +10,6 @@ export const orderQueryValidation = Joi.object({
       "number.integer": "El id debe ser un número entero.",
       "number.positive": "El id debe ser un número positivo.",
     }),
-  clienteId: Joi.number()
-    .integer()
-    .positive()
-    .messages({
-      "number.base": "El clienteId debe ser un número.",
-      "number.integer": "El clienteId debe ser un número entero.",
-      "number.positive": "El clienteId debe ser un número positivo.",
-    }),
   estado: Joi.string()
     .valid("pendiente", "en proceso", "completado", "cancelado")
     .messages({
@@ -25,24 +17,14 @@ export const orderQueryValidation = Joi.object({
       "any.only": "El estado debe ser 'pendiente', 'en proceso', 'completado' o 'cancelado'.",
     }),
 })
-  .or("id", "clienteId", "estado")
+  .or("id", "estado")
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
-    "object.missing": "Debes proporcionar al menos un parámetro: id, clienteId o estado.",
+    "object.missing": "Debes proporcionar al menos un parámetro: id o estado.",
   });
 
 export const orderBodyValidation = Joi.object({
-  clienteId: Joi.number()
-    .integer()
-    .positive()
-    .required()
-    .messages({
-      "number.base": "El clienteId debe ser un número.",
-      "number.integer": "El clienteId debe ser un número entero.",
-      "number.positive": "El clienteId debe ser un número positivo.",
-      "any.required": "El clienteId es requerido.",
-    }),
   productos: Joi.array()
     .items(
       Joi.object({

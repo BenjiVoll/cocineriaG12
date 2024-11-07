@@ -26,7 +26,7 @@ const useAddOrder = (setOrders) => {
   // Envía el nuevo pedido a la base de datos y actualiza la lista de pedidos
   const handleSubmitNewOrder = async () => {
     try {
-      const response = await axios.post('/api/orders', newOrderData); // Ajusta la URL según tu backend
+      const response = await axios.post('/api/order', newOrderData); // Ajusta la URL según tu backend
       setOrders((prevOrders) => [...prevOrders, response.data]); // Añade el nuevo pedido a la lista actual
       setIsAddPopupOpen(false);
       setNewOrderData({
