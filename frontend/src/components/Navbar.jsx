@@ -44,7 +44,6 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-<<<<<<< HEAD
     <div className={`nav-menu ${menuOpen ? 'activado' : ''}`}>
         <ul>
             <li>
@@ -61,23 +60,6 @@ const Navbar = () => {
             </li>
             {userRole === 'administrador' && (
                 <>
-=======
-            <div className={`nav-menu ${menuOpen ? 'activado' : ''}`}>
-                <ul>
-                    <li>
-                        <NavLink 
-                            to="/home" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Inicio
-                        </NavLink>
-                    </li>
-                    {(userRole === 'administrador') && (
->>>>>>> rama_cocina_3
                     <li>
                         <NavLink 
                             to="/users" 
@@ -90,9 +72,6 @@ const Navbar = () => {
                             Usuarios
                         </NavLink>
                     </li>
-<<<<<<< HEAD
-=======
-                    )}
                     {(userRole === 'administrador' || userRole === 'mesero') && (
                     <li>
                         <NavLink 
@@ -107,7 +86,6 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
->>>>>>> rama_cocina_3
                     <li>
                         <NavLink 
                             to="/asistencia" 
