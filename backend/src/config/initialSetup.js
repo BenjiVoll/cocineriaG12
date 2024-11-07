@@ -5,6 +5,8 @@ import Plato from "../entity/plato.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
 import { createOrders } from "./createOrders.js";
+import { createAsistencias } from "./createAsistencias.js";
+
 
 async function createInitialData() {
   try {
@@ -143,6 +145,8 @@ async function createInitialData() {
     }
     // Crear órdenes iniciales
     await createOrders();
+    // Crear órdenes iniciales
+    await createAsistencias();
 
   } catch (error) {
     console.error("Error al crear datos iniciales:", error);
