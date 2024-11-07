@@ -49,7 +49,7 @@ const Personals = () => {
 
   const columns = [
     { title: "ID", field: "id", width: 100, responsive: 0 },
-    { title: "Nombre completo", field: "nombre_Completo", width: 200, responsive: 2 },
+    { title: "Nombre completo", field: "nombreCompleto", width: 200, responsive: 2 },
     { title: "Telefono", field: "telefono", width: 200, responsive: 2 },
     { title: "fecha", field: "fechaIncorporacion", width: 200, responsive: 2 },
     { title: "cargo", field: "cargo", width: 200, responsive: 2 },
