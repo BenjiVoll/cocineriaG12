@@ -86,7 +86,7 @@ async function createInitialData() {
       console.log("* => Usuarios creados exitosamente");
     }
 
-    // Crear ingredientes iniciales
+    // Crear ingredientes
     const ingredienteCount = await ingredienteRepository.count();
     if (ingredienteCount === 0) {
       const ingredientes = [
@@ -103,21 +103,29 @@ async function createInitialData() {
       console.log("* => Ingredientes creados exitosamente");
     }
 
-    // Crear platos iniciales
+    // Crear platos
     const platoCount = await platoRepository.count();
     if (platoCount === 0) {
+      const ingredientes = await ingredienteRepository.find();
+
       const platos = [
         {
           nombre: "Hamburguesa",
           descripcion: "Hamburguesa con queso, tomate y lechuga",
           precio: 5000,
-          disponible: true,
+          disponible: ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].every(nombre => 
+            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
+          ),
+          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].includes(ing.nombre)),
         },
         {
           nombre: "Ensalada",
           descripcion: "Ensalada fresca con tomate y lechuga",
           precio: 4500,
-          disponible: true,
+          disponible: ["Tomate", "Lechuga"].every(nombre => 
+            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
+          ),
+          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga"].includes(ing.nombre)),
         },
       ];      
 
@@ -129,12 +137,8 @@ async function createInitialData() {
           disponible: platoData.disponible,
         });
         await platoRepository.save(plato);
-
-        // Asignar ingredientes al plato
-        
-        for (const ingredienteId of platoData.ingredientes) {
-          const ingrediente = await ingredienteRepository.findOneBy({ id: ingredienteId });
-        }
+        plato.ingredientes = platoData.ingredientes;
+        await platoRepository.save(plato);
       }
       console.log("* => Platos creados exitosamente");
     }
