@@ -53,10 +53,8 @@ const IngredienteSchema = new EntitySchema({
     platos: {
       target: "Plato",
       type: "many-to-many",
-      joinTable: {
-        name: "plato_ingredientes",
-      },
-      cascade: true,
+      inverseSide: "ingredientes",
+      joinTable: false,
     },
   },
 });

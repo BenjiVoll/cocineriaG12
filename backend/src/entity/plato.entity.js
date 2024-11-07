@@ -58,8 +58,17 @@ const PlatoSchema = new EntitySchema({
     ingredientes: {
       target: "Ingrediente",
       type: "many-to-many",
+      inverseSide: "platos",
       joinTable: {
-        name: "plato_ingredientes",
+        name: "plato_ingrediente",
+        joinColumn: {
+          name: "plato_id",
+          referencedColumnName: "id",
+        },
+        inverseJoinColumn: {
+          name: "ingrediente_id",
+          referencedColumnName: "id",
+        },
       },
       cascade: true,
     },

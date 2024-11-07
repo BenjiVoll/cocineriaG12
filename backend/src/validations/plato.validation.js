@@ -30,70 +30,30 @@ export const platoQueryValidation = Joi.object({
 
 export const platoBodyValidation = Joi.object({
   nombre: Joi.string()
-        .min(3)
-        .max(255)
-        .required()
-        .messages({
+    .min(3)
+    .max(255)
+    .pattern(/^[a-zA-Z0-9\s]+$/)
+    .required()
+    .messages({
       "string.base": "El nombre debe ser un string.",
       "string.min": "El nombre debe tener al menos 3 caracteres.",
       "string.max": "El nombre debe tener como máximo 255 caracteres.",
+      "string.pattern.base": "El nombre solo puede contener letras, números y espacios.",
       "any.required": "El nombre es obligatorio.",
     }),
-  descripcion: Joi.string()
-        .min(10)
-        .max(255)
-        .messages({
-        "string.empty": "La descripción no puede estar vacía.",
-        "string.base": "La descripción debe ser de tipo string.",
-        "string.min": "La descripción debe tener como mínimo 10 caracteres.",
-        "string.max": "La descripción debe tener como máximo 255 caracteres.",
-    }),
-  precio: Joi.number()
-    .positive()
-    .required()
-    .messages({
-      "number.base": "El precio debe ser un número.",
-      "number.positive": "El precio debe ser un número positivo.",
-      "any.required": "El precio es obligatorio.",
-    }),
-    disponible: Joi.boolean()
-    .required()
-    .messages({
-      "boolean.base": "El campo disponible debe ser de tipo booleano.",
-      "any.required": "El campo disponible es obligatorio.",
-    }),
-})
-  .unknown(false)
-  .messages({
-    "object.unknown": "No se permiten propiedades adicionales.",
-    "object.missing":
-      "Debes proporcionar al menos un campo: nombre, descripcion, precio, ingredientes.",
-  });
-
-export const platoUpdateValidation = Joi.object({
-  nombre: Joi.string().min(3).max(255).optional().messages({
-    "string.base": "El nombre debe ser un string.",
-    "string.min": "El nombre debe tener al menos 3 caracteres.",
-    "string.max": "El nombre debe tener como máximo 255 caracteres.",
-  }),
   descripcion: Joi.string().min(10).max(255).optional().messages({
     "string.empty": "La descripción no puede estar vacía.",
     "string.base": "La descripción debe ser de tipo string.",
     "string.min": "La descripción debe tener como mínimo 10 caracteres.",
     "string.max": "La descripción debe tener como máximo 255 caracteres.",
   }),
-  precio: Joi.number().positive().optional().messages({
+  precio: Joi.number().positive().required().messages({
     "number.base": "El precio debe ser un número.",
     "number.positive": "El precio debe ser un número positivo.",
+    "any.required": "El precio es obligatorio.",
   }),
-  disponible: Joi.boolean().optional().messages({
-    "boolean.base": "El campo disponible debe ser de tipo booleano.",
+  ingredientesIds: Joi.array().items(Joi.number().integer().positive()).required().messages({
+    "array.base": "Los ingredientes deben ser un array de IDs.",
+    "any.required": "Los IDs de los ingredientes son obligatorios.",
   }),
-  ingredientes: Joi.array()
-    .items(Joi.number().integer().positive().optional())
-    .min(0)
-    .optional()
-    .messages({
-      "array.base": "Los ingredientes deben ser un array.",
-    }),
 });
