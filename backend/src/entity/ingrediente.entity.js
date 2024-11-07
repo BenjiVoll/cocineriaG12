@@ -18,6 +18,7 @@ const IngredienteSchema = new EntitySchema({
     cantidad: {
       type: "int",
       nullable: false,
+<<<<<<< HEAD
       default: 0,
     },
     createdAt: {
@@ -57,6 +58,8 @@ const IngredienteSchema = new EntitySchema({
         name: "plato_ingredientes",
       },
       cascade: true,
+=======
+>>>>>>> rama_cocina_3
     },
   },
 });

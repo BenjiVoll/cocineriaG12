@@ -4,14 +4,21 @@ import Ingrediente from "../entity/ingrediente.entity.js";
 import Plato from "../entity/plato.entity.js";
 import { AppDataSource } from "./configDb.js";
 import { encryptPassword } from "../helpers/bcrypt.helper.js";
+import { createOrders } from "./createOrders.js";
 
 async function createInitialData() {
   try {
     const userRepository = AppDataSource.getRepository(User);
     const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
     const platoRepository = AppDataSource.getRepository(Plato);
+<<<<<<< HEAD
 
     // Crear usuarios
+=======
+    
+
+    // Crear usuarios iniciales
+>>>>>>> rama_cocina_3
     const userCount = await userRepository.count();
     if (userCount === 0) {
       await Promise.all([
@@ -82,7 +89,11 @@ async function createInitialData() {
       console.log("* => Usuarios creados exitosamente");
     }
 
+<<<<<<< HEAD
     // Crear ingredientes
+=======
+    // Crear ingredientes iniciales
+>>>>>>> rama_cocina_3
     const ingredienteCount = await ingredienteRepository.count();
     if (ingredienteCount === 0) {
       const ingredientes = [
@@ -99,24 +110,37 @@ async function createInitialData() {
       console.log("* => Ingredientes creados exitosamente");
     }
 
+<<<<<<< HEAD
     // Crear platos
     const platoCount = await platoRepository.count();
     if (platoCount === 0) {
       const ingredientes = await ingredienteRepository.find();
 
+=======
+    // Crear platos iniciales
+    const platoCount = await platoRepository.count();
+    if (platoCount === 0) {
+>>>>>>> rama_cocina_3
       const platos = [
         {
           nombre: "Hamburguesa",
           descripcion: "Hamburguesa con queso, tomate y lechuga",
+<<<<<<< HEAD
           precio: 5000,
           disponible: ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].every(nombre => 
             ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
           ),
           ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].includes(ing.nombre)),
+=======
+          precio: 5.99,
+          disponible: true,
+          ingredientes: [1, 2, 3, 4, 5],
+>>>>>>> rama_cocina_3
         },
         {
           nombre: "Ensalada",
           descripcion: "Ensalada fresca con tomate y lechuga",
+<<<<<<< HEAD
           precio: 4500,
           disponible: ["Tomate", "Lechuga"].every(nombre => 
             ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
@@ -124,6 +148,13 @@ async function createInitialData() {
           ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga"].includes(ing.nombre)),
         },
       ];      
+=======
+          precio: 3.99,
+          disponible: true,
+          ingredientes: [1, 2],
+        },
+      ];
+>>>>>>> rama_cocina_3
 
       for (const platoData of platos) {
         const plato = platoRepository.create({
@@ -133,11 +164,25 @@ async function createInitialData() {
           disponible: platoData.disponible,
         });
         await platoRepository.save(plato);
+<<<<<<< HEAD
         plato.ingredientes = platoData.ingredientes;
         await platoRepository.save(plato);
       }
       console.log("* => Platos creados exitosamente");
     }
+=======
+
+        // Asignar ingredientes al plato
+        for (const ingredienteId of platoData.ingredientes) {
+          const ingrediente = await ingredienteRepository.findOneBy({ id: ingredienteId });
+        }
+      }
+      console.log("* => Platos creados exitosamente");
+    }
+    // Crear órdenes iniciales
+    await createOrders();
+
+>>>>>>> rama_cocina_3
   } catch (error) {
     console.error("Error al crear datos iniciales:", error);
   }

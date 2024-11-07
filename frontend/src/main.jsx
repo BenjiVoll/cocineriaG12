@@ -5,6 +5,7 @@ import Home from '@pages/Home';
 import Asistencia from '@pages/Asistencia';
 import Personal from '@pages/Personal';
 import Users from '@pages/Users';
+import Pedidos from '@pages/Pedidos';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: '/personal',
         element: <Personal/>
+      },
+      {
+        path: '/users',
+        element: <Users/>
+      },
+      {
+        path: '/orders',
+        element: <Pedidos/>
       },
       {
         path: '/users',

@@ -1,6 +1,7 @@
 "use strict";
 import Joi from "joi";
 
+<<<<<<< HEAD
 export const platoQueryValidation = Joi.object({
   id: Joi.number()
     .integer()
@@ -28,6 +29,8 @@ export const platoQueryValidation = Joi.object({
       "Debes proporcionar al menos un parámetro: id o nombre.",
   });
 
+=======
+>>>>>>> rama_cocina_3
 export const platoBodyValidation = Joi.object({
   nombre: Joi.string()
         .min(3)
@@ -56,6 +59,7 @@ export const platoBodyValidation = Joi.object({
       "number.positive": "El precio debe ser un número positivo.",
       "any.required": "El precio es obligatorio.",
     }),
+<<<<<<< HEAD
     disponible: Joi.boolean()
     .required()
     .messages({
@@ -95,5 +99,15 @@ export const platoUpdateValidation = Joi.object({
     .optional()
     .messages({
       "array.base": "Los ingredientes deben ser un array.",
+=======
+  ingredientes: Joi.array()
+    .items(Joi.number().integer().positive().required())
+    .min(1)
+    .required()
+    .messages({
+      "array.base": "Los ingredientes deben ser un array.",
+      "array.min": "Debe haber al menos un ingrediente.",
+      "any.required": "Los ingredientes son obligatorios.",
+>>>>>>> rama_cocina_3
     }),
 });
