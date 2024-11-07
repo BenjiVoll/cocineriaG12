@@ -54,7 +54,7 @@ const IngredienteSchema = new EntitySchema({
       target: "Plato",
       type: "many-to-many",
       inverseSide: "ingredientes",
-      joinTable: false, // La tabla de unión se define en `PlatoSchema`
+      joinTable: false,
     },
   },
 });

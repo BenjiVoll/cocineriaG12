@@ -8,7 +8,6 @@ import {
 } from "../services/plato.service.js";
 import{
   platoBodyValidation,
-  platoQueryValidation,
   platoUpdateValidation,
 } from "../validations/plato.validation.js";
 import { 
@@ -21,14 +20,17 @@ export async function createPlatoController(req, res) {
   try {
     const { error } = platoBodyValidation.validate(req.body);
     if (error) {
+      console.log("Error de validación:", error.details);
       return handleErrorClient(res, 400, error.message);
     }
 
     const [plato, errorPlato] = await createPlatoService(req.body);
-
     if (errorPlato) {
+      console.log("Error al crear el plato:", errorPlato);
       return handleErrorClient(res, 409, errorPlato);
     }
+
+    console.log("Plato creado exitosamente:", plato);
     handleSuccess(res, 201, "Plato creado exitosamente", plato);
   } catch (error) {
     console.error("Error al crear el plato:", error.message);
@@ -44,11 +46,12 @@ export async function updatePlatoController(req, res) {
       return handleErrorClient(res, 400, error.message);
     }
 
-    const [plato, errorPlato] = await updatePlatoService(req.params.id, req.body);
+    const { id } = req.params;
+    const [plato, errorPlato] = await updatePlatoService(id, req.body);
 
     if (errorPlato) {
       console.log("Error al actualizar el plato:", errorPlato);
-      return handleErrorClient(res, 409, errorPlato);
+      return handleErrorClient(res, 404, errorPlato);
     }
 
     console.log("Plato actualizado exitosamente:", plato);
@@ -60,6 +63,23 @@ export async function updatePlatoController(req, res) {
 }
 
 
+export async function getPlatosController(req, res) {
+  try {
+    const { id } = req.params;
+    const [plato, errorPlato] = await getPlatosService(id);
+
+    if (errorPlato) {
+      console.log("Error al obtener el plato:", errorPlato);
+      return handleErrorClient(res, 404, errorPlato);
+    }
+
+    console.log("Plato obtenido exitosamente:", plato);
+    handleSuccess(res, 200, "Plato obtenido exitosamente", plato);
+  } catch (error) {
+    console.error("Error al obtener el plato:", error.message);
+    handleErrorServer(res, 500, error.message);
+  }
+}
 
 export async function getPlatoController(req, res) {
   try {
@@ -70,19 +90,11 @@ export async function getPlatoController(req, res) {
       return handleErrorClient(res, 404, errorPlatos);
     }
 
-    handleSuccess(res, 200, "Platos encontrados", platos);
+    console.log("Platos obtenidos exitosamente:", platos);
+    handleSuccess(res, 200, "Platos obtenidos exitosamente", platos);
   } catch (error) {
     console.error("Error al obtener los platos:", error.message);
     handleErrorServer(res, 500, error.message);
-  }
-}
-
-export async function getPlatosController (req, res) {
-  try {
-    const platos = await getPlatosService();
-    handleSuccess(res, platos);
-  } catch (error) {
-    handleErrorServer(res, error);
   }
 }
 

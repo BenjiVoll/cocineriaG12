@@ -60,7 +60,7 @@ const PlatoSchema = new EntitySchema({
       type: "many-to-many",
       inverseSide: "platos",
       joinTable: {
-        name: "plato_ingrediente", // Tabla intermedia para la relación
+        name: "plato_ingrediente",
         joinColumn: {
           name: "plato_id",
           referencedColumnName: "id",
