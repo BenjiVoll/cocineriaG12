@@ -103,45 +103,35 @@ async function createInitialData() {
       console.log("* => Ingredientes creados exitosamente");
     }
 
-    // Crear platos
     const platoCount = await platoRepository.count();
-    if (platoCount === 0) {
-      const ingredientes = await ingredienteRepository.find();
+if (platoCount === 0) {
+  const platos = [
+    {
+      nombre: "Hamburguesa",
+      descripcion: "Hamburguesa con queso, tomate y lechuga",
+      precio: 5000,
+      disponible: true, // Asumimos que el plato está disponible
+    },
+    {
+      nombre: "Ensalada",
+      descripcion: "Ensalada fresca con tomate y lechuga",
+      precio: 4500,
+      disponible: true, // Asumimos que el plato está disponible
+    },
+  ];      
 
-      const platos = [
-        {
-          nombre: "Hamburguesa",
-          descripcion: "Hamburguesa con queso, tomate y lechuga",
-          precio: 5000,
-          disponible: ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].every(nombre => 
-            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
-          ),
-          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].includes(ing.nombre)),
-        },
-        {
-          nombre: "Ensalada",
-          descripcion: "Ensalada fresca con tomate y lechuga",
-          precio: 4500,
-          disponible: ["Tomate", "Lechuga"].every(nombre => 
-            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
-          ),
-          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga"].includes(ing.nombre)),
-        },
-      ];      
+  for (const platoData of platos) {
+    const plato = platoRepository.create({
+      nombre: platoData.nombre,
+      descripcion: platoData.descripcion,
+      precio: platoData.precio,
+      disponible: platoData.disponible,
+    });
+    await platoRepository.save(plato);
+  }
+  console.log("* => Platos creados exitosamente");
+}
 
-      for (const platoData of platos) {
-        const plato = platoRepository.create({
-          nombre: platoData.nombre,
-          descripcion: platoData.descripcion,
-          precio: platoData.precio,
-          disponible: platoData.disponible,
-        });
-        await platoRepository.save(plato);
-        plato.ingredientes = platoData.ingredientes;
-        await platoRepository.save(plato);
-      }
-      console.log("* => Platos creados exitosamente");
-    }
     // Crear órdenes iniciales
     await createOrders();
     // Crear órdenes iniciales
