@@ -9,6 +9,7 @@ import express, { json, urlencoded } from "express";
 import { cookieKey, HOST, PORT } from "./config/configEnv.js";
 import { connectDB } from "./config/configDb.js";
 import { createInitialData } from "./config/initialSetup.js";
+import { createAsistencias } from "./config/createAsistencias.js";
 import { passportJwtSetup } from "./auth/passport.auth.js";
 
 async function setupServer() {
@@ -73,6 +74,7 @@ async function setupAPI() {
   try {
     await connectDB();
     await setupServer();
+    await createAsistencias();
     await createInitialData();
   } catch (error) {
     console.log("Error en index.js -> setupAPI(), el error es: ", error);
