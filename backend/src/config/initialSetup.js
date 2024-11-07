@@ -111,19 +111,13 @@ async function createInitialData() {
           nombre: "Hamburguesa",
           descripcion: "Hamburguesa con queso, tomate y lechuga",
           precio: 5000,
-          disponible: ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].every(nombre => 
-            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
-          ),
-          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga", "Queso", "Pan", "Carne"].includes(ing.nombre)),
+          disponible: true,
         },
         {
           nombre: "Ensalada",
           descripcion: "Ensalada fresca con tomate y lechuga",
           precio: 4500,
-          disponible: ["Tomate", "Lechuga"].every(nombre => 
-            ingredientes.some(ing => ing.nombre === nombre && ing.cantidad > 0)
-          ),
-          ingredientes: ingredientes.filter(ing => ["Tomate", "Lechuga"].includes(ing.nombre)),
+          disponible: true,
         },
       ];      
 
@@ -137,10 +131,10 @@ async function createInitialData() {
         await platoRepository.save(plato);
 
         // Asignar ingredientes al plato
-        /*
+        
         for (const ingredienteId of platoData.ingredientes) {
           const ingrediente = await ingredienteRepository.findOneBy({ id: ingredienteId });
-        }*/
+        }
       }
       console.log("* => Platos creados exitosamente");
     }
