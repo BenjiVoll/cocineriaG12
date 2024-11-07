@@ -21,11 +21,8 @@ const PlatoSchema = new EntitySchema({
     },
     precio: {
       type: "decimal",
-<<<<<<< HEAD
       precision: 10,
       scale: 2,
-=======
->>>>>>> rama_cocina_3
       nullable: false,
     },
     disponible: {
@@ -33,7 +30,6 @@ const PlatoSchema = new EntitySchema({
       default: true,
       nullable: false,
     },
-<<<<<<< HEAD
     createdAt: {
       type: "timestamp with time zone",
       default: () => "CURRENT_TIMESTAMP",
@@ -67,8 +63,6 @@ const PlatoSchema = new EntitySchema({
       },
       cascade: true,
     },
-=======
->>>>>>> rama_cocina_3
   },
 });
 
