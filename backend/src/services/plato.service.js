@@ -1,5 +1,5 @@
 "use strict";
-import { AppDataSource } from "./configDb.js";
+import { AppDataSource } from "../config/configDb.js";
 import Plato from "../entity/plato.entity.js";
 import Ingrediente from "../entity/ingrediente.entity.js";
 
@@ -75,14 +75,14 @@ export async function updatePlatoService(platoId, data) {
       return [null, "Plato no encontrado"];
     }
 
-    // Actualizar los datos del plato
-    plato.nombre = data.nombre || plato.nombre;
-    plato.descripcion = data.descripcion || plato.descripcion;
-    plato.precio = data.precio || plato.precio;
-    plato.disponible = data.disponible != null ? data.disponible : plato.disponible;
+    // Actualizar solo los datos proporcionados
+    if (data.nombre) plato.nombre = data.nombre;
+    if (data.descripcion) plato.descripcion = data.descripcion;
+    if (data.precio) plato.precio = data.precio;
+    if (data.disponible != null) plato.disponible = data.disponible;
 
     // Si se proporcionan nuevos IDs de ingredientes, actualizar la relación
-    if (data.ingredientesIds && data.ingredientesIds.length > 0) {
+    if (data.ingredientesIds) {
       const ingredientes = await ingredienteRepository.findByIds(data.ingredientesIds);
       if (ingredientes.length !== data.ingredientesIds.length) {
         return [null, "Algunos ingredientes no fueron encontrados"];

@@ -8,7 +8,6 @@ import {
 } from "../services/plato.service.js";
 import{
   platoBodyValidation,
-  platoQueryValidation,
   platoUpdateValidation,
 } from "../validations/plato.validation.js";
 import { 
@@ -16,11 +15,6 @@ import {
   handleErrorServer,
   handleSuccess
 } from "../handlers/responseHandlers.js";
-
-"use strict";
-import { createPlatoService } from '../services/plato.service.js';
-import { platoBodyValidation } from '../validations/plato.validation.js';
-import { handleErrorClient, handleErrorServer, handleSuccess } from '../helpers/response.helper.js';
 
 export async function createPlatoController(req, res) {
   try {
@@ -46,7 +40,7 @@ export async function createPlatoController(req, res) {
 
 export async function updatePlatoController(req, res) {
   try {
-    const { error } = platoBodyValidation.validate(req.body);
+    const { error } = platoUpdateValidation.validate(req.body);
     if (error) {
       console.log("Error de validación:", error.details);
       return handleErrorClient(res, 400, error.message);
@@ -72,7 +66,7 @@ export async function updatePlatoController(req, res) {
 export async function getPlatosController(req, res) {
   try {
     const { id } = req.params;
-    const [plato, errorPlato] = await getPlatoService(id);
+    const [plato, errorPlato] = await getPlatosService(id);
 
     if (errorPlato) {
       console.log("Error al obtener el plato:", errorPlato);
@@ -89,7 +83,7 @@ export async function getPlatosController(req, res) {
 
 export async function getPlatoController(req, res) {
   try {
-    const [platos, errorPlatos] = await getPlatosService();
+    const [platos, errorPlatos] = await getPlatoService();
 
     if (errorPlatos) {
       console.log("Error al obtener los platos:", errorPlatos);
