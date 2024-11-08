@@ -20,9 +20,7 @@ const PlatoSchema = new EntitySchema({
       nullable: true,
     },
     precio: {
-      type: "decimal",
-      precision: 10,
-      scale: 2,
+      type: "int",
       nullable: false,
     },
     disponible: {
