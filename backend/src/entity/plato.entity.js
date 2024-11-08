@@ -12,7 +12,7 @@ const PlatoSchema = new EntitySchema({
     },
     nombre: {
       type: "varchar",
-      length: 255,
+      length: 255, 
       nullable: false,
     },
     descripcion: {
@@ -20,7 +20,7 @@ const PlatoSchema = new EntitySchema({
       nullable: true,
     },
     precio: {
-      type: "int",
+      type: "int", // Cambia a tipo entero
       nullable: false,
     },
     disponible: {
@@ -58,7 +58,7 @@ const PlatoSchema = new EntitySchema({
       type: "many-to-many",
       inverseSide: "platos",
       joinTable: {
-        name: "plato_ingrediente",
+        name: "plato_ingrediente", // Tabla intermedia para la relación
         joinColumn: {
           name: "plato_id",
           referencedColumnName: "id",
