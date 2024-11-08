@@ -13,40 +13,20 @@ async function createAsistencias() {
     const asistenciasToCreate = [
       {
         id: 1,
-        estado: "Producto A", // Solo el nombre del producto como string
-        justificativo: 150.00,
+        estado: "Presente", // Solo el nombre del producto como string
+        justificativo: Null,
         fecha: new Date("2024-01-20"),
         personal_id: 2,
         
       },
       {
         id: 1,
-        estado: "Producto A", // Solo el nombre del producto como string
-        justificativo: 150.00,
+        estado: "Ausente", // Solo el nombre del producto como string
+        justificativo: Null,
         personal_id: 2,
-        fecha: new Date("2024-01-20"),
+        fecha: new Date("2024-05-11"),
       },
-      {
-        id: 1,
-        estado: "Producto A", // Solo el nombre del producto como string
-        justificativo: 150.00,
-        personal_id: 2,
-        fecha: new Date("2024-01-20"),
-      },
-      {
-        id: 1,
-        estado: "Producto A", // Solo el nombre del producto como string
-        justificativo: 150.00,
-        personal_id: 2,
-        fecha: new Date("2024-01-20"),
-      },
-      {
-        id: 1,
-        estado: "Producto A", // Solo el nombre del producto como string
-        justificativo: 150.00,
-        personal_id: 2,
-        fecha: new Date("2024-01-20"),
-      },
+      
     ];
 
     // Guardar todas las órdenes
