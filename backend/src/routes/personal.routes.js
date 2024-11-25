@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { isAdmin} from "../middlewares/authorization.middleware.js";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createUser,
     deleteUser,
@@ -8,6 +10,10 @@ import {
 } from "../controllers/personal.controller.js";
 
 const router = Router();
+
+router
+  .use(authenticateJwt)
+  .use(isAdmin);
 
 router.post("/", createUser); // POST http://localhost:3001/api/user/
 router.get("/", getUsers); // GET http://localhost:3001/api/user/all
