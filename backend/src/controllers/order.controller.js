@@ -52,7 +52,6 @@ export async function addOrder(req, res) {
   try {
     const { body } = req;
 
-    // Validar el cuerpo de la solicitud
     const { error: bodyError } = orderBodyValidation.validate(body);
 
     if (bodyError)
@@ -63,7 +62,6 @@ export async function addOrder(req, res) {
         bodyError.message,
       );
 
-    // Llama al servicio para agregar la orden
     const [newOrder, orderError] = await addOrderService(body);
 
     if (orderError) return handleErrorClient(res, 400, "Error agregando el pedido", orderError);

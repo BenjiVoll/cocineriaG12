@@ -7,9 +7,9 @@ async function createOrders() {
     const orderRepository = AppDataSource.getRepository(Order);
 
     const count = await orderRepository.count();
-    if (count > 0) return; // Si ya hay órdenes, no crear más
+    if (count > 0) return;
 
-    // Define un array con las órdenes que deseas crear
+    
     const ordersToCreate = [
       {
         productos: [
@@ -57,8 +57,7 @@ async function createOrders() {
         fechaEntrega: new Date("2024-04-05"),
       },
     ];
-
-    // Guardar todas las órdenes
+    
     await Promise.all(ordersToCreate.map(orderData => {
       const order = orderRepository.create(orderData);
       return orderRepository.save(order);

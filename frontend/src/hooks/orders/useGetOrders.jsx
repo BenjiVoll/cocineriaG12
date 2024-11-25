@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getOrders } from '@services/order.service.js'; // Asegúrate de tener este servicio
+import { getOrders } from '@services/order.service.js';
 
 const useGetOrders = () => {
     const [orders, setOrders] = useState([]);
