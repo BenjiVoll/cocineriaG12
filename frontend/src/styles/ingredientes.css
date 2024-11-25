@@ -1,0 +1,75 @@
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: 100vh;
+        max-height: 90%;
+        width: 100%;
+        padding-top: 50px; /* Agrega espacio superior */
+    }
+
+    .table-container {
+        width: 100%;
+        max-width: 70vw;
+        margin-top: 20px;
+    }
+
+    .top-table {
+        display: flex;
+        position: relative; /* Cambia de absolute a relative */
+        justify-content: space-between;
+        align-items: center;
+        width: 70%;
+        padding: 10px;
+        margin-bottom: 5px; /* Añade margen inferior para separar de la tabla */
+    }
+
+    .title-table {
+        color: #003366;
+        margin-left: 20px;
+        font-size: 1.5em; /* Aumenta el tamaño de la fuente */
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .filter-actions button {
+        background: rgba(255, 255, 255, 0.87);
+        border: #fff;
+        cursor: pointer;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    .delete-user-button {
+        margin-right: 20px;
+    }
+
+    @media (max-width: 767px) {
+        .title-table {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .top-table {
+            flex-direction: column;
+            gap: 10px;
+            width: 100%; /* Ajusta ancho en móviles */
+        }
+
+        .table-container {
+            margin: 0;
+            width: 352px;
+            height: 500px;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .title-table {
+            margin-left: 15px;
+        }
+        .top-table {
+            width: 80%; /* Ajusta el ancho en tablets */
+        }
+    }
