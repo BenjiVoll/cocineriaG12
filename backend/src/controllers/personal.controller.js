@@ -9,7 +9,7 @@ export async function createUser(req, res) {
 
         if (!user) {
             return res.status(400).json({
-                message: "Es necesario ingresar los datos del usuario.",
+                message: "Es necesario ingresar los datos del personal.",
                 data: null
             });
         }
@@ -27,7 +27,7 @@ export async function createUser(req, res) {
         const telefonoRegex = /^[0-9]{9}$/; // Solo acepta 9 dígitos numéricos
         if (!telefonoRegex.test(user.telefono)) {
             return res.status(400).json({
-                message: "El número de teléfono debe contener solo 9 dígitos numéricos.",
+                message: "teléfono debe contener solo 9 dígitos numéricos.",
                 data: null
             });
         }
@@ -126,7 +126,7 @@ export async function updateUser(req, res) {
             });
         }
 
-        // Validación del campo cargo
+        
         const validCargos = ['cocinero', 'administrador', 'garzon'];
         if (cargo && !validCargos.includes(cargo.toLowerCase())) {
             return res.status(400).json({
@@ -144,7 +144,7 @@ export async function updateUser(req, res) {
             });
         }
 
-        // Actualizar los campos del usuario
+        
         user.nombreCompleto = nombreCompleto;
         user.telefono = telefono;
         user.fechaIncorporacion = fechaIncorporacion;

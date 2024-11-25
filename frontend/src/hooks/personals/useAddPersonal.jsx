@@ -1,53 +1,21 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import { addPersonal } from "@services/personal.service.js"; 
 
-const useAddPersonal = (setPersonals) => {
-  const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
-  const [newPersonalData, setNewPersonalData] = useState({
-    estado: '',
-    precioTotal: '',
-    fechaEntrega: '',
-  });
+const useAddPersonal = () => {
+    const [isAdding, setIsAdding] = useState(false);
 
-  // Abre el popup de añadir pedido
-  const handleAddPersonal = () => {
-    setIsAddPopupOpen(true);
-  };
+    const handleAddPersonal = async (personalData) => {
+        try {
+            setIsAdding(true);
+            await addPersonal(personalData); 
+            setIsAdding(false);
+        } catch (error) {
+            console.error("Error al agregar personal: ", error);
+            setIsAdding(false);
+        }
+    };
 
-  // Maneja el cambio en los campos del formulario
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewPersonalData({
-      ...newPersonalData,
-      [name]: value,
-    });
-  };
-
-  // Envía el nuevo pedido a la base de datos y actualiza la lista de pedidos
-  const handleSubmitNewPersonal = async () => {
-    try {
-      const response = await axios.post('/api/personals', newPersonalData); // Ajusta la URL según tu backend
-      setPersonals((prevPersonals) => [...prevPersonals, response.data]); // Añade el nuevo pedido a la lista actual
-      setIsAddPopupOpen(false);
-      setNewPersonalData({
-        estado: '',
-        precioTotal: '',
-        fechaEntrega: '',
-      });
-    } catch (error) {
-      console.error('Error al añadir el pedido:', error);
-    }
-  };
-
-  return {
-    isAddPopupOpen,
-    setIsAddPopupOpen,
-    newPersonalData,
-    setNewPersonalData,
-    handleAddPersonal,
-    handleInputChange,
-    handleSubmitNewPersonal,
-  };
+    return { handleAddPersonal, isAdding };
 };
 
 export default useAddPersonal;

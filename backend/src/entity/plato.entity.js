@@ -20,8 +20,9 @@ const PlatoSchema = new EntitySchema({
       nullable: true,
     },
     precio: {
-      type: "int", // Cambia a tipo entero
+      type: "int", // Tipo entero
       nullable: false,
+      default: 0, // Valor por defecto para evitar problemas con registros existentes
     },
     disponible: {
       type: "boolean",
