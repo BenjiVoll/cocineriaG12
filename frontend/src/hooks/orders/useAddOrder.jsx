@@ -4,17 +4,19 @@ import axios from 'axios';
 const useAddOrder = (setOrders) => {
   const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
   const [newOrderData, setNewOrderData] = useState({
-    estado: '',
-    precioTotal: '',
-    fechaEntrega: '',
+      productos: '',
+      estado: '',
+      precioTotal: '',
+      metodoPago: '',
+      fechaEntrega: '',
   });
 
-  // Abre el popup de añadir pedido
+
   const handleAddOrder = () => {
     setIsAddPopupOpen(true);
   };
 
-  // Maneja el cambio en los campos del formulario
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewOrderData({
@@ -23,15 +25,17 @@ const useAddOrder = (setOrders) => {
     });
   };
 
-  // Envía el nuevo pedido a la base de datos y actualiza la lista de pedidos
+
   const handleSubmitNewOrder = async () => {
     try {
-      const response = await axios.post('/api/order', newOrderData); // Ajusta la URL según tu backend
-      setOrders((prevOrders) => [...prevOrders, response.data]); // Añade el nuevo pedido a la lista actual
+      const response = await axios.post('/api/order', newOrderData);
+      setOrders((prevOrders) => [...prevOrders, response.data]);
       setIsAddPopupOpen(false);
       setNewOrderData({
-        estado: '',
+        productos: '',
+	      estado: '',
         precioTotal: '',
+	      metodoPago: '',
         fechaEntrega: '',
       });
     } catch (error) {

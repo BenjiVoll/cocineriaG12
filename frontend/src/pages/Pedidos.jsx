@@ -2,7 +2,8 @@ import { useCallback, useState } from 'react';
 import Table from '@components/TableOrder';
 import useOrders from '@hooks/orders/useGetOrders';
 import Search from '../components/Search';
-import Popup from '../components/PopupOrder';
+import PopupEdit from '../components/PopupOrder';
+import PopupAdd from '../components/PopupAddOrder';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import AddIcon from '../assets/addIcon.svg';
@@ -11,7 +12,7 @@ import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import '@styles/orders.css';
 import useEditOrder from '@hooks/orders/useEditOrder';
 import useDeleteOrder from '@hooks/orders/useDeleteOrder';
-import useAddOrder from '@hooks/orders/useAddOrder'; // Nuevo hook para añadir pedidos
+import useAddOrder from '@hooks/orders/useAddOrder';
 
 const Orders = () => {
   const { orders, fetchOrders, setOrders } = useOrders();
@@ -34,7 +35,7 @@ const Orders = () => {
     setIsAddPopupOpen,
     newOrderData,
     handleSubmitNewOrder
-  } = useAddOrder(setOrders); // Funciones y estados para añadir pedidos
+  } = useAddOrder(setOrders);
 
   const handleOrderIdFilterChange = (e) => {
     setFilterOrderId(e.target.value);
@@ -65,7 +66,7 @@ const Orders = () => {
           <div className='filter-actions'>
             <Search value={filterOrderId} onChange={handleOrderIdFilterChange} placeholder={'Filtrar por ID de Pedido'} />
             <button onClick={handleAddOrder}>
-              <img src={AddIcon} alt="add" />
+              <img src={AddIcon} alt="add" width="20px"/>
             </button>
             <button onClick={handleClickUpdate} disabled={dataOrder.length === 0}>
               {dataOrder.length === 0 ? (
@@ -91,13 +92,13 @@ const Orders = () => {
           onSelectionChange={handleSelectionChange}
         />
       </div>
-      <Popup 
+      <PopupEdit 
         show={isPopupOpen} 
         setShow={setIsPopupOpen} 
         data={dataOrder} 
         action={handleUpdate} 
       />
-      <Popup 
+      <PopupAdd 
         show={isAddPopupOpen} 
         setShow={setIsAddPopupOpen} 
         data={newOrderData} 

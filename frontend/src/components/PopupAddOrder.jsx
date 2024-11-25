@@ -2,9 +2,7 @@ import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
-export default function OrderPopup({ show, setShow, data, action }) {
-    const orderData = data && data.length > 0 ? data[0] : {};
-
+export default function OrderPopup({ show, setShow, action }) {
     const handleSubmit = (formData) => {
         action(formData);
         setShow(false);   
@@ -19,21 +17,13 @@ export default function OrderPopup({ show, setShow, data, action }) {
                             <img src={CloseIcon} alt="close icon" />
                         </button>
                         <Form
-                            title="Editar Pedido"
+                            title="Agregar Pedido"
                             fields={[
-                                {
-                                    label: "ID del Pedido",
-                                    name: "id",
-                                    fieldType: 'input',
-                                    defaultValue: orderData.id || "",
-                                    required: false,
-                                    disabled: true,  // Deshabilitado ya que el ID no se debe modificar
-                                },
                                 {
                                     label: "Productos",
                                     name: "productos",
                                     fieldType: 'textarea',
-                                    defaultValue: orderData.productos ? orderData.productos.join(", ") : "",
+                                    defaultValue: "",
                                     required: true,
                                 },
                                 {
@@ -47,12 +37,12 @@ export default function OrderPopup({ show, setShow, data, action }) {
                                         { value: 'cancelado', label: 'Cancelado' },
                                     ],
                                     required: true,
-                                    defaultValue: orderData.estado || "",
+                                    defaultValue: "",
                                 },
                                 {
                                     label: "Fecha de Entrega",
                                     name: "fechaEntrega",
-                                    defaultValue: orderData.fechaEntrega || "",
+                                    defaultValue: "",
                                     placeholder: 'DD-MM-YYYY',
                                     fieldType: 'input',
                                     type: "date",
@@ -62,7 +52,7 @@ export default function OrderPopup({ show, setShow, data, action }) {
                                     label: "Precio Total",
                                     name: "precioTotal",
                                     fieldType: 'input',
-                                    defaultValue: orderData.precioTotal || "",
+                                    defaultValue: "",
                                     required: true,
                                     type: "number",
                                 },
@@ -76,11 +66,11 @@ export default function OrderPopup({ show, setShow, data, action }) {
                                         { value: 'paypal', label: 'PayPal' },
                                     ],
                                     required: true,
-                                    defaultValue: orderData.metodoPago || "",
+                                    defaultValue: "",
                                 },
                             ]}
                             onSubmit={handleSubmit}
-                            buttonText="Guardar Pedido"
+                            buttonText="Agregar Pedido"
                             backgroundColor={'#fff'}
                         />
                     </div>
