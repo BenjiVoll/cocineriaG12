@@ -18,8 +18,6 @@ router
     .use("/ingrediente", ingredienteRoutes)
     .use("/personal", personalRoutes)
     .use("/asistencia", asistenciaRoutes) 
-    .use("/order", orderRoutes)
-    .use("/api/platos", platoRoutes)
-    .use("/api/ingredientes", ingredienteRoutes);
+    .use("/order", orderRoutes);
 
 export default router;
