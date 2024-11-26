@@ -14,11 +14,11 @@ const AsistenciaSchema = new EntitySchema({
         estado: {
             type: "varchar",
             length: 50,
-            nullable: false, // Puede ser 'presente', 'ausente_justificado', 'ausente_pendiente'
+            nullable: false, //'presente', 'ausente_justificado', 'ausente_pendiente'
         },
         justificativo: {
             type: "text",
-            nullable: true, // Solo se usa si hay justificación
+            nullable: true, 
         },
         fecha: {
             type: "timestamp with time zone",

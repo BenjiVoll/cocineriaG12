@@ -9,6 +9,7 @@ const Navbar = () => {
     const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
     const userRole = user?.rol;
     const [menuOpen, setMenuOpen] = useState(false);
+    const [submenuOpen, setSubmenuOpen] = useState(false);
 
     const logoutSubmit = () => {
         try {
@@ -28,6 +29,10 @@ const Navbar = () => {
         setMenuOpen(!menuOpen);
     };
 
+    const toggleSubmenu = () => {
+        setSubmenuOpen(!submenuOpen);
+    };
+
     const removeActiveClass = () => {
         const activeLinks = document.querySelectorAll('.nav-menu ul li a.active');
         activeLinks.forEach(link => link.classList.remove('active'));
@@ -44,100 +49,133 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-    <div className={`nav-menu ${menuOpen ? 'activado' : ''}`}>
-        <ul>
-            <li>
-                <NavLink 
-                    to="/home" 
-                    onClick={() => { 
-                        setMenuOpen(false); 
-                        addActiveClass();
-                    }} 
-                    activeClassName="active"
-                >
-                    Inicio
-                </NavLink>
-            </li>
-            {userRole === 'administrador' && (
-                <>
+            <div className={`nav-menu ${menuOpen ? 'activado' : ''}`}>
+                <ul>
                     <li>
                         <NavLink 
-                            to="/users" 
+                            to="/home" 
                             onClick={() => { 
                                 setMenuOpen(false); 
                                 addActiveClass();
                             }} 
                             activeClassName="active"
                         >
-                            Usuarios
+                            Inicio
                         </NavLink>
                     </li>
-                    {(userRole === 'administrador' || userRole === 'mesero') && (
-                    <li>
-                        <NavLink 
-                            to="/orders" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Pedidos
-                        </NavLink>
-                    </li>
+                    {userRole === 'administrador' && (
+                        <>
+                            <li>
+                                <NavLink 
+                                    to="/users" 
+                                    onClick={() => { 
+                                        setMenuOpen(false); 
+                                        addActiveClass();
+                                    }} 
+                                    activeClassName="active"
+                                >
+                                    Usuarios
+                                </NavLink>
+                            </li>
+                            <li>
+                                <div className="submenu">
+                                    <span onClick={toggleSubmenu}>
+                                        Menú
+                                    </span>
+                                    {submenuOpen && (
+                                        <ul>
+                                            <li>
+                                                <NavLink 
+                                                    to="/platos" 
+                                                    onClick={() => { 
+                                                        setMenuOpen(false); 
+                                                        addActiveClass();
+                                                    }} 
+                                                    activeClassName="active"
+                                                >
+                                                    Platos
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink 
+                                                    to="/ingredientes" 
+                                                    onClick={() => { 
+                                                        setMenuOpen(false); 
+                                                        addActiveClass();
+                                                    }} 
+                                                    activeClassName="active"
+                                                >
+                                                    Ingredientes
+                                                </NavLink>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
+                            </li>
+                            {(userRole === 'administrador' || userRole === 'mesero') && (
+                                <li>
+                                    <NavLink 
+                                        to="/orders" 
+                                        onClick={() => { 
+                                            setMenuOpen(false); 
+                                            addActiveClass();
+                                        }} 
+                                        activeClassName="active"
+                                    >
+                                        Pedidos
+                                    </NavLink>
+                                </li>
+                            )}
+                            {(userRole === 'administrador') && (
+                                <li>
+                                    <NavLink 
+                                        to="/asistencia" 
+                                        onClick={() => { 
+                                            setMenuOpen(false); 
+                                            addActiveClass();
+                                        }} 
+                                        activeClassName="active"
+                                    >
+                                        Asistencia
+                                    </NavLink>
+                                </li>
+                            )}
+                            {(userRole === 'administrador') && (
+                                <li>
+                                    <NavLink 
+                                        to="/personal" 
+                                        onClick={() => { 
+                                            setMenuOpen(false); 
+                                            addActiveClass();
+                                        }} 
+                                        activeClassName="active"
+                                    >
+                                        Personal
+                                    </NavLink>
+                                </li>
+                            )}
+                        </>
                     )}
-                    {(userRole === 'administrador') && (
                     <li>
-                        
                         <NavLink 
-                            to="/asistencia" 
+                            to="/auth" 
                             onClick={() => { 
+                                logoutSubmit(); 
                                 setMenuOpen(false); 
-                                addActiveClass();
                             }} 
                             activeClassName="active"
                         >
-                            Asistencia
+                            Cerrar sesión
                         </NavLink>
                     </li>
-                    )}
-                    {(userRole === 'administrador') && (
-                    <li>
-                        <NavLink 
-                            to="/personal" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Personal
-                        </NavLink>
-                    </li>
-                    )}
-                </>
-            )}
-            <li>
-                <NavLink 
-                    to="/auth" 
-                    onClick={() => { 
-                        logoutSubmit(); 
-                        setMenuOpen(false); 
-                    }} 
-                    activeClassName="active"
-                >
-                    Cerrar sesión
-                </NavLink>
-            </li>
-        </ul>
-    </div>
-    <div className="hamburger" onClick={toggleMenu}>
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-    </div>
-</nav>
-
+                </ul>
+            </div>
+            <div className="hamburger" onClick={toggleMenu}>
+                <span className="bar"></span>
+                <span className="bar"></span>
+                <span className="bar"></span>
+            </div>
+        </nav>
     );
 };
 
