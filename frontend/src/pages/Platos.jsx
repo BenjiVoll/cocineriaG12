@@ -1,40 +1,34 @@
 import Table from '@components/Table';
 import usePlatos from '@hooks/platos/useGetPlatos.jsx';
 import Search from '../components/Search';
-import Popup from '../components/Popup';
-//import PopupAddPlato, { PopupEditPlato } from './PopupPlato';
+import { PopupAddPlato, PopupEditPlato } from '@components/popupPlato'; // Importa los popups desde popupPlato.jsx
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
+import AddIcon from '../assets/addIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import { useCallback, useState } from 'react';
 import '@styles/platos.css';
 import useEditPlato from '@hooks/platos/useEditPlato';
 import useDeletePlato from '@hooks/platos/useDeletePlato';
-//import useAddPlato from '@hooks/platos/useAddPlato';
+import useAddPlato from '@hooks/platos/useAddPlato';
 
 const Platos = () => {
     const { platos, fetchPlatos, setPlatos } = usePlatos();
     const [filterNombre, setFilterNombre] = useState('');
+    const [isAddPopupOpen, setIsAddPopupOpen] = useState(false); // Estado para el popup de agregar
+    const [isEditPopupOpen, setIsEditPopupOpen] = useState(false); // Estado para el popup de editar
 
     const {
         handleClickUpdate,
         handleUpdate,
-        isPopupOpen,
-        setIsPopupOpen,
         dataPlato,
         setDataPlato,
-      } = useEditPlato(setPlatos);
+    } = useEditPlato(setPlatos);
 
-    /*const {
-        handleAddPlato,
-        isAddPopupOpen,
-        setShowAddPopup,
-        newPlatoData,
-        handleSubmitNewPlato
-    } = useAddPlato(setPlatos);
-*/
     const { handleDelete } = useDeletePlato(fetchPlatos, setDataPlato);
+
+    const { handleAddPlato } = useAddPlato(setPlatos);
 
     const handleNombreFilterChange = (e) => {
         setFilterNombre(e.target.value);
@@ -44,10 +38,19 @@ const Platos = () => {
         setDataPlato(selectedPlatos);
     }, [setDataPlato]);
 
+    const handleAddPlatoClick = () => {
+        setIsAddPopupOpen(true);
+    };
+
+    const handleEditPlato = () => {
+        setIsEditPopupOpen(true);
+    };
+
     const columns = [
         { title: "Nombre", field: "nombre", width: 350, responsive: 0 },
         { title: "Descripción", field: "descripcion", width: 300, responsive: 3 },
         { title: "Precio", field: "precio", width: 150, responsive: 2 },
+        { title: "Disponible", field: "disponible", width: 150, responsive: 2 },
         { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
     ];
 
@@ -58,7 +61,10 @@ const Platos = () => {
                     <h1 className='title-table'>Platos</h1>
                     <div className='filter-actions'>
                         <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder={'Filtrar por nombre'} />
-                        <button onClick={handleClickUpdate} disabled={dataPlato.length === 0}>
+                        <button onClick={handleAddPlatoClick}>
+                            <img src={AddIcon} alt="add" />
+                        </button>
+                        <button onClick={handleEditPlato} disabled={dataPlato.length === 0}>
                             {dataPlato.length === 0 ? (
                                 <img src={UpdateIconDisable} alt="edit-disabled" />
                             ) : (
@@ -83,12 +89,14 @@ const Platos = () => {
                     onSelectionChange={handleSelectionChange}
                 />
             </div>
-            <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataPlato} action={handleUpdate} />
+            <PopupEditPlato show={isEditPopupOpen} setShow={setIsEditPopupOpen} data={dataPlato} action={handleUpdate} />
+            <PopupAddPlato show={isAddPopupOpen} setShow={setIsAddPopupOpen} action={handleAddPlato} />
         </div>
     );
 };
 
 export default Platos;
+
 
 /*import { useCallback, useState } from 'react';
 import Table from '@components/Table';

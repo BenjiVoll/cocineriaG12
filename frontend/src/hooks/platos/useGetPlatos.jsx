@@ -8,12 +8,13 @@ const useGetPlatos = () => {
         try {
             const response = await getPlatos();
             const formattedData = response.map(plato => ({
+                id: plato.id,
                 nombre: plato.nombre,
                 descripcion: plato.descripcion,
                 precio: plato.precio,
+                disponible: plato.disponible,
                 createdAt: plato.createdAt
             }));
-            dataLogged(formattedData);
             setPlatos(formattedData);
         } catch (error) {
             console.error("Error: ", error);
@@ -23,20 +24,6 @@ const useGetPlatos = () => {
     useEffect(() => {
         fetchPlatos();
     }, []);
-
-    const dataLogged = (formattedData) => {
-        try {
-            const { rut } = JSON.parse(sessionStorage.getItem('usuario'));
-            for(let i = 0; i < formattedData.length ; i++) {
-                if(formattedData[i].rut === rut) {
-                    formattedData.splice(i, 1);
-                    break;
-                }
-            }
-        } catch (error) {
-            console.error("Error: ", error)
-        }
-    };
 
     return { platos, fetchPlatos, setPlatos };
 };

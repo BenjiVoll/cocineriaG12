@@ -7,7 +7,11 @@ const useDeletePlato = (fetchPlatos, setDataPlato) => {
             try {
                 const result = await deleteDataAlert();
                 if (result.isConfirmed) {
-                    const response = await deletePlato(dataPlato[0].id);
+                    const id = dataPlato[0].id;
+                    if (!id) {
+                        return showErrorAlert('Error', 'ID no válido');
+                    }
+                    const response = await deletePlato(id);
                     if(response.status === 'Client error') {
                         return showErrorAlert('Error', response.details);
                     }
@@ -23,6 +27,7 @@ const useDeletePlato = (fetchPlatos, setDataPlato) => {
             }
         }
     };
+    
 
     return {
         handleDelete

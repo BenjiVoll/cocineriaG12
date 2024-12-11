@@ -6,7 +6,7 @@ export const formatIngredienteData = (ingrediente) => {
         id: ingrediente.id,
         nombre: startCase(ingrediente.nombre),
         cantidad: ingrediente.cantidad,
-        fechaCreacion: ingrediente.fechaCreacion ? formatTempo(ingrediente.fechaCreacion, 'DD-MM-YYYY') : null,
-        fechaActualizacion: ingrediente.fechaActualizacion ? formatTempo(ingrediente.fechaActualizacion, 'DD-MM-YYYY HH:mm:ss') : null
+        createdAt: formatTempo(ingrediente.createdAt, "DD-MM-YYYY"),
+        updatedAt: formatTempo(ingrediente.updatedAt, 'DD-MM-YYYY HH:mm:ss')
     };
 };
