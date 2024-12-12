@@ -1,21 +1,40 @@
-import { useState } from "react";
-import { addPersonal } from "@services/personal.service.js"; 
+import { useState } from 'react';
+import { addPersonal as addPersonalService } from '@services/personal.service.js';
 
-const useAddPersonal = () => {
+const useAddPersonal = (fetchPersonals) => {
     const [isAdding, setIsAdding] = useState(false);
+    const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+    const [newPersonalData, setNewPersonalData] = useState({
+        nombreCompleto: '',
+        telefono: '',
+        fechaIncorporacion: '',
+        cargo: '',
+    });
+    const [error, setError] = useState(null);
 
-    const handleAddPersonal = async (personalData) => {
+    const handleSubmitNewPersonal = async (personalData) => {
+        setIsAdding(true);
+        setError(null);
         try {
-            setIsAdding(true);
-            await addPersonal(personalData); 
-            setIsAdding(false);
-        } catch (error) {
-            console.error("Error al agregar personal: ", error);
+            await addPersonalService(personalData);
+            fetchPersonals();
+            setIsAddPopupOpen(false); // Close the popup after adding
+        } catch (err) {
+            setError(err.message || 'Error desconocido');
+        } finally {
             setIsAdding(false);
         }
     };
 
-    return { handleAddPersonal, isAdding };
+    return {
+        handleSubmitNewPersonal,
+        isAdding,
+        isAddPopupOpen,
+        setIsAddPopupOpen,
+        newPersonalData,
+        setNewPersonalData,
+        error,
+    };
 };
 
 export default useAddPersonal;

@@ -1,13 +1,11 @@
-import { useCallback, useState } from 'react';
-import Table from '@components/TablePersonal'; // Reutilizar el componente de tabla
+import { useCallback, useState, useEffect } from 'react';
+import Table from '@components/TableAsistencia'; // Importa el componente de tabla para asistencia
 import usePersonals from '@hooks/personals/useGetPersonals'; // Usar el hook de personales para obtener la lista de personal actualizada
 import useAsistencia from '@hooks/asistencia/useAsistencia'; // Hook para manejar asistencia
 import Search from '../components/Search';
 import '@styles/asistencias.css';
 
-
-
-const Asistencias = () => {
+const AsistenciaTable = () => {
     const { personals, fetchPersonals } = usePersonals();
     const [filterAsistenciaId, setFilterAsistenciaId] = useState('');
     const [selectedPersonal, setSelectedPersonal] = useState(null);
@@ -29,6 +27,20 @@ const Asistencias = () => {
         setFilterAsistenciaId(e.target.value);
     };
 
+    useEffect(() => {
+        const handleButtonClick = (event) => {
+            if (event.target.matches('.attendance-button')) {
+                const estado = event.target.dataset.estado;
+                handleAsistenciaButtonClick(estado);
+            }
+        };
+        document.addEventListener('click', handleButtonClick);
+
+        return () => {
+            document.removeEventListener('click', handleButtonClick);
+        };
+    }, [handleAsistenciaButtonClick]);
+
     const columns = [
         { title: 'ID', field: 'id', width: 100 },
         { title: 'Nombre completo', field: 'nombreCompleto', width: 200 },
@@ -38,13 +50,15 @@ const Asistencias = () => {
         { title: 'Creado en', field: 'createdAt', width: 200 },
         { title: 'Actualizado', field: 'updatedAt', width: 200 },
         {
-            title: 'Asistencia', field: 'asistencia', width: 300, render: (rowData) => (
-                <div>
-                    <button onClick={() => handleAsistenciaButtonClick('Presente')}>Presente</button>
-                    <button onClick={() => handleAsistenciaButtonClick('Ausente')}>Ausente</button>
-                    <button onClick={() => handleAsistenciaButtonClick('Ausente Justificado', 'Justificado')}>Ausente Justificado</button>
-                </div>
-            )
+            title: 'Asistencia', field: 'asistencia', width: 300, formatter: (cell) => {
+                return `
+                    <div>
+                        <button class="attendance-button" data-estado="Presente">Presente</button>
+                        <button class="attendance-button" data-estado="Ausente">Ausente</button>
+                        <button class="attendance-button" data-estado="Justificado">Ausente Justificado</button>
+                    </div>
+                `;
+            }
         }
     ];
 
@@ -73,4 +87,4 @@ const Asistencias = () => {
     );
 };
 
-export default Asistencias;
+export default AsistenciaTable;

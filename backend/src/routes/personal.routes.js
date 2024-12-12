@@ -1,6 +1,4 @@
 import { Router } from "express";
-import { isAdmin} from "../middlewares/authorization.middleware.js";
-import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createUser,
     deleteUser,
@@ -9,16 +7,19 @@ import {
     updateUser
 } from "../controllers/personal.controller.js";
 
+// Temporalmente omitir el middleware de autenticación y autorización
+// import { authenticateJwt } from '../middlewares/authentication.middleware.js';
+// import { isAdmin } from '../middlewares/authorization.middleware.js';
+
 const router = Router();
 
-router
-  .use(authenticateJwt)
-  .use(isAdmin);
+// router.use(authenticateJwt);
+// router.use(isAdmin);
 
-router.post("/", createUser); // POST http://localhost:3001/api/user/
-router.get("/", getUsers); // GET http://localhost:3001/api/user/all
-router.get("/:id", getUser); // GET http://localhost:3001/api/user/:id
-router.put("/:id", updateUser); // PUT http://localhost:3001/api/user/:id
-router.delete("/:id", deleteUser); // DELETE http://localhost:3001/api/user/:id
+router.post("/", createUser); // POST http://localhost:3001/api/personal/
+router.get("/", getUsers); // GET http://localhost:3001/api/personal/
+router.get("/:id", getUser); // GET http://localhost:3001/api/personal/:id
+router.put("/:id", updateUser); // PUT http://localhost:3001/api/personal/:id
+router.delete("/:id", deleteUser); // DELETE http://localhost:3001/api/personal/:id
 
 export default router;

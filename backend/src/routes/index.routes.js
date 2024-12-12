@@ -8,7 +8,6 @@ import personalRoutes from "./personal.routes.js";
 import asistenciaRoutes from "./asistencia.routes.js";
 import orderRoutes from "./order.routes.js";
 
-
 const router = Router();
 
 router

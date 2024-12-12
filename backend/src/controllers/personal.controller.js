@@ -1,194 +1,60 @@
-"use strict";
-import User_personal from '../entity/personal.entity.js';
-import { AppDataSource } from '../config/configDb.js';
+import { personalService } from "../services/personal.service.js";
 
-export async function createUser(req, res) {
+export const createUser = async (req, res) => {
     try {
-        const userRepository = AppDataSource.getRepository(User_personal);
-        const user = req.body;
+        const data = req.body;
+        console.log("Datos recibidos en controlador para crear usuario:", data); // Log adicional
 
-        if (!user) {
-            return res.status(400).json({
-                message: "Es necesario ingresar los datos del personal.",
-                data: null
-            });
-        }
-
-      
-        const validCargos = ['cocinero', 'administrador', 'garzon'];
-        if (!validCargos.includes(user.cargo.toLowerCase())) {
-            return res.status(400).json({
-                message: "El cargo debe ser uno de los siguientes: 'cocinero', 'administrador', 'garzon'.",
-                data: null
-            });
-        }
-
-        
-        const telefonoRegex = /^[0-9]{9}$/; // Solo acepta 9 dígitos numéricos
-        if (!telefonoRegex.test(user.telefono)) {
-            return res.status(400).json({
-                message: "teléfono debe contener solo 9 dígitos numéricos.",
-                data: null
-            });
-        }
-
-        const newUser = userRepository.create({
-            nombreCompleto: user.nombreCompleto,
-            telefono: user.telefono,
-            fechaIncorporacion: user.fechaIncorporacion,
-            cargo: user.cargo
-        });
-
-        const userSaved = await userRepository.save(newUser);
-
-        res.status(201).json({
-            message: "Usuario creado exitosamente",
-            data: userSaved
-        });
+        const personal = await personalService.createPersonal(data);
+        res.status(201).json({ data: personal });
     } catch (error) {
-        console.error("Error al crear un usuario, el error es: ", error);
-        res.status(500).json({
-            message: "Error al crear el usuario",
-            error: error.message
-        });
+        console.error("Error al crear el personal:", error);
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-export async function getUser(req, res) {
+export const getUsers = async (req, res) => {
     try {
-        const userRepository = AppDataSource.getRepository(User_personal);
-        const id = req.params.id;
-
-        const userFound = await userRepository.findOne({
-            where: {
-                id: id
-            }
-        });
-
-        if (!userFound) {
-            return res.status(404).json({
-                message: "Usuario no encontrado",
-                data: null
-            });
-        }
-
-        res.status(200).json({
-            message: "Usuario encontrado",
-            data: userFound
-        });
-
+        const users = await personalService.getAllPersonals();
+        res.status(200).json({ data: users });
     } catch (error) {
-        console.error('Error al obtener un usuario, el error: ', error);
-        res.status(500).json({
-            message: "Error al obtener el usuario",
-            error: error.message
-        });
+        console.error("Error al obtener los usuarios:", error);
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-export async function getUsers(req, res) {
+export const getUser = async (req, res) => {
     try {
-        const userRepository = AppDataSource.getRepository(User_personal);
-        const users = await userRepository.find();
-
-        if (users.length === 0) {
-            return res.status(404).json({
-                message: "No se encontraron usuarios.",
-                data: null
-            });
-        }
-
-        res.status(200).json({
-            message: "Usuarios encontrados.",
-            data: users
-        });
+        const { id } = req.params;
+        const user = await personalService.getPersonalById(id);
+        res.status(200).json({ data: user });
     } catch (error) {
-        console.error('Error al obtener usuarios, el error: ', error);
-        res.status(500).json({
-            message: "Error al obtener los usuarios.",
-            error: error.message
-        });
+        console.error("Error al obtener el usuario:", error);
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-export async function updateUser(req, res) {
+export const updateUser = async (req, res) => {
     try {
-        const id = req.params.id; 
-        const { nombreCompleto, telefono, fechaIncorporacion, cargo } = req.body;
+        const { id } = req.params;
+        const updates = req.body;
+        console.log("Datos recibidos para actualización en controlador:", updates); // Log adicional
 
-        const userRepository = AppDataSource.getRepository(User_personal);
-        const user = await userRepository.findOne({ where: { id } });
-
-        if (!user) {
-            return res.status(404).json({
-                message: "Usuario no encontrado",
-                data: null
-            });
-        }
-
-        
-        const validCargos = ['cocinero', 'administrador', 'garzon'];
-        if (cargo && !validCargos.includes(cargo.toLowerCase())) {
-            return res.status(400).json({
-                message: "El cargo debe ser uno de los siguientes: 'cocinero', 'administrador', 'garzon'.",
-                data: null
-            });
-        }
-
-        
-        const telefonoRegex = /^[0-9]{9}$/; // Solo acepta 9 dígitos numéricos
-        if (telefono && !telefonoRegex.test(telefono)) {
-            return res.status(400).json({
-                message: "El número de teléfono debe contener solo 9 dígitos numéricos.",
-                data: null
-            });
-        }
-
-        
-        user.nombreCompleto = nombreCompleto;
-        user.telefono = telefono;
-        user.fechaIncorporacion = fechaIncorporacion;
-        user.cargo = cargo;
-
-        const userUpdated = await userRepository.save(user);
-
-        res.status(200).json({
-            message: "Usuario modificado correctamente",
-            data: userUpdated
-        });
+        const updatedUser = await personalService.updatePersonal(id, updates);
+        res.status(200).json({ data: updatedUser });
     } catch (error) {
-        console.error("Error al modificar el usuario: ", error);
-        res.status(500).json({
-            message: "Error al modificar el usuario",
-            error: error.message
-        });
+        console.error("Error al actualizar el personal:", error);
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
-export async function deleteUser(req, res) {
+export const deleteUser = async (req, res) => {
     try {
-        const id = req.params.id; 
-
-        const userRepository = AppDataSource.getRepository(User_personal);
-        const user = await userRepository.findOne({ where: { id } });
-
-        if (!user) {
-            return res.status(404).json({
-                message: "Usuario no encontrado",
-                data: null
-            });
-        }
-
-        await userRepository.remove(user); 
-        res.status(200).json({
-            message: "Usuario eliminado correctamente",
-            data: user
-        });
+        const { id } = req.params;
+        await personalService.deletePersonal(id);
+        res.status(204).json();
     } catch (error) {
-        console.error("Error al eliminar el usuario: ", error);
-        res.status(500).json({
-            message: "Error al eliminar el usuario",
-            error: error.message
-        });
+        console.error("Error al eliminar el personal:", error);
+        res.status(400).json({ message: error.message });
     }
-}
+};
