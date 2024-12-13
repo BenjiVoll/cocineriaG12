@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { updateIngrediente } from '@services/ingrediente.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatIngredienteData } from '@helpers/formatIngredienteData.js';
+import { formatIngredientePostUpdate } from '@helpers/formatIngredienteData.js';
 
 const useEditIngrediente = (setIngredientes) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupEditOpen, setIsPopupEditOpen] = useState(false);
     const [dataIngrediente, setDataIngrediente] = useState([]);
 
     const handleClickUpdate = () => {
         if (dataIngrediente.length > 0) {
-            setIsPopupOpen(true);
+            setIsPopupEditOpen(true);
         }
     };
 
@@ -18,15 +18,16 @@ const useEditIngrediente = (setIngredientes) => {
             try {
                 const updatedIngrediente = await updateIngrediente(updatedIngredienteData, dataIngrediente[0].id);
                 showSuccessAlert('¡Actualizado!', 'El ingrediente ha sido actualizado correctamente.');
-                setIsPopupOpen(false);
-                const formattedIngrediente = formatIngredienteData(updatedIngrediente);
+                setIsPopupEditOpen(false);
+                const formattedIngrediente = formatIngredientePostUpdate(updatedIngrediente);
 
                 setIngredientes(prevIngredientes => prevIngredientes.map(ingrediente => {
                     console.log("Ingrediente actual:", ingrediente);
                     if (ingrediente.id === formattedIngrediente.id) {
                         console.log("Reemplazando con:", formattedIngrediente);
+                        return formattedIngrediente;
                     }
-                    return ingrediente.id === formattedIngrediente.id ? formattedIngrediente : ingrediente;
+                    return ingrediente;
                 }));
 
                 setDataIngrediente([]);
@@ -40,8 +41,8 @@ const useEditIngrediente = (setIngredientes) => {
     return {
         handleClickUpdate,
         handleUpdate,
-        isPopupOpen,
-        setIsPopupOpen,
+        isPopupEditOpen,
+        setIsPopupEditOpen,
         dataIngrediente,
         setDataIngrediente
     };

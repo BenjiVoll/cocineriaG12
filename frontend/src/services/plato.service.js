@@ -11,6 +11,16 @@ export async function getPlatos() {
     }
 }
 
+export async function addOrder(newPlatoData) {
+    try {
+        const { data } = await axios.post('/plato/', newPlatoData); 
+        return data.data;
+    } catch (error) {
+        console.error("Error al añadir el plato:", error);
+        return error.response.data;
+    }
+}
+
 export async function updatePlato(data, id) {
     try {
         const response = await axios.patch(`/plato/update/${id}`, data);

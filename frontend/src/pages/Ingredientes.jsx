@@ -1,15 +1,17 @@
 import Table from '@components/Table';
 import useIngredientes from '@hooks/ingredientes/useGetIngredientes.jsx';
 import Search from '../components/Search';
-import Popup from '../components/Popup';
+import { PopupAddIngrediente, PopupEditIngrediente } from '@components/PopupIngrediente';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
+import AddIcon from '../assets/addIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
 import { useCallback, useState } from 'react';
 import '@styles/ingredientes.css';
 import useEditIngrediente from '@hooks/ingredientes/useEditIngrediente';
 import useDeleteIngrediente from '@hooks/ingredientes/useDeleteIngrediente';
+import useAddIngrediente from '@hooks/ingredientes/useAddIngrediente';
 
 const Ingredientes = () => {
     const { ingredientes, fetchIngredientes, setIngredientes } = useIngredientes();
@@ -18,13 +20,20 @@ const Ingredientes = () => {
     const {
         handleClickUpdate,
         handleUpdate,
-        isPopupOpen,
-        setIsPopupOpen,
+        isPopupEditOpen,
+        setIsPopupEditOpen,
         dataIngrediente,
-        setDataIngrediente
+        setDataIngrediente,
     } = useEditIngrediente(setIngredientes);
 
     const { handleDelete } = useDeleteIngrediente(fetchIngredientes, setDataIngrediente);
+
+    const {
+        handleAddIngrediente,
+        isPopupOpen: isAddPopupOpen,
+        setIsPopupOpen: setIsAddPopupOpen,
+        handleClickAdd,
+    } = useAddIngrediente(setIngredientes);
 
     const handleNombreFilterChange = (e) => {
         setFilterNombre(e.target.value);
@@ -47,6 +56,9 @@ const Ingredientes = () => {
                     <h1 className='title-table'>Ingredientes</h1>
                     <div className='filter-actions'>
                         <Search value={filterNombre} onChange={handleNombreFilterChange} placeholder={'Filtrar por nombre'} />
+                        <button onClick={handleClickAdd}>
+                            <img src={AddIcon} alt="add" />
+                        </button>
                         <button onClick={handleClickUpdate} disabled={dataIngrediente.length === 0}>
                             {dataIngrediente.length === 0 ? (
                                 <img src={UpdateIconDisable} alt="edit-disabled" />
@@ -72,9 +84,11 @@ const Ingredientes = () => {
                     onSelectionChange={handleSelectionChange}
                 />
             </div>
-            <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataIngrediente} action={handleUpdate} />
+            <PopupEditIngrediente show={isPopupEditOpen} setShow={setIsPopupEditOpen} data={dataIngrediente} action={handleUpdate} />
+            <PopupAddIngrediente show={isAddPopupOpen} setShow={setIsAddPopupOpen} action={handleAddIngrediente} />
         </div>
     );
 };
 
 export default Ingredientes;
+

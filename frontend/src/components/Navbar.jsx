@@ -52,31 +52,9 @@ const Navbar = () => {
             <div className={`nav-menu ${menuOpen ? 'activado' : ''}`}>
                 <ul>
                     <li>
-                        <NavLink 
-                            to="/home" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Inicio
-                        </NavLink>
                     </li>
                     {userRole === 'administrador' && (
                         <>
-                            <li>
-                                <NavLink 
-                                    to="/users" 
-                                    onClick={() => { 
-                                        setMenuOpen(false); 
-                                        addActiveClass();
-                                    }} 
-                                    activeClassName="active"
-                                >
-                                    Usuarios
-                                </NavLink>
-                            </li>
                             <li>
                                 <div className="submenu">
                                     <span onClick={toggleSubmenu}>

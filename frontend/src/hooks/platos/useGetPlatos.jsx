@@ -12,7 +12,7 @@ const useGetPlatos = () => {
                 nombre: plato.nombre,
                 descripcion: plato.descripcion,
                 precio: plato.precio,
-                disponible: plato.disponible,
+                disponible: plato.disponible ? 'Sí' : 'No',
                 createdAt: plato.createdAt
             }));
             setPlatos(formattedData);

@@ -11,6 +11,16 @@ export async function getIngredientes() {
     }
 }
 
+export async function addOrder(newIngredienteData) {
+    try {
+        const { data } = await axios.post('/ingrediente/', newIngredienteData); 
+        return data.data;
+    } catch (error) {
+        console.error("Error al añadir el ingrediente:", error);
+        return error.response.data;
+    }
+}
+
 export async function updateIngrediente(data, id) {
     try {
         const response = await axios.patch(`/ingrediente/update/${id}`, data);

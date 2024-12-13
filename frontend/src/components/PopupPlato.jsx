@@ -6,7 +6,7 @@ import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 export function PopupAddPlato({ show, setShow, action }) {
 
     const handleSubmit = (formData) => {
-        action(formData); 
+        action(formData);
         setShow(false);
     };
 
