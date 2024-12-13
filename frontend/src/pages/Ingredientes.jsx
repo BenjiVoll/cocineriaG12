@@ -29,10 +29,12 @@ const Ingredientes = () => {
     const { handleDelete } = useDeleteIngrediente(fetchIngredientes, setDataIngrediente);
 
     const {
+        isAddPopupOpen,
+        setIsAddPopupOpen,
+        ingredienteData,
+        setIngredienteData,
         handleAddIngrediente,
-        isPopupOpen: isAddPopupOpen,
-        setIsPopupOpen: setIsAddPopupOpen,
-        handleClickAdd,
+        handleClickAdd
     } = useAddIngrediente(setIngredientes);
 
     const handleNombreFilterChange = (e) => {
@@ -91,4 +93,3 @@ const Ingredientes = () => {
 };
 
 export default Ingredientes;
-

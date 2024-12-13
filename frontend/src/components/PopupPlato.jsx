@@ -1,7 +1,6 @@
 import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
-import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 
 export function PopupAddPlato({ show, setShow, action }) {
 
@@ -28,6 +27,10 @@ export function PopupAddPlato({ show, setShow, action }) {
                                     type: "text",
                                     required: true,
                                     defaultValue: "",
+                                    minLength: 3,
+                                    maxLength: 50,
+                                    pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/,
+                                    patternMessage: "El nombre solo puede contener letras, números, espacios y acentos",
                                 },
                                 {
                                     label: "Descripción",
@@ -35,6 +38,10 @@ export function PopupAddPlato({ show, setShow, action }) {
                                     fieldType: 'textarea',
                                     required: true,
                                     defaultValue: "",
+                                    minLength: 10,
+                                    maxLength: 255,
+                                    pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/,
+                                    patternMessage: "La descripción solo puede contener letras, números, espacios y acentos",
                                 },
                                 {
                                     label: "Precio",
@@ -43,6 +50,11 @@ export function PopupAddPlato({ show, setShow, action }) {
                                     type: "number",
                                     required: true,
                                     defaultValue: "",
+                                    validate: {
+                                        positive: value => value > 0 || 'El precio debe ser un número positivo',
+                                        min: value => value >= 100 || 'El precio debe ser al menos 100 CLP',
+                                        max: value => value <= 1000000 || 'El precio no puede exceder 1.000.000 CLP'
+                                    }
                                 },
                                 {
                                     label: "Disponible",
@@ -66,7 +78,6 @@ export function PopupAddPlato({ show, setShow, action }) {
         </div>
     );
 }
-
 
 export function PopupEditPlato({ show, setShow, data, action }) {
     const platoData = data && data.length > 0 ? data[0] : {};
@@ -96,19 +107,20 @@ export function PopupEditPlato({ show, setShow, data, action }) {
                                 required: true,
                                 minLength: 3,
                                 maxLength: 50,
-                                pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
-                                patternMessage: "Debe contener solo letras y espacios",
+                                pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/,
+                                patternMessage: "El nombre solo puede contener letras, números, espacios y acentos",
                             },
                             {
                                 label: "Descripción",
                                 name: "descripcion",
                                 defaultValue: platoData.descripcion || "",
                                 placeholder: 'Descripción del plato',
-                                fieldType: 'input',
-                                type: "text",
+                                fieldType: 'textarea',
                                 required: true,
                                 minLength: 10,
-                                maxLength: 200,
+                                maxLength: 255,
+                                pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/,
+                                patternMessage: "La descripción solo puede contener letras, números, espacios y acentos",
                             },
                             {
                                 label: "Precio",
@@ -118,8 +130,11 @@ export function PopupEditPlato({ show, setShow, data, action }) {
                                 fieldType: 'input',
                                 type: "number",
                                 required: true,
-                                min: 0,
-                                max: 100000,
+                                validate: {
+                                    positive: value => value > 0 || 'El precio debe ser un número positivo',
+                                    min: value => value >= 100 || 'El precio debe ser al menos 100 CLP',
+                                    max: value => value <= 1000000 || 'El precio no puede exceder 1.000.000 CLP'
+                                }
                             },
                             {
                                 label: "Disponible",

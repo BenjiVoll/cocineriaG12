@@ -11,7 +11,7 @@ export async function getIngredientes() {
     }
 }
 
-export async function addOrder(newIngredienteData) {
+export async function addIngrediente(newIngredienteData) {
     try {
         const { data } = await axios.post('/ingrediente/', newIngredienteData); 
         return data.data;

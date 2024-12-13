@@ -1,30 +1,41 @@
 import { useState } from 'react';
-import axios from 'axios';
-import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
+import { addIngrediente } from '@services/ingrediente.service.js';
+import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 
 const useAddIngrediente = (setIngredientes) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+    const [ingredienteData, setIngredienteData] = useState({
+        nombre: '',
+        cantidad: 0,
+    });
 
-    const handleAddIngrediente = async (newIngrediente) => {
-        setIsPopupOpen(false); // Cerrar popup antes de la solicitud
+    const handleClickAdd = () => {
+        setIsAddPopupOpen(true);
+    };
+
+    const handleAddIngrediente = async (data) => {
         try {
-            const response = await axios.post('/api/ingrediente', newIngrediente);
-            setIngredientes((prevIngredientes) => [...prevIngredientes, response.data]);
-            showSuccessAlert('¡Agregado!', 'El ingrediente ha sido agregado correctamente.');
+            console.log('Datos del ingrediente antes de agregar:', data); // Agrega este log
+            const newIngrediente = await addIngrediente(data);
+            showSuccessAlert('¡Creado!', 'El ingrediente ha sido creado correctamente.');
+            setIsAddPopupOpen(false);
+            setIngredientes(prevIngredientes => [...prevIngredientes, newIngrediente]);
+            setIngredienteData({
+                nombre: '',
+                cantidad: 0,
+            });
         } catch (error) {
-            console.error('Error al agregar el ingrediente:', error);
-            showErrorAlert('Error', 'Ocurrió un error al agregar el ingrediente.');
+            console.error('Error al crear el ingrediente:', error);
+            showErrorAlert('Error', error);
         }
     };
 
-    const handleClickAdd = () => {
-        setIsPopupOpen(true);
-    };
-
     return {
+        isAddPopupOpen,
+        setIsAddPopupOpen,
+        ingredienteData,
+        setIngredienteData,
         handleAddIngrediente,
-        isPopupOpen,
-        setIsPopupOpen,
         handleClickAdd
     };
 };

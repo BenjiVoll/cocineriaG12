@@ -1,11 +1,37 @@
+import React from 'react';
 import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
 export function PopupAddIngrediente({ show, setShow, action }) {
+    const fields = [
+        {
+            label: "Nombre del Ingrediente",
+            name: "nombre",
+            fieldType: 'input',
+            type: "text",
+            required: true,
+            defaultValue: "",
+            minLength: 3,
+            maxLength: 50,
+            pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/,
+            patternMessage: "El nombre solo puede contener letras, números, espacios y acentos",
+        },
+        {
+            label: "Cantidad",
+            name: "cantidad",
+            fieldType: 'input',
+            type: "number",
+            required: true,
+            defaultValue: "",
+            validate: {
+                min: value => value >= 1 || 'La cantidad debe ser al menos 1',
+            }
+        }
+    ];
 
-    const handleSubmit = (formData) => {
-        action(formData); 
+    const handleFormSubmit = (data) => {
+        action(data);
         setShow(false);
     };
 
@@ -19,27 +45,10 @@ export function PopupAddIngrediente({ show, setShow, action }) {
                         </button>
                         <Form
                             title="Agregar Ingrediente"
-                            fields={[
-                                {
-                                    label: "Nombre del Ingrediente",
-                                    name: "nombre",
-                                    fieldType: 'input',
-                                    type: "text",
-                                    required: true,
-                                    defaultValue: "",
-                                },
-                                {
-                                    label: "Cantidad",
-                                    name: "cantidad",
-                                    fieldType: 'input',
-                                    type: "number",
-                                    required: true,
-                                    defaultValue: "",
-                                }
-                            ]}
-                            onSubmit={handleSubmit}
+                            fields={fields}
+                            onSubmit={handleFormSubmit}
                             buttonText="Agregar Ingrediente"
-                            backgroundColor={'#fff'}
+                            backgroundColor="#fff"
                         />
                     </div>
                 </div>
@@ -58,45 +67,44 @@ export function PopupEditIngrediente({ show, setShow, data, action }) {
     return (
         <div>
             { show && (
-            <div className="bg">
-                <div className="popup">
-                    <button className='close' onClick={() => setShow(false)}>
-                        <img src={CloseIcon} alt="close icon" />
-                    </button>
-                    <Form
-                        title="Editar Ingrediente"
-                        fields={[
-                            {
-                                label: "Nombre del Ingrediente",
-                                name: "nombre",
-                                defaultValue: ingredienteData.nombre || "",
-                                placeholder: 'Nombre del ingrediente',
-                                fieldType: 'input',
-                                type: "text",
-                                required: true,
-                                minLength: 3,
-                                maxLength: 50,
-                                pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
-                                patternMessage: "Debe contener solo letras y espacios",
-                            },
-                            {
-                                label: "Cantidad",
-                                name: "cantidad",
-                                defaultValue: ingredienteData.cantidad || "",
-                                placeholder: 'Cantidad del ingrediente',
-                                fieldType: 'input',
-                                type: "number",
-                                required: true,
-                                min: 0,
-                                max: 100000,
-                            }
-                        ]}
-                        onSubmit={handleSubmit}
-                        buttonText="Editar Ingrediente"
-                        backgroundColor={'#fff'}
-                    />
+                <div className="bg">
+                    <div className="popup">
+                        <button className="close" onClick={() => setShow(false)}>
+                            <img src={CloseIcon} alt="close icon" />
+                        </button>
+                        <Form
+                            title="Editar Ingrediente"
+                            fields={[
+                                {
+                                    label: "Nombre del Ingrediente",
+                                    name: "nombre",
+                                    fieldType: 'input',
+                                    type: "text",
+                                    required: true,
+                                    defaultValue: ingredienteData.nombre || "",
+                                    minLength: 3,
+                                    maxLength: 50,
+                                    pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/,
+                                    patternMessage: "El nombre solo puede contener letras, números, espacios y acentos",
+                                },
+                                {
+                                    label: "Cantidad",
+                                    name: "cantidad",
+                                    fieldType: 'input',
+                                    type: "number",
+                                    required: true,
+                                    defaultValue: ingredienteData.cantidad || "",
+                                    validate: {
+                                        min: value => value >= 1 || 'La cantidad debe ser al menos 1',
+                                    }
+                                }
+                            ]}
+                            onSubmit={handleSubmit}
+                            buttonText="Editar Ingrediente"
+                            backgroundColor="#fff"
+                        />
+                    </div>
                 </div>
-            </div>
             )}
         </div>
     );
