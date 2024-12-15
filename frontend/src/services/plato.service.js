@@ -11,7 +11,7 @@ export async function getPlatos() {
     }
 }
 
-export async function addOrder(newPlatoData) {
+export async function addPlato(newPlatoData) {
     try {
         const { data } = await axios.post('/plato/', newPlatoData); 
         return data.data;

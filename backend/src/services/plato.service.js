@@ -14,20 +14,12 @@ export async function createPlatoService(data) {
     }
 
     const platoRepository = AppDataSource.getRepository(Plato);
-    const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
-
-    const ingredientes = await ingredienteRepository.findBy({ id: In(data.ingredientesIds) });
-
-    if (ingredientes.length !== data.ingredientesIds.length) {
-      return [null, "Algunos ingredientes no fueron encontrados"];
-    }
-
+    
     const nuevoPlato = platoRepository.create({
       nombre: data.nombre,
       descripcion: data.descripcion,
       precio: data.precio,
       disponible: data.disponible,
-      ingredientes: ingredientes,
     });
 
     await platoRepository.save(nuevoPlato);

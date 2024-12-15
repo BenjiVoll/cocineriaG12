@@ -31,8 +31,6 @@ const Ingredientes = () => {
     const {
         isAddPopupOpen,
         setIsAddPopupOpen,
-        ingredienteData,
-        setIngredienteData,
         handleAddIngrediente,
         handleClickAdd
     } = useAddIngrediente(setIngredientes);

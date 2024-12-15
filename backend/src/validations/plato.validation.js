@@ -42,9 +42,8 @@ export const platoBodyValidation = Joi.object({
   disponible: Joi.boolean().optional().messages({
     "boolean.base": "Disponible debe ser un valor booleano.",
   }),
-  ingredientesIds: Joi.array().items(Joi.number().integer().positive()).required().messages({
+  ingredientesIds: Joi.array().items(Joi.number().integer().positive()).optional().messages({
     "array.base": "Los ingredientes deben ser un array de IDs.",
-    "any.required": "Los IDs de los ingredientes son obligatorios.",
   }),
 });
 
