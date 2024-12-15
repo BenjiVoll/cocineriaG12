@@ -2,13 +2,21 @@
 import { AppDataSource } from "../config/configDb.js";
 import Plato from "../entity/plato.entity.js";
 import Ingrediente from "../entity/ingrediente.entity.js";
+import { platoBodyValidation, platoUpdateValidation } from "../validations/plato.validation.js";
+import { In } from 'typeorm';
 
 export async function createPlatoService(data) {
   try {
+    // Validar los datos de entrada
+    const { error } = platoBodyValidation.validate(data);
+    if (error) {
+      return [null, error.details[0].message];
+    }
+
     const platoRepository = AppDataSource.getRepository(Plato);
     const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
 
-    const ingredientes = await ingredienteRepository.findByIds(data.ingredientesIds);
+    const ingredientes = await ingredienteRepository.findBy({ id: In(data.ingredientesIds) });
 
     if (ingredientes.length !== data.ingredientesIds.length) {
       return [null, "Algunos ingredientes no fueron encontrados"];
@@ -63,6 +71,12 @@ export async function getPlatoService() {
 
 export async function updatePlatoService(platoId, data) {
   try {
+    // Validar los datos de entrada
+    const { error } = platoUpdateValidation.validate(data);
+    if (error) {
+      return [null, error.details[0].message];
+    }
+
     const platoRepository = AppDataSource.getRepository(Plato);
     const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
 
@@ -76,15 +90,14 @@ export async function updatePlatoService(platoId, data) {
     }
 
     // Actualizar solo los datos proporcionados
-    if (data.nombre) plato.nombre = data.nombre;
-    if (data.descripcion) plato.descripcion = data.descripcion;
-    if (data.precio) plato.precio = data.precio;
-    if (data.disponible != null) plato.disponible = data.disponible;
+    Object.assign(plato, data);
 
-    // Si se proporcionan nuevos IDs de ingredientes, actualizar la relación
+    // Si se proporcionan nuevos IDs de ingredientes, combinar con los existentes
     if (data.ingredientesIds) {
-      const ingredientes = await ingredienteRepository.findByIds(data.ingredientesIds);
-      if (ingredientes.length !== data.ingredientesIds.length) {
+      const existingIngredients = plato.ingredientes.map(ing => ing.id);
+      const combinedIngredientsIds = [...new Set([...existingIngredients, ...data.ingredientesIds])];
+      const ingredientes = await ingredienteRepository.findBy({ id: In(combinedIngredientsIds) });
+      if (ingredientes.length !== combinedIngredientsIds.length) {
         return [null, "Algunos ingredientes no fueron encontrados"];
       }
       plato.ingredientes = ingredientes;
@@ -97,6 +110,7 @@ export async function updatePlatoService(platoId, data) {
     return [null, "Error interno del servidor"];
   }
 }
+
 
 export async function deletePlatoService(id) {
   try {
@@ -114,7 +128,4 @@ export async function deletePlatoService(id) {
     return [null, "Error interno del servidor"];
   }
 }
-
-
-
 
