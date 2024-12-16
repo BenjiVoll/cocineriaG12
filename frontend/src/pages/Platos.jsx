@@ -1,7 +1,7 @@
 import Table from '@components/TableMenu';
 import usePlatos from '@hooks/platos/useGetPlatos.jsx';
 import Search from '../components/Search';
-import { PopupAddPlato, PopupEditPlato } from '@components/popupPlato'; // Importa los popups desde popupPlato.jsx
+import { PopupAddPlato, PopupEditPlato } from '@components/PopupPlato'; // Importa los popups desde popupPlato.jsx
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import AddIcon from '../assets/addIcon.svg';
