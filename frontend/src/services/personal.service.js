@@ -21,9 +21,9 @@ export async function addPersonal(newPersonalData) {
     }
 }
 
-export async function updatePersonal(data, id) {
+export async function editPersonal(updatedData, id) {
     try {
-        const response = await axios.patch(`/personal/?id=${id}`, data);
+        const response = await axios.put(`/personal/${id}`, updatedData);
         console.log(response);
         return response.data.data;
     } catch (error) {

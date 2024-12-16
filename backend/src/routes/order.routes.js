@@ -1,5 +1,7 @@
 "use strict";
 import { Router } from "express";
+import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
   addOrder,
   deleteOrder,
@@ -9,6 +11,10 @@ import {
 } from "../controllers/order.controller.js";
 
 const router = Router();
+
+router
+  .use(authenticateJwt)
+  .use(isAdmin);
 
 router
   .get("/", getOrders)            // Obtener todos los pedidos

@@ -30,7 +30,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/personal',
-        element: <Personal/>
+        element: (
+        <ProtectedRoute allowedRoles={['administrador']}>
+          <Personal />
+        </ProtectedRoute>
+        ),
       },
       /*{
         path: '/users',
