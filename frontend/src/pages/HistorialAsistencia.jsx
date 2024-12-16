@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useHistorialAsistencia from '@hooks/historial/useHistorialAsistencia';
 import { TabulatorFull as Tabulator } from 'tabulator-tables';
-import AttendanceTable from '@components/AttendanceTable'; // Asegúrate de ajustar la ruta
+import AttendanceTable from '@components/AttendanceTable'; 
 import '@styles/historial.css';
 
 const HistorialAsistencia = () => {
@@ -48,17 +48,24 @@ const HistorialAsistencia = () => {
                 responsiveLayout: "collapse",
                 pagination: true,
                 paginationSize: 6,
-                selectableRows: 1, // Usar selectableRows en lugar de selectable
-                rowClick: (e, row) => {
-                    const data = row.getData();
-                    console.log("Fila seleccionada (rowClick):", data);
-                    setSelectedHistorial(data);
+                selectableRows: 1, 
+                rowSelectionChanged: function(data) {
+                    console.log("rowSelectionChanged triggered");
+                    const selectedData = data.length > 0 ? data[0] : null;
+                    console.log("Datos de fila seleccionada (rowSelectionChanged):", selectedData);
+                    setSelectedHistorial(selectedData);
+                },
+                rowSelected: (row) => {
+                    console.log("Fila seleccionada (rowSelected):", row.getData());
                 }
             });
+
+           
+            console.log("Tabla Tabulator inicializada:", table);
         }
     }, [historial]);
 
-    // Definir la función `handleFileButtonClick` en el contexto global
+  
     window.handleFileButtonClick = (personalId, asistenciaId) => {
         const inputElement = document.getElementById(`upload-${asistenciaId}`);
         inputElement.onchange = () => handleFileUpload(personalId, asistenciaId, inputElement.files[0]);
@@ -68,22 +75,23 @@ const HistorialAsistencia = () => {
     const handleFileUpload = async (personalId, asistenciaId, file) => {
         if (!file) return;
         await subirJustificativo(personalId, asistenciaId, file);
+        console.log("Justificativo subido para asistencia ID:", asistenciaId);
     };
 
     return (
         <div className="historial-container">
             <h1 className="title-historial">Historial de Asistencia</h1>
 
-            {loading && <p>Cargando historial...</p>}  {/* Mostrar mensaje de carga */}
-            {error && <p style={{ color: 'red' }}>Error: {error}</p>}  {/* Mostrar error si ocurre */}
+            {loading && <p>Cargando historial...</p>}  {}
+            {error && <p style={{ color: 'red' }}>Error: {error}</p>}  {}
 
-            <div id="historial-table"></div> {/* Aquí se renderiza la tabla Tabulator */}
+            <div id="historial-table"></div> {}
 
             {selectedHistorial && (
                 <>
                     <p>Datos seleccionados:</p>
-                    <pre>{JSON.stringify(selectedHistorial, null, 2)}</pre> {/* Mostrar datos seleccionados */}
-                    <AttendanceTable data={selectedHistorial.personal} /> {/* Mostrar tabla de asistencia */}
+                    <pre>{JSON.stringify(selectedHistorial, null, 2)}</pre> {}
+                    <AttendanceTable data={selectedHistorial.personal} /> {}
                 </>
             )}
         </div>

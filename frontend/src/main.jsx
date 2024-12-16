@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
 import Home from '@pages/Home';
-import Asistencia from '@pages/Asistencia'; // Importa el componente Asistencia
+import Asistencia from '@pages/Asistencia'; 
 import Personal from '@pages/Personals';
 import Users from '@pages/Users';
 import Pedidos from '@pages/Pedidos';

@@ -1,7 +1,7 @@
 import HistorialAsistenciaSchema from "../entity/historial.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 
-// Obtener historial de asistencias
+
 export const getHistorialAsistencias = async (req, res) => {
     try {
         const historialRepository = AppDataSource.getRepository(HistorialAsistenciaSchema);

@@ -10,11 +10,10 @@ const useAsistencia = () => {
         setError(null);
 
         try {
-            // Registrar asistencia
+          
             const response = await registerAsistencia({ personalId, estado, justificativo });
             console.log("Respuesta del servidor (Asistencia):", response);
 
-            // Actualizar el estado de asistencia del personal
             await updatePersonalAsistencia(personalId, estado);
 
             return response;

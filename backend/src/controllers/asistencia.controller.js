@@ -4,7 +4,7 @@ import Personal from "../entity/personal.entity.js";
 import fs from 'fs';
 import path from 'path';
 
-// Registrar asistencia
+
 export const marcarAsistencia = async (req, res) => {
     const { personalId, estado } = req.body;
 
@@ -13,23 +13,23 @@ export const marcarAsistencia = async (req, res) => {
     const estadosValidos = ['Presente', 'Ausente', 'Ausente justificado'];
 
     try {
-        // Validar estado
+     
         if (!estadosValidos.includes(estado)) {
             return res.status(400).json({ message: "El estado debe ser 'Presente', 'Ausente' o 'Ausente justificado'." });
         }
 
-        // Convertir personalId a número
+       
         const parsedPersonalId = parseInt(personalId, 10);
         console.log('Parsed Personal ID:', parsedPersonalId);
 
-        // Buscar personal por ID
+       
         const personal = await AppDataSource.getRepository(Personal).findOneBy({ id: parsedPersonalId });
         console.log('Personal encontrado:', personal);
         if (!personal) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
 
-        // Crear nueva asistencia
+      
         const asistenciaRepository = AppDataSource.getRepository(AsistenciaSchema);
         const nuevaAsistencia = asistenciaRepository.create({
             personal: { id: parsedPersonalId },
@@ -38,7 +38,7 @@ export const marcarAsistencia = async (req, res) => {
         });
         console.log('Nueva asistencia creada:', nuevaAsistencia);
 
-        // Guardar nueva asistencia en la base de datos
+        
         await asistenciaRepository.save(nuevaAsistencia);
 
         res.status(201).json({ message: "Asistencia registrada con éxito", asistencia: nuevaAsistencia });
@@ -48,7 +48,7 @@ export const marcarAsistencia = async (req, res) => {
     }
 };
 
-// Subir justificativo
+
 export const subirJustificativo = async (req, res) => {
     const { personalId, asistenciaId } = req.params;
     const file = req.file;
@@ -81,7 +81,7 @@ export const subirJustificativo = async (req, res) => {
     }
 };
 
-// Actualizar estado de asistencia
+
 export const actualizarEstadoAsistencia = async (req, res) => {
     const { personalId } = req.params;
     const { estado } = req.body;
@@ -89,13 +89,13 @@ export const actualizarEstadoAsistencia = async (req, res) => {
     console.log('Payload recibido para actualizar estado:', req.body);
 
     try {
-        // Buscar personal por ID
+        
         const personal = await AppDataSource.getRepository(Personal).findOneBy({ id: parseInt(personalId, 10) });
         if (!personal) {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
 
-        // Actualizar el estado de asistencia
+        
         personal.asistencia = estado;
         await AppDataSource.getRepository(Personal).save(personal);
 
@@ -106,7 +106,7 @@ export const actualizarEstadoAsistencia = async (req, res) => {
     }
 };
 
-// Obtener todas las asistencias
+
 export const getAsistencias = async (req, res) => {
     try {
         const asistenciaRepository = AppDataSource.getRepository(AsistenciaSchema);

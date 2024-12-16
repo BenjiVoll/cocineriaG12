@@ -12,11 +12,11 @@ const useTableHistorial = ({ data, columns, initialSortName }) => {
         columns,
         layout: 'fitColumns',
         initialSort: [
-          { column: initialSortName, dir: 'asc' } // Orden inicial
+          { column: initialSortName, dir: 'asc' } 
         ],
       });
 
-      // Limpia la instancia de Tabulator al desmontar el componente
+     
       return () => {
         table.destroy();
       };

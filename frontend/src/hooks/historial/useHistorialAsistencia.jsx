@@ -6,10 +6,10 @@ const useHistorialAsistencia = () => {
     const [loading, setLoading] = useState(true);
 
     const fetchHistorial = async () => {
-        setLoading(true); // Indicamos que estamos cargando los datos
+        setLoading(true); 
         console.log('Iniciando la solicitud de historial...');
         try {
-            // Accedemos a la URL de la variable de entorno VITE_BASE_URL
+            
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/asistencia`);
             console.log('Respuesta recibida:', response);
 
@@ -39,7 +39,7 @@ const useHistorialAsistencia = () => {
         formData.append('justificativo', file);
 
         try {
-            // Aquí estamos asegurándonos de que la URL sea la correcta para subir justificativos
+           
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/historial/${personalId}/asistencia/${asistenciaId}/justificativo`, {
                 method: 'POST',
                 body: formData
@@ -49,7 +49,7 @@ const useHistorialAsistencia = () => {
                 throw new Error(`Error HTTP: ${response.status}`);
             }
 
-            await fetchHistorial(); // Actualiza el historial después de subir el archivo
+            await fetchHistorial(); 
         } catch (error) {
             console.error('Error al subir justificativo:', error);
             setError(error.message);

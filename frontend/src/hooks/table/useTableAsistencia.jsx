@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Tabulator from 'tabulator-tables'; // Asegúrate de que Tabulator está correctamente importado
-
+import Tabulator from 'tabulator-tables'; 
 const TableAsistencia = ({ data, columns, onSelectionChange }) => {
     const tableRef = useRef(null);
 
@@ -17,7 +16,7 @@ const TableAsistencia = ({ data, columns, onSelectionChange }) => {
                 },
             });
 
-            // Update table data on data change
+          
             table.setData(data);
 
             return () => {

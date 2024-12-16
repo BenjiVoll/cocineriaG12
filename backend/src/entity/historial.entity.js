@@ -1,4 +1,4 @@
-// entity/historial.entity.js
+
 "use strict";
 import { EntitySchema } from "typeorm";
 

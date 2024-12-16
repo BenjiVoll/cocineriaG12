@@ -60,7 +60,7 @@ const Asistencias = () => {
         { title: 'Teléfono', field: 'telefono', width: 200 },
         { title: 'Fecha', field: 'fechaIncorporacion', width: 200 },
         { title: 'Cargo', field: 'cargo', width: 200 },
-        { title: 'Asistencia', field: 'asistencia', width: 200 }, // Columna para mostrar el estado de asistencia
+        { title: 'Asistencia', field: 'asistencia', width: 200 },
         {
             title: 'Control de Asistencia',
             field: 'controlAsistencia',

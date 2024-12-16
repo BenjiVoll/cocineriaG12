@@ -31,7 +31,7 @@ const useGetPersonals = () => {
     useEffect(() => {
         fetchPersonals();
         if (!fetchInterval.current) {
-            fetchInterval.current = setInterval(fetchPersonals, 60000); // Actualiza cada 60 segundos
+            fetchInterval.current = setInterval(fetchPersonals, 60000); 
         }
         return () => {
             if (fetchInterval.current) {
