@@ -6,11 +6,10 @@ import Asistencia from '@pages/Asistencia';
 import Personal from '@pages/Personals';
 import Users from '@pages/Users';
 import Pedidos from '@pages/Pedidos';
-import Ingredientes from '@pages/Ingredientes';
-import Platos from '@pages/Platos';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
+import HistorialAsistencia from '@pages/HistorialAsistencia';
 
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
@@ -37,21 +36,13 @@ const router = createBrowserRouter([
         </ProtectedRoute>
         ),
       },
-      /*{
+      {
         path: '/users',
         element: <Users/>
-      },*/
+      },
       {
         path: '/orders',
         element: <Pedidos/>
-      },
-      {
-        path: '/ingredientes',
-        element: <Ingredientes/>
-      },
-      {
-        path: '/platos',
-        element: <Platos/>
       },
       {
         path: '/users',
