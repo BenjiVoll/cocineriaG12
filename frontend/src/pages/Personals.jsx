@@ -18,13 +18,13 @@ const Personals = () => {
     const [filterPersonalId, setFilterPersonalId] = useState('');
     const [selectedPersonal, setSelectedPersonal] = useState(null);
 
-    // Hook para editar personal
+    
     const { handleEditPersonal, isPopupOpen, setIsPopupOpen, isLoading: isEditing, error: editError } = useEditPersonal(fetchPersonals);
 
-    // Hook para eliminar personal
+  
     const { handleDelete, isDeleting, error: deleteError } = useDeletePersonal(fetchPersonals);
 
-    // Hook para agregar personal
+ 
     const {
         handleSubmitNewPersonal,
         isAdding,
@@ -46,13 +46,13 @@ const Personals = () => {
     }, []);
 
     const handleEditButtonClick = () => {
-        // Asegurémonos de que hay un personal seleccionado antes de abrir el formulario
+       
         if (selectedPersonal) {
             setTimeout(() => {
                 if (selectedPersonal) {
                     setIsPopupOpen(true);
                 }
-            }, 300); // pequeño retraso para asegurar que el personal esté seleccionado
+            }, 300); 
         }
     };
 

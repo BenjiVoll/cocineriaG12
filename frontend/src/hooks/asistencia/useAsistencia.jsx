@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { registerAsistencia } from '@services/asistencia.service.js';
+import { registerAsistencia, updatePersonalAsistencia } from '@services/asistencia.service.js';
 
 const useAsistencia = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -10,11 +10,18 @@ const useAsistencia = () => {
         setError(null);
 
         try {
+            // Registrar asistencia
             const response = await registerAsistencia({ personalId, estado, justificativo });
             console.log("Respuesta del servidor (Asistencia):", response);
+
+            // Actualizar el estado de asistencia del personal
+            await updatePersonalAsistencia(personalId, estado);
+
+            return response;
         } catch (err) {
             console.error("Error al registrar asistencia:", err);
-            setError(err.message || 'Error desconocido');
+            setError(err.response?.data?.message || 'Error desconocido');
+            throw err;
         } finally {
             setIsLoading(false);
         }

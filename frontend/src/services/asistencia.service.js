@@ -9,3 +9,13 @@ export const registerAsistencia = async (asistenciaData) => {
         throw error.response?.data || { success: false, message: "Error desconocido" };
     }
 };
+
+export const updatePersonalAsistencia = async (personalId, estado) => {
+    try {
+        const response = await axios.put(`/asistencia/personal/${personalId}/asistencia`, { estado });
+        return response.data;
+    } catch (error) {
+        console.error("Error al actualizar estado de asistencia:", error);
+        throw error.response?.data || { success: false, message: "Error desconocido" };
+    }
+};

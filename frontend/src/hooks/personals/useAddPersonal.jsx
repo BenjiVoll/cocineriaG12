@@ -18,7 +18,7 @@ const useAddPersonal = (fetchPersonals) => {
         try {
             await addPersonalService(personalData);
             fetchPersonals();
-            setIsAddPopupOpen(false); // Close the popup after adding
+            setIsAddPopupOpen(false); 
         } catch (err) {
             setError(err.message || 'Error desconocido');
         } finally {

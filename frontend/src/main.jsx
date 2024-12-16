@@ -9,6 +9,7 @@ import Pedidos from '@pages/Pedidos';
 import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
+import HistorialAsistencia from '@pages/HistorialAsistencia';
 
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/asistencia',
-        element: <Asistencia/> // Asegúrate de que esta ruta esté correcta
+        element: <Asistencia/> 
       },
       {
         path: '/personal',
@@ -50,7 +51,11 @@ const router = createBrowserRouter([
           <Users />
         </ProtectedRoute>
         ),
-    }
+      },
+      {
+        path: '/historial', 
+        element: <HistorialAsistencia/> 
+      }
     ]
   },
   {
@@ -61,8 +66,8 @@ const router = createBrowserRouter([
     path: '/register',
     element: <Register/>
   }
-])
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router}/>
-)
+);

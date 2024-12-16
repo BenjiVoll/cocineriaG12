@@ -1,51 +1,40 @@
-"use strict";
-import Personal from '../entity/personal.entity.js';
-import { AppDataSource } from '../config/configDb.js';
-
-const personalRepository = AppDataSource.getRepository(Personal);
+import { AppDataSource } from "../config/configDb.js";
+import Personal from "../entity/personal.entity.js";
 
 export const personalService = {
-    async createPersonal(data) {
-        console.log("Datos recibidos en backend para creación:", data); // Añadir log detallado
-
-        if (!data.fechaIncorporacion) {
-            throw new Error("La fecha de incorporación es requerida.");
+    createPersonal: async (data) => {
+        const newPersonal = AppDataSource.getRepository(Personal).create(data);
+        return await AppDataSource.getRepository(Personal).save(newPersonal);
+    },
+    getAllPersonals: async () => {
+        return await AppDataSource.getRepository(Personal).find();
+    },
+    getPersonalById: async (id) => {
+        return await AppDataSource.getRepository(Personal).findOneBy({ id: parseInt(id, 10) });
+    },
+    updatePersonal: async (id, updates) => {
+        const personal = await AppDataSource.getRepository(Personal).findOneBy({ id: parseInt(id, 10) });
+        if (!personal) {
+            throw new Error("Personal no encontrado");
         }
-
-        const newPersonal = personalRepository.create(data);
-        console.log("Nuevo personal creado:", newPersonal); // Log adicional
-        return await personalRepository.save(newPersonal);
-    },
-
-    async getPersonalById(id) {
-        const personal = await personalRepository.findOne({ where: { id } });
-        if (!personal) throw new Error("Personal no encontrado.");
-        return personal;
-    },
-
-    async getAllPersonals() {
-        return await personalRepository.find();
-    },
-
-    async updatePersonal(id, updates) {
-        const personal = await personalRepository.findOne({ where: { id } });
-        if (!personal) throw new Error("Personal no encontrado.");
-
-        console.log("Datos recibidos para actualización en backend:", updates); // Log detallado
-
-        if (!updates.fechaIncorporacion) {
-            throw new Error("La fecha de incorporación es requerida.");
-        }
-
         Object.assign(personal, updates);
-        console.log("Datos actualizados del personal:", personal); // Log adicional
-        return await personalRepository.save(personal);
+        return await AppDataSource.getRepository(Personal).save(personal);
     },
-
-    async deletePersonal(id) {
-        const personal = await personalRepository.findOne({ where: { id } });
-        if (!personal) throw new Error("Personal no encontrado.");
-        await personalRepository.remove(personal);
-        return personal;
+    deletePersonal: async (id) => {
+        const personal = await AppDataSource.getRepository(Personal).findOneBy({ id: parseInt(id, 10) });
+        if (!personal) {
+            throw new Error("Personal no encontrado");
+        }
+        return await AppDataSource.getRepository(Personal).remove(personal);
+    },
+    getAllPersonalsWithLastAsistencia: async () => {
+        return await AppDataSource.getRepository(Personal)
+            .createQueryBuilder("personal")
+            .leftJoinAndSelect(
+                "personal.asistencias", 
+                "asistencia", 
+                "asistencia.id = (SELECT MAX(a.id) FROM asistencias a WHERE a.personalId = personal.id)"
+            )
+            .getMany();
     }
 };

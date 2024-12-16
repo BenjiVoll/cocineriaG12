@@ -10,7 +10,6 @@ const PersonalSchema = new EntitySchema({
             primary: true,
             generated: true,
         },
-    
         nombreCompleto: {
             type: "varchar",
             length: 255,
@@ -30,7 +29,10 @@ const PersonalSchema = new EntitySchema({
             length: 100,
             nullable: false,
         },
-     
+        asistencia: {
+            type: "varchar",
+            nullable: true,
+        },
         createdAt: {
             type: "timestamp with time zone",
             default: () => "CURRENT_TIMESTAMP",
@@ -47,9 +49,11 @@ const PersonalSchema = new EntitySchema({
         asistencias: {
             type: "one-to-many",
             target: "Asistencia",
-            inverseSide: "personal"
+            inverseSide: "personal",
+            eager: true 
         }
     }
 });
 
 export default PersonalSchema;
+

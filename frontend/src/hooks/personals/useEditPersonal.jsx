@@ -10,9 +10,9 @@ const useEditPersonal = (fetchPersonals) => {
         setIsLoading(true);
         setError(null);
         try {
-            console.log("Editando personal con ID:", id); // Log adicional
+            console.log("Editando personal con ID:", id); 
             await editPersonalService(id, updatedData);
-            await fetchPersonals(); // Refrescar la lista de personales después de editar
+            await fetchPersonals(); 
             console.log("Personal editado correctamente");
         } catch (err) {
             console.error("Error al editar personal:", err);
