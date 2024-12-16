@@ -7,7 +7,7 @@ const useDeleteOrder = (fetchOrders, setDataOrder) => {
             try {
                 const result = await deleteDataAlert();
                 if (result.isConfirmed) {
-                    const response = await deleteOrder(dataOrder[0].id); // Asegúrate de que 'id' es el identificador correcto
+                    const response = await deleteOrder(dataOrder[0].id);
                     if (response.status === 'Client error') {
                         return showErrorAlert('Error', response.details);
                     }

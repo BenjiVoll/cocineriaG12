@@ -20,7 +20,7 @@ export const marcarAsistencia = async (req, res) => {
             return res.status(404).json({ message: "Usuario no encontrado" });
         }
 
-        // Si el estado es "Ausente justificado", verificar que haya un justificativo
+        // Si Ausente justificado verificar justificativo
         if (estado === 'Ausente justificado' && !justificativo) {
             return res.status(400).json({ message: "Se requiere un justificativo para marcar la asistencia como 'Ausente justificado'." });
         }
@@ -44,7 +44,7 @@ export const marcarAsistencia = async (req, res) => {
 export const getAsistencias = async (req, res) => {
     try {
         const asistenciaRepository = AppDataSource.getRepository(AsistenciaSchema);
-        const asistencias = await asistenciaRepository.find({ relations: ['personal'] }); // Incluye la relación si es necesario
+        const asistencias = await asistenciaRepository.find({ relations: ['personal'] }); 
         res.json(asistencias);
     } catch (error) {
         console.error(error);

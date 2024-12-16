@@ -4,20 +4,21 @@ import CloseIcon from '@assets/XIcon.svg';
 import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 
 export default function Popup({ show, setShow, data, action }) {
-    const userData = data && data.length > 0 ? data[0] : {};
+    
+    const userData = data || {};
 
     const handleSubmit = (formData) => {
-        action(formData);
+        action(formData);  
     };
 
     const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/);
     return (
         <div>
-            { show && (
+            {show && (
             <div className="bg">
                 <div className="popup">
                     <button className='close' onClick={() => setShow(false)}>
-                        <img src={CloseIcon} />
+                        <img src={CloseIcon} alt="Cerrar" />
                     </button>
                     <Form
                         title="Editar usuario"
@@ -66,6 +67,8 @@ export default function Popup({ show, setShow, data, action }) {
                                 options: [
                                     { value: 'administrador', label: 'Administrador' },
                                     { value: 'usuario', label: 'Usuario' },
+                                    { value: 'mesero', label: 'Mesero' },
+                                    { value: 'cocinero', label: 'Cocinero' },
                                 ],
                                 required: true,
                                 defaultValue: userData.rol || "",
@@ -75,7 +78,7 @@ export default function Popup({ show, setShow, data, action }) {
                                     <span>
                                         Nueva contraseña
                                         <span className='tooltip-icon'>
-                                            <img src={QuestionIcon} />
+                                            <img src={QuestionIcon} alt="tooltip" />
                                             <span className='tooltip-text'>Este campo es opcional</span>
                                         </span>
                                     </span>
