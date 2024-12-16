@@ -36,10 +36,11 @@ export async function getOrdersService() {
 
 export async function addOrderService(orderData) {
   try {
+    console.log("Datos recibidos para agregar el pedido:", orderData);
     const orderRepository = AppDataSource.getRepository(Order);
 
     const newOrder = orderRepository.create(orderData);
-    
+
     await orderRepository.save(newOrder);
 
     return [newOrder, null];
@@ -57,9 +58,7 @@ export async function updateOrderService(id, body) {
 
     if (!orderFound) return [null, "Pedido no encontrado"];
 
-    const dataOrderUpdate = {
-      estado: body.estado
-    };
+    const dataOrderUpdate = { ...body };
 
     await orderRepository.update(id, dataOrderUpdate);
 

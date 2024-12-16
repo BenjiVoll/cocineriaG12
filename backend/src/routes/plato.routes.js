@@ -17,7 +17,7 @@ router
 
 router
   .post("/",  createPlatoController)
-  .put("/update/:id", updatePlatoController)
+  .patch("/update/:id", updatePlatoController)
   .get("/search/:id", getPlatosController)
   .get("/", getPlatoController)
   .delete("/delete/:id", deletePlatoController);

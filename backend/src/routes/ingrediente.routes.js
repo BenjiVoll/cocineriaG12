@@ -18,7 +18,7 @@ router
 
 router
   .post("/", createIngredienteController)
-  .put("/update/:id", updateIngredienteController)
+  .patch("/update/:id", updateIngredienteController)
   .get("/search/:id", getIngredientesController)
   .get("/", getIngredienteController)
   .delete("/delete/:id", deleteIngredienteController);
