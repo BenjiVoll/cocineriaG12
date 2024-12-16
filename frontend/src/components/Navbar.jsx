@@ -9,6 +9,7 @@ const Navbar = () => {
     const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
     const userRole = user?.rol;
     const [menuOpen, setMenuOpen] = useState(false);
+    const [submenuOpen, setSubmenuOpen] = useState(false);
 
     const logoutSubmit = () => {
         try {
@@ -26,6 +27,10 @@ const Navbar = () => {
             addActiveClass();
         }
         setMenuOpen(!menuOpen);
+    };
+
+    const toggleSubmenu = () => {
+        setSubmenuOpen(!submenuOpen);
     };
 
     const removeActiveClass = () => {
@@ -71,6 +76,41 @@ const Navbar = () => {
                                 >
                                     Usuarios
                                 </NavLink>
+                            </li>
+                            <li>
+                                <div className="submenu">
+                                    <span onClick={toggleSubmenu}>
+                                        Menú
+                                    </span>
+                                    {submenuOpen && (
+                                        <ul>
+                                            <li>
+                                                <NavLink 
+                                                    to="/platos" 
+                                                    onClick={() => { 
+                                                        setMenuOpen(false); 
+                                                        addActiveClass();
+                                                    }} 
+                                                    activeClassName="active"
+                                                >
+                                                    Platos
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink 
+                                                    to="/ingredientes" 
+                                                    onClick={() => { 
+                                                        setMenuOpen(false); 
+                                                        addActiveClass();
+                                                    }} 
+                                                    activeClassName="active"
+                                                >
+                                                    Ingredientes
+                                                </NavLink>
+                                            </li>
+                                        </ul>
+                                    )}
+                                </div>
                             </li>
                             {(userRole === 'administrador' || userRole === 'mesero') && (
                                 <li>

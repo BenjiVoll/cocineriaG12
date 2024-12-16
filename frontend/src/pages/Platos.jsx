@@ -1,4 +1,4 @@
-import Table from '@components/Table';
+import Table from '@components/TableMenu';
 import usePlatos from '@hooks/platos/useGetPlatos.jsx';
 import Search from '../components/Search';
 import { PopupAddPlato, PopupEditPlato } from '@components/popupPlato'; // Importa los popups desde popupPlato.jsx

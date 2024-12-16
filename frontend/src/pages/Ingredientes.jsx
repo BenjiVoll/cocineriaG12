@@ -1,4 +1,4 @@
-import Table from '@components/Table';
+import Table from '@components/TableMenu';
 import useIngredientes from '@hooks/ingredientes/useGetIngredientes.jsx';
 import Search from '../components/Search';
 import { PopupAddIngrediente, PopupEditIngrediente } from '@components/PopupIngrediente';

@@ -13,7 +13,7 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
             const updatedColumns = [
                 { 
                     formatter: "rowSelection", 
-                    titleFormatter: "rowSelection",
+                    titleFormatter: false, 
                     hozAlign: "center", 
                     headerSort: false, 
                     cellClick: function (e, cell) {
@@ -45,11 +45,6 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
                     { column: initialSortName, dir: "asc" }
                 ],
             });
-
-            tabulatorTable.on("rowClick", function(e, row) {
-                row.toggleSelect();
-            });
-
             tabulatorTable.on("rowSelectionChanged", function(selectedData) {
                 if (onSelectionChange) {
                     onSelectionChange(selectedData);
@@ -86,5 +81,5 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
 
     return { tableRef };
 }
-
 export default useTable;
+

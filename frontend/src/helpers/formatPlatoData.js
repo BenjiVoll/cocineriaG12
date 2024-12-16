@@ -7,9 +7,8 @@ export function formatPlatoData(plato) {
         nombre: startCase(plato.nombre),
         descripcion: plato.descripcion,
         precio: plato.precio,
-        disponible: plato.disponible ? "Sí" : "No",
+        disponible: plato.disponible,
         ingredientes: Array.isArray(plato.ingredientes) ? plato.ingredientes : [],
         createdAt: formatTempo(plato.createdAt, "DD-MM-YYYY"),
-        updatedAt: formatTempo(plato.updatedAt, 'DD-MM-YYYY HH:mm:ss')
     };
 }

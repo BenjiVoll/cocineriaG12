@@ -62,7 +62,7 @@ export async function getPlatoService() {
       nombre: plato.nombre,
       descripcion: plato.descripcion,
       precio: plato.precio,
-      disponible: plato.disponible ? 'Sí' : 'No',
+      disponible: plato.disponible,
       ingredientes: plato.ingredientes.map(ingrediente => ingrediente.nombre),
       createdAt: plato.createdAt
     }));

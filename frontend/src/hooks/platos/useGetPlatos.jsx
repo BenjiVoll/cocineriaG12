@@ -13,9 +13,9 @@ const useGetPlatos = () => {
                 nombre: plato.nombre,
                 descripcion: plato.descripcion,
                 precio: plato.precio,
-                disponible: plato.disponible ? 'Sí' : 'No',
-                ingredientes: plato.ingredientes ? plato.ingredientes.join(", ") // Unimos los ingredientes como una cadena de texto
-                    : "Sin ingredientes", // Si no hay ingredientes, mostramos "Sin ingredientes"
+                disponible: plato.disponible ? "Sí" : "No",
+                ingredientes: plato.ingredientes ? plato.ingredientes.join(", ")
+                    : "Sin ingredientes", 
                 createdAt: plato.createdAt,
             }));
     
