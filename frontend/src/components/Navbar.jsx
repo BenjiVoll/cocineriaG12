@@ -59,18 +59,75 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     {userRole === 'administrador' && (
-                    <li>
-                        <NavLink 
-                            to="/users" 
-                            onClick={() => { 
-                                setMenuOpen(false); 
-                                addActiveClass();
-                            }} 
-                            activeClassName="active"
-                        >
-                            Usuarios
-                        </NavLink>
-                    </li>
+                        <>
+                            <li>
+                                <NavLink 
+                                    to="/users" 
+                                    onClick={() => { 
+                                        setMenuOpen(false); 
+                                        addActiveClass();
+                                    }} 
+                                    activeClassName="active"
+                                >
+                                    Usuarios
+                                </NavLink>
+                            </li>
+                            {(userRole === 'administrador' || userRole === 'mesero') && (
+                                <li>
+                                    <NavLink 
+                                        to="/orders" 
+                                        onClick={() => { 
+                                            setMenuOpen(false); 
+                                            addActiveClass();
+                                        }} 
+                                        activeClassName="active"
+                                    >
+                                        Pedidos
+                                    </NavLink>
+                                </li>
+                            )}
+                            {(userRole === 'administrador') && (
+                                <li>
+                                    <NavLink 
+                                        to="/asistencia" 
+                                        onClick={() => { 
+                                            setMenuOpen(false); 
+                                            addActiveClass();
+                                        }} 
+                                        activeClassName="active"
+                                    >
+                                        Asistencia
+                                    </NavLink>
+                                </li>
+                            )}
+                            {(userRole === 'administrador') && (
+                                <li>
+                                    <NavLink 
+                                        to="/personal" 
+                                        onClick={() => { 
+                                            setMenuOpen(false); 
+                                            addActiveClass();
+                                        }} 
+                                        activeClassName="active"
+                                    >
+                                        Personal
+                                    </NavLink>
+                                </li>
+                            )}
+                            {}
+                            <li>
+                                <NavLink 
+                                    to="/historial" 
+                                    onClick={() => { 
+                                        setMenuOpen(false); 
+                                        addActiveClass();
+                                    }} 
+                                    activeClassName="active"
+                                >
+                                    Historial
+                                </NavLink>
+                            </li>
+                        </>
                     )}
                     <li>
                         <NavLink 

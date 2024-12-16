@@ -2,11 +2,23 @@
 import { Router } from "express";
 import userRoutes from "./user.routes.js";
 import authRoutes from "./auth.routes.js";
+import platoRoutes from "./plato.routes.js";
+import ingredienteRoutes from "./ingrediente.routes.js";
+import personalRoutes from "./personal.routes.js";
+import asistenciaRoutes from "./asistencia.routes.js";
+import orderRoutes from "./order.routes.js";
+import historialRoutes from "./historial.routes.js";  
 
 const router = Router();
 
 router
     .use("/auth", authRoutes)
-    .use("/user", userRoutes);
+    .use("/user", userRoutes)
+    .use("/plato", platoRoutes)
+    .use("/ingrediente", ingredienteRoutes)
+    .use("/personal", personalRoutes)
+    .use("/asistencia", asistenciaRoutes)
+    .use("/order", orderRoutes)
+    .use("/historial", historialRoutes);  
 
 export default router;

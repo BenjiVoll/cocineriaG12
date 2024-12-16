@@ -1,0 +1,18 @@
+.attendance-select {
+  padding: 4px;
+  margin: 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.attendance-select option[value="Presente"] {
+  background-color: lightblue;
+}
+
+.attendance-select option[value="Ausente"] {
+  background-color: lightcoral;
+}
+
+.attendance-select option[value="Justificado"] {
+  background-color: lightgoldenrodyellow;
+}
