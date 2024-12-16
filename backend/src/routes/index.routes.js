@@ -7,7 +7,7 @@ import ingredienteRoutes from "./ingrediente.routes.js";
 import personalRoutes from "./personal.routes.js";
 import asistenciaRoutes from "./asistencia.routes.js";
 import orderRoutes from "./order.routes.js";
-
+import historialRoutes from "./historial.routes.js";  
 
 const router = Router();
 
@@ -17,7 +17,8 @@ router
     .use("/plato", platoRoutes)
     .use("/ingrediente", ingredienteRoutes)
     .use("/personal", personalRoutes)
-    .use("/asistencia", asistenciaRoutes) 
-    .use("/order", orderRoutes);
+    .use("/asistencia", asistenciaRoutes)
+    .use("/order", orderRoutes)
+    .use("/historial", historialRoutes);  
 
 export default router;

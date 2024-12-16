@@ -1,84 +1,31 @@
-import { useEffect, useRef, useState } from 'react';
-import { TabulatorFull as Tabulator } from 'tabulator-tables';
-import "tabulator-tables/dist/css/tabulator.min.css";
-import '@styles/asistencias.css';
-
-function useTableAsistencia({ data, columns, filter, dataToFilter, initialSortName, onSelectionChange }) {
+import React, { useEffect, useRef } from 'react';
+import Tabulator from 'tabulator-tables'; 
+const TableAsistencia = ({ data, columns, onSelectionChange }) => {
     const tableRef = useRef(null);
-    const [table, setTable] = useState(null);
-    const [isTableBuilt, setIsTableBuilt] = useState(false);
 
     useEffect(() => {
         if (tableRef.current) {
-            const updatedColumns = [
-                { 
-                    formatter: "rowSelection", 
-                    titleFormatter: false, 
-                    hozAlign: "center", 
-                    headerSort: false, 
-                    cellClick: function (e, cell) {
-                        cell.getRow().toggleSelect();
-                    } 
-                },
-                ...columns
-            ];
-            const tabulatorTable = new Tabulator(tableRef.current, {
-                data: [],
-                columns: updatedColumns,
+            const table = new Tabulator(tableRef.current, {
+                data,
+                columns,
                 layout: "fitColumns",
-                responsiveLayout: "collapse",
-                pagination: true,
-                paginationSize: 6,
-                selectableRows: 1,
-                rowHeight: 46,
-                langs: {
-                    "default": {
-                        "pagination": {
-                            "first": "Primero",
-                            "prev": "Anterior",
-                            "next": "Siguiente",
-                            "last": "Último",
-                        }
+                rowClick: (e, row) => {
+                    if (onSelectionChange) {
+                        onSelectionChange([row.getData()]);
                     }
                 },
-                initialSort: [
-                    { column: initialSortName, dir: "asc" }
-                ],
             });
-            tabulatorTable.on("rowSelectionChanged", function(selectedData) {
-                if (onSelectionChange) {
-                    onSelectionChange(selectedData);
-                }
-            });
-            tabulatorTable.on("tableBuilt", function() {
-                setIsTableBuilt(true);
-            });
-            setTable(tabulatorTable);
+
+          
+            table.setData(data);
+
             return () => {
-                tabulatorTable.destroy();
-                setIsTableBuilt(false);
-                setTable(null);
+                table.destroy();
             };
         }
-    }, []);
+    }, [data, columns, onSelectionChange]);
 
-    useEffect(() => {
-        if (table && isTableBuilt) {
-            table.replaceData(data);
-        }
-    }, [data, table, isTableBuilt]);
+    return <div ref={tableRef}></div>;
+};
 
-    useEffect(() => {
-        if (table && isTableBuilt) {
-            if (filter) {
-                table.setFilter(dataToFilter, "like", filter);
-            } else {
-                table.clearFilter();
-            }
-            table.redraw();
-        }
-    }, [filter, table, dataToFilter, isTableBuilt]);
-
-    return { tableRef };
-}
-export default useTableAsistencia;
+export default TableAsistencia;
