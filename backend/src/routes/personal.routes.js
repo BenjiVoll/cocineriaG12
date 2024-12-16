@@ -16,10 +16,10 @@ const router = Router();
 // router.use(authenticateJwt);
 // router.use(isAdmin);
 
-router.post("/", createUser); // POST http://localhost:3001/api/personal/
-router.get("/", getUsers); // GET http://localhost:3001/api/personal/
-router.get("/:id", getUser); // GET http://localhost:3001/api/personal/:id
-router.put("/:id", updateUser); // PUT http://localhost:3001/api/personal/:id
-router.delete("/:id", deleteUser); // DELETE http://localhost:3001/api/personal/:id
+router.post("/", createUser); 
+router.get("/", getUsers); 
+router.get("/:id", getUser); 
+router.put("/:id", updateUser); 
+router.delete("/:id", deleteUser); 
 
 export default router;

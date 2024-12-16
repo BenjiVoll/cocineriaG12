@@ -6,7 +6,7 @@ const TableAsistencia = ({ data, columns, onSelectionChange }) => {
     const tableInstance = useRef(null);
 
     useEffect(() => {
-        // Verificar que los datos y las columnas estén correctos
+      
         if (!data || data.length === 0) {
             console.log('No hay datos disponibles para mostrar');
             return;
@@ -16,7 +16,7 @@ const TableAsistencia = ({ data, columns, onSelectionChange }) => {
             return;
         }
 
-        // Asegúrate de destruir la tabla anterior si existe
+       
         if (tableInstance.current) {
             console.log('Destruyendo la tabla previa...');
             tableInstance.current.destroy();
@@ -26,7 +26,7 @@ const TableAsistencia = ({ data, columns, onSelectionChange }) => {
         if (tableRef.current && columns.length > 0) {
             console.log('Inicializando nueva tabla...');
             tableInstance.current = new Tabulator(tableRef.current, {
-                data: data || [], // Configurar los datos iniciales al construir la tabla
+                data: data || [], 
                 columns: columns,
                 layout: "fitColumns",
                 rowClick: (e, row) => {
@@ -37,7 +37,7 @@ const TableAsistencia = ({ data, columns, onSelectionChange }) => {
                 },
             });
 
-            // Cleanup al desmontar el componente
+            
             return () => {
                 if (tableInstance.current) {
                     console.log('Destruyendo la tabla al desmontar el componente...');
@@ -46,7 +46,7 @@ const TableAsistencia = ({ data, columns, onSelectionChange }) => {
                 }
             };
         }
-    }, [columns, data]); // Agregar `data` como dependencia
+    }, [columns, data]); 
 
     return <div id="example-table" ref={tableRef}></div>;
 };

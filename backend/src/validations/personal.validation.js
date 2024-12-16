@@ -26,12 +26,14 @@ export const personalQueryValidation = Joi.object({
 
 export const personalBodyValidation = Joi.object({
   nombreCompleto: Joi.string()
-    .pattern(/^[a-zA-Z\s]+$/)
+    .pattern(/^[A-Z][a-z]*\s[A-Z][a-z]*$/)
+    .min(3)
     .max(100)
     .required()
     .messages({
       "string.base": "El nombre completo debe ser de tipo string.",
-      "string.pattern.base": "El nombre completo solo debe contener letras.",
+      "string.pattern.base": "El nombre completo debe tener la primera letra en mayúscula y estar separado por un espacio.",
+      "string.min": "El nombre completo debe tener al menos 3 caracteres.",
       "string.max": "El nombre completo no debe exceder los 100 caracteres.",
       "any.required": "El nombre completo es requerido.",
     }),
@@ -56,11 +58,11 @@ export const personalBodyValidation = Joi.object({
       "date.max": "La fecha de incorporación no puede ser después del año 2025.",
     }),
   cargo: Joi.string()
-    .valid('cocinero', 'administrador', 'garzon')
+    .valid('cocinero', 'administrador', 'mesero')
     .required()
     .messages({
       "string.base": "El cargo debe ser de tipo string.",
-      "any.only": "El cargo debe ser cocinero, administrador o garzón.",
+      "any.only": "El cargo debe ser cocinero, administrador o mesero.",
       "any.required": "El cargo es requerido.",
     }),
   createdAt: Joi.date()

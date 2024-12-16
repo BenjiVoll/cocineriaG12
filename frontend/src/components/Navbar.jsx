@@ -114,7 +114,7 @@ const Navbar = () => {
                                     </NavLink>
                                 </li>
                             )}
-                            {/* Nueva opción de Historial de Asistencia */}
+                            {}
                             <li>
                                 <NavLink 
                                     to="/historial" 

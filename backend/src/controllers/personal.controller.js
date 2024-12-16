@@ -12,6 +12,12 @@ export const createUser = async (req, res) => {
         const data = req.body;
         console.log("Datos recibidos en controlador para crear usuario:", data); // Log adicional
 
+        // Verificar si el teléfono ya existe
+        const existingPersonal = await personalService.getPersonalByPhone(data.telefono);
+        if (existingPersonal) {
+            return res.status(400).json({ message: "El teléfono ya está en uso." });
+        }
+
         const personal = await personalService.createPersonal(data);
         res.status(201).json({ data: personal });
     } catch (error) {
@@ -58,6 +64,12 @@ export const updateUser = async (req, res) => {
         const { id } = req.params;
         const updates = req.body;
         console.log("Datos recibidos para actualización en controlador:", updates); // Log adicional
+
+        // Verificar si el teléfono ya existe y pertenece a otro usuario
+        const existingPersonal = await personalService.getPersonalByPhone(updates.telefono);
+        if (existingPersonal && existingPersonal.id !== parseInt(id, 10)) {
+            return res.status(400).json({ message: "El teléfono ya está en uso." });
+        }
 
         const updatedUser = await personalService.updatePersonal(id, updates);
         res.status(200).json({ data: updatedUser });

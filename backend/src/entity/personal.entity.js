@@ -12,12 +12,12 @@ const PersonalSchema = new EntitySchema({
         },
         nombreCompleto: {
             type: "varchar",
-            length: 255,
+            length: 100, // Restringir a 100 caracteres
             nullable: false,
         },
         telefono: {
             type: "varchar",
-            length: 9,
+            length: 9, // Restringir a 9 caracteres
             nullable: false,
         },
         fechaIncorporacion: {
@@ -52,7 +52,14 @@ const PersonalSchema = new EntitySchema({
             inverseSide: "personal",
             eager: true 
         }
-    }
+    },
+    checks: [
+        { expression: "char_length(\"telefono\") = 9", name: "check_telefono_length" },
+        { expression: "\"telefono\" ~ '^9[0-9]{8}$'", name: "check_telefono_format" }, 
+        { expression: "char_length(\"nombreCompleto\") <= 100", name: "check_nombre_length" }, 
+        { expression: "\"fechaIncorporacion\" >= '2024-01-01' AND \"fechaIncorporacion\" <= '2025-12-31'", name: "check_fechaIncorporacion_range" }, 
+        { expression: "\"cargo\" IN ('cocinero', 'administrador', 'mesero')", name: "check_cargo_values" } 
+    ]
 });
 
 export default PersonalSchema;

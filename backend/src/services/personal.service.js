@@ -12,6 +12,9 @@ export const personalService = {
     getPersonalById: async (id) => {
         return await AppDataSource.getRepository(Personal).findOneBy({ id: parseInt(id, 10) });
     },
+    getPersonalByPhone: async (telefono) => {
+        return await AppDataSource.getRepository(Personal).findOneBy({ telefono });
+    },
     updatePersonal: async (id, updates) => {
         const personal = await AppDataSource.getRepository(Personal).findOneBy({ id: parseInt(id, 10) });
         if (!personal) {

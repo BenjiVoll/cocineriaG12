@@ -12,19 +12,15 @@ import '@styles/personals.css';
 import useEditPersonal from '@hooks/personals/useEditPersonal';
 import useDeletePersonal from '@hooks/personals/useDeletePersonal';
 import useAddPersonal from '@hooks/personals/useAddPersonal';
+import AttendanceChart from '@components/AttendanceChart';
 
 const Personals = () => {
     const { personals, fetchPersonals } = usePersonals();
     const [filterPersonalId, setFilterPersonalId] = useState('');
     const [selectedPersonal, setSelectedPersonal] = useState(null);
 
-    
     const { handleEditPersonal, isPopupOpen, setIsPopupOpen, isLoading: isEditing, error: editError } = useEditPersonal(fetchPersonals);
-
-  
     const { handleDelete, isDeleting, error: deleteError } = useDeletePersonal(fetchPersonals);
-
- 
     const {
         handleSubmitNewPersonal,
         isAdding,
@@ -46,13 +42,12 @@ const Personals = () => {
     }, []);
 
     const handleEditButtonClick = () => {
-       
         if (selectedPersonal) {
             setTimeout(() => {
                 if (selectedPersonal) {
                     setIsPopupOpen(true);
                 }
-            }, 300); 
+            }, 300);
         }
     };
 
@@ -72,8 +67,6 @@ const Personals = () => {
         { title: 'Teléfono', field: 'telefono', width: 200 },
         { title: 'Fecha', field: 'fechaIncorporacion', width: 200 },
         { title: 'Cargo', field: 'cargo', width: 200 },
-        { title: 'Creado en', field: 'createdAt', width: 200 },
-        { title: 'Actualizado', field: 'updatedAt', width: 200 },
     ];
 
     return (
