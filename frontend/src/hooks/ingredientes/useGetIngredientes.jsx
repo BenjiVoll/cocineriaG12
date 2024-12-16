@@ -8,9 +8,9 @@ const useGetIngredientes = () => {
         try {
             const response = await getIngredientes();
             const formattedData = response.map(ingrediente => ({
+                id: ingrediente.id,
                 nombre: ingrediente.nombre,
                 cantidad: ingrediente.cantidad,
-                unidad: ingrediente.unidad,
                 createdAt: ingrediente.createdAt
             }));
             dataLogged(formattedData);

@@ -1,53 +1,42 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+import { addIngrediente } from '@services/ingrediente.service.js';
+import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 
-const useAddIngrediente = () => {
-    const [errorNombre, setErrorNombre] = useState('');
-    const [errorCantidad, setErrorCantidad] = useState('');
-    const [inputData, setInputData] = useState({ nombre: '', cantidad: '' });
-    const [ingredientes, setIngredientes] = useState([]);
+const useAddIngrediente = (setIngredientes) => {
+    const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+    const [ingredienteData, setIngredienteData] = useState({
+        nombre: '',
+        cantidad: 0,
+    });
 
-    useEffect(() => {
-        if (inputData.nombre) setErrorNombre('');
-        if (inputData.cantidad) setErrorCantidad('');
-    }, [inputData.nombre, inputData.cantidad]);
-
-    const errorData = (dataMessage) => {
-        if (dataMessage.dataInfo === 'nombre') {
-            setErrorNombre(dataMessage.message);
-        } else if (dataMessage.dataInfo === 'cantidad') {
-            setErrorCantidad(dataMessage.message);
-        }
+    const handleClickAdd = () => {
+        setIsAddPopupOpen(true);
     };
 
-    const handleInputChange = (field, value) => {
-        setInputData(prevState => ({
-            ...prevState,
-            [field]: value
-        }));
-    };
-
-    const addIngrediente = async () => {
+    const handleAddIngrediente = async (data) => {
         try {
-            const response = await axios.post('ingredientes', inputData);
-            setIngredientes(prevIngredientes => [...prevIngredientes, response.data]);
-            setInputData({ nombre: '', cantidad: '' });
+            console.log('Datos del ingrediente antes de agregar:', data); // Agrega este log
+            const newIngrediente = await addIngrediente(data);
+            showSuccessAlert('¡Creado!', 'El ingrediente ha sido creado correctamente.');
+            setIsAddPopupOpen(false);
+            setIngredientes(prevIngredientes => [...prevIngredientes, newIngrediente]);
+            setIngredienteData({
+                nombre: '',
+                cantidad: 0,
+            });
         } catch (error) {
-            console.error('Error al agregar ingrediente:', error);
-            if (error.response && error.response.data) {
-                errorData(error.response.data);
-            }
+            console.error('Error al crear el ingrediente:', error);
+            showErrorAlert('Error', error);
         }
     };
 
     return {
-        errorNombre,
-        errorCantidad,
-        inputData,
-        ingredientes,
-        errorData,
-        handleInputChange,
-        addIngrediente,
+        isAddPopupOpen,
+        setIsAddPopupOpen,
+        ingredienteData,
+        setIngredienteData,
+        handleAddIngrediente,
+        handleClickAdd
     };
 };
 

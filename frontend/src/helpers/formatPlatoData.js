@@ -7,7 +7,9 @@ export function formatPlatoData(plato) {
         nombre: startCase(plato.nombre),
         descripcion: plato.descripcion,
         precio: plato.precio,
-        fechaCreacion: plato.fechaCreacion ? formatTempo(plato.fechaCreacion, 'DD-MM-YYYY') : null,
-        fechaActualizacion: plato.fechaActualizacion ? formatTempo(plato.fechaActualizacion, 'DD-MM-YYYY HH:mm:ss') : null
+        disponible: plato.disponible ? "Sí" : "No",
+        ingredientes: Array.isArray(plato.ingredientes) ? plato.ingredientes : [],
+        createdAt: formatTempo(plato.createdAt, "DD-MM-YYYY"),
+        updatedAt: formatTempo(plato.updatedAt, 'DD-MM-YYYY HH:mm:ss')
     };
 }

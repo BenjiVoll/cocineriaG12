@@ -7,6 +7,7 @@ const useDeleteIngrediente = (fetchIngredientes, setDataIngrediente) => {
             try {
                 const result = await deleteDataAlert();
                 if (result.isConfirmed) {
+                    console.log('dataIngrediente:', dataIngrediente);
                     const ingredienteId = dataIngrediente[0].id;
                     if (!ingredienteId) {
                         return showErrorAlert('Error', 'ID del ingrediente no encontrado.');

@@ -1,7 +1,8 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { logout } from '@services/auth.service.js';
 import '@styles/navbar.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -14,18 +15,13 @@ const Navbar = () => {
     const logoutSubmit = () => {
         try {
             logout();
-            navigate('/auth'); 
+            navigate('/auth');
         } catch (error) {
             console.error('Error al cerrar sesión:', error);
         }
     };
 
     const toggleMenu = () => {
-        if (!menuOpen) {
-            removeActiveClass();
-        } else {
-            addActiveClass();
-        }
         setMenuOpen(!menuOpen);
     };
 
@@ -33,19 +29,16 @@ const Navbar = () => {
         setSubmenuOpen(!submenuOpen);
     };
 
-    const removeActiveClass = () => {
-        const activeLinks = document.querySelectorAll('.nav-menu ul li a.active');
-        activeLinks.forEach(link => link.classList.remove('active'));
-    };
-
-    const addActiveClass = () => {
+    useEffect(() => {
         const links = document.querySelectorAll('.nav-menu ul li a');
         links.forEach(link => {
             if (link.getAttribute('href') === location.pathname) {
                 link.classList.add('active');
+            } else {
+                link.classList.remove('active');
             }
         });
-    };
+    }, [location.pathname]);
 
     return (
         <nav className="navbar">
@@ -112,6 +105,20 @@ const Navbar = () => {
                                     )}
                                 </div>
                             </li>
+                            {(userRole === 'administrador' || userRole === 'mesero') && (
+                                <li>
+                                    <NavLink 
+                                        to="/orders" 
+                                        onClick={() => { 
+                                            setMenuOpen(false); 
+                                            addActiveClass();
+                                        }} 
+                                        activeClassName="active"
+                                    >
+                                        Pedidos
+                                    </NavLink>
+                                </li>
+                            )}
                             {(userRole === 'administrador') && (
                                 <li>
                                     <NavLink 
@@ -142,20 +149,6 @@ const Navbar = () => {
                             )}
                         </>
                     )}
-                    {(userRole === 'administrador' || userRole === 'mesero' || userRole === 'cocinero') && (
-                                <li>
-                                    <NavLink 
-                                        to="/orders" 
-                                        onClick={() => { 
-                                            setMenuOpen(false); 
-                                            addActiveClass();
-                                        }} 
-                                        activeClassName="active"
-                                    >
-                                        Pedidos
-                                    </NavLink>
-                                </li>
-                            )}
                     <li>
                         <NavLink 
                             to="/auth" 

@@ -7,36 +7,28 @@ const useGetPlatos = () => {
     const fetchPlatos = async () => {
         try {
             const response = await getPlatos();
+            console.log("Platos recibidos:", response);
+    
             const formattedData = response.map(plato => ({
+                id: plato.id,
                 nombre: plato.nombre,
                 descripcion: plato.descripcion,
                 precio: plato.precio,
-                createdAt: plato.createdAt
+                disponible: plato.disponible ? 'Sí' : 'No',
+                ingredientes: plato.ingredientes ? plato.ingredientes.join(", ") // Unimos los ingredientes como una cadena de texto
+                    : "Sin ingredientes", // Si no hay ingredientes, mostramos "Sin ingredientes"
+                createdAt: plato.createdAt,
             }));
-            dataLogged(formattedData);
+    
             setPlatos(formattedData);
         } catch (error) {
-            console.error("Error: ", error);
+            console.error("Error al obtener los platos:", error);
         }
     };
 
     useEffect(() => {
         fetchPlatos();
     }, []);
-
-    const dataLogged = (formattedData) => {
-        try {
-            const { rut } = JSON.parse(sessionStorage.getItem('usuario'));
-            for(let i = 0; i < formattedData.length ; i++) {
-                if(formattedData[i].rut === rut) {
-                    formattedData.splice(i, 1);
-                    break;
-                }
-            }
-        } catch (error) {
-            console.error("Error: ", error)
-        }
-    };
 
     return { platos, fetchPlatos, setPlatos };
 };

@@ -4,12 +4,12 @@ import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { formatPlatoData } from '@helpers/formatPlatoData.js';
 
 const useEditPlato = (setPlatos) => {
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [isPopupEditOpen, setIsPopupEditOpen] = useState(false);
     const [dataPlato, setDataPlato] = useState([]);
     
     const handleClickUpdate = () => {
         if (dataPlato.length > 0) {
-            setIsPopupOpen(true);
+            setIsPopupEditOpen(true);
         }
     };
 
@@ -18,7 +18,7 @@ const useEditPlato = (setPlatos) => {
             try {
                 const updatedPlato = await updatePlato(updatedPlatoData, dataPlato[0].id);
                 showSuccessAlert('¡Actualizado!', 'El plato ha sido actualizado correctamente.');
-                setIsPopupOpen(false);
+                setIsPopupEditOpen(false);
                 const formattedPlato = formatPlatoData(updatedPlato);
 
                 setPlatos(prevPlatos => prevPlatos.map(plato => {
@@ -40,8 +40,8 @@ const useEditPlato = (setPlatos) => {
     return {
         handleClickUpdate,
         handleUpdate,
-        isPopupOpen,
-        setIsPopupOpen,
+        isPopupEditOpen,
+        setIsPopupEditOpen,
         dataPlato,
         setDataPlato
     };

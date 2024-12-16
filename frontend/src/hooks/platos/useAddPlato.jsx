@@ -1,53 +1,47 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+import { addPlato } from '@services/plato.service.js'; // Asegúrate de tener este servicio implementado
+import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 
-const useAddPlato = () => {
-    const [errorNombre, setErrorNombre] = useState('');
-    const [errorDescripcion, setErrorDescripcion] = useState('');
-    const [inputData, setInputData] = useState({ nombre: '', descripcion: '' });
-    const [platos, setPlatos] = useState([]);
+const useAddPlato = (setPlatos) => {
+    const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+    const [platoData, setPlatoData] = useState({
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        disponible: false
+    });
 
-    useEffect(() => {
-        if (inputData.nombre) setErrorNombre('');
-        if (inputData.descripcion) setErrorDescripcion('');
-    }, [inputData.nombre, inputData.descripcion]);
-
-    const errorData = (dataMessage) => {
-        if (dataMessage.dataInfo === 'nombre') {
-            setErrorNombre(dataMessage.message);
-        } else if (dataMessage.dataInfo === 'descripcion') {
-            setErrorDescripcion(dataMessage.message);
-        }
+    const handleClickAdd = () => {
+        setIsAddPopupOpen(true);
     };
 
-    const handleInputChange = (field, value) => {
-        setInputData(prevState => ({
-            ...prevState,
-            [field]: value
-        }));
-    };
-
-    const addPlato = async () => {
+    const handleAddPlato = async (data) => {
         try {
-            const response = await axios.post('platos', inputData);
-            setPlatos(prevPlatos => [...prevPlatos, response.data]);
-            setInputData({ nombre: '', descripcion: '' });
+            console.log('Datos del plato antes de agregar:', data); // Agrega este log
+            const newPlato = await addPlato(data);
+            showSuccessAlert('¡Creado!', 'El plato ha sido creado correctamente.');
+            setIsAddPopupOpen(false);
+            setPlatos(prevPlatos => [...prevPlatos, newPlato]);
+            setPlatoData({
+                nombre: '',
+                descripcion: '',
+                precio: '',
+                disponible: false,
+                ingredientesIds: []
+            });
         } catch (error) {
-            console.error('Error al agregar plato:', error);
-            if (error.response && error.response.data) {
-                errorData(error.response.data);
-            }
+            console.error('Error al crear el plato:', error);
+            showErrorAlert('Error', error);
         }
     };
 
     return {
-        errorNombre,
-        errorDescripcion,
-        inputData,
-        platos,
-        errorData,
-        handleInputChange,
-        addPlato,
+        isAddPopupOpen,
+        setIsAddPopupOpen,
+        platoData,
+        setPlatoData,
+        handleAddPlato,
+        handleClickAdd
     };
 };
 

@@ -36,10 +36,10 @@ const router = createBrowserRouter([
         </ProtectedRoute>
         ),
       },
-      {
+      /*{
         path: '/users',
         element: <Users/>
-      },
+      },*/
       {
         path: '/orders',
         element: <Pedidos/>
