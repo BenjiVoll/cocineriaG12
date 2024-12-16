@@ -14,7 +14,7 @@ const HistorialAsistenciaSchema = new EntitySchema({
         estado: {
             type: "varchar",
             length: 50,
-            nullable: false, //'Presente', 'Ausente', 'Justificado'
+            nullable: false, 
         },
         justificativo: {
             type: "text",

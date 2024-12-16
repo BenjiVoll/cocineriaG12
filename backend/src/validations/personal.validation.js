@@ -26,7 +26,7 @@ export const personalQueryValidation = Joi.object({
 
 export const personalBodyValidation = Joi.object({
   nombreCompleto: Joi.string()
-    .pattern(/^[A-Z][a-z]*\s[A-Z][a-z]*$/)
+    .pattern(/^[A-ZÑ][a-zñ]*\s[A-ZÑ][a-zñ]*$/)
     .min(3)
     .max(100)
     .required()

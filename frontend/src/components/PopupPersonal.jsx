@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
 const PopupPersonal = ({ show, setShow, data, action, isEdit }) => {
     const [formData, setFormData] = useState({
         nombreCompleto: '',
@@ -38,7 +37,7 @@ const PopupPersonal = ({ show, setShow, data, action, isEdit }) => {
         if (nombre.length < 3) {
             return 'El nombre completo debe tener al menos 3 caracteres.';
         }
-        const regex = /^[A-Z][a-z]*\s[A-Z][a-z]*$/;
+        const regex = /^[A-ZÑ][a-zñ]*\s[A-ZÑ][a-zñ]*$/;
         if (!regex.test(nombre)) {
             return 'El nombre completo debe tener la primera letra en mayúscula y estar separado por un espacio.';
         }
@@ -68,14 +67,14 @@ const PopupPersonal = ({ show, setShow, data, action, isEdit }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validar los datos del formulario
+        
         const validationErrors = {
             nombreCompleto: validateNombreCompleto(formData.nombreCompleto),
             telefono: validateTelefono(formData.telefono),
             fechaIncorporacion: validateFechaIncorporacion(formData.fechaIncorporacion),
         };
 
-        // Verificar si hay errores de validación
+        
         if (Object.values(validationErrors).some(error => error !== '')) {
             setErrors(validationErrors);
             return;
@@ -91,7 +90,7 @@ const PopupPersonal = ({ show, setShow, data, action, isEdit }) => {
 
         try {
             await action(formattedData);
-            setShow(false); // Cierra el popup
+            setShow(false); 
         } catch (error) {
             console.error('Error al guardar:', error);
             if (error.response && error.response.data.message === "El teléfono ya está en uso.") {
@@ -123,7 +122,7 @@ const PopupPersonal = ({ show, setShow, data, action, isEdit }) => {
                             required
                             style={{ 
                                 borderColor: errors.nombreCompleto ? 'red' : 'initial', 
-                                backgroundImage: 'none' // Quita la imagen de fondo
+                                backgroundImage: 'none' 
                             }}
                         />
                         {errors.nombreCompleto && <p style={{ color: 'red' }}>{errors.nombreCompleto}</p>}

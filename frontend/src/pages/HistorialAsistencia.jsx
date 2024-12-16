@@ -1,18 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useHistorialAsistencia from '@hooks/historial/useHistorialAsistencia';
 import { TabulatorFull as Tabulator } from 'tabulator-tables';
+import AttendanceTable from '@components/AttendanceTable'; // Asegúrate de ajustar la ruta
 import '@styles/historial.css';
 
 const HistorialAsistencia = () => {
     const { historial, error, loading, subirJustificativo } = useHistorialAsistencia();
+    const [selectedHistorial, setSelectedHistorial] = useState(null);
 
     useEffect(() => {
         console.log('Componente HistorialAsistencia montado.');
+        console.log("Datos del historial inicialmente:", historial);
 
         if (historial.length > 0) {
-            new Tabulator("#historial-table", {
+            const table = new Tabulator("#historial-table", {
                 data: historial,
                 columns: [
+                    { 
+                        formatter: "rowSelection", 
+                        titleFormatter: "rowSelection",
+                        hozAlign: "center", 
+                        headerSort: false, 
+                        cellClick: function (e, cell) {
+                            console.log("Celda seleccionada:", cell);
+                            cell.getRow().toggleSelect();
+                        }
+                    },
                     { title: 'ID', field: 'id', width: 100 },
                     { title: 'Personal ID', field: 'personal.id', width: 200 },
                     { title: 'Nombre completo', field: 'personal.nombreCompleto', width: 200 },
@@ -23,7 +36,6 @@ const HistorialAsistencia = () => {
                         const asistenciaId = cell.getRow().getData().id;
                         const personalId = cell.getRow().getData().personal.id;
                         if (justificativo === 'Pendiente') {
-                            // Cambia la lógica para definir la función `handleFileUpload` en este contexto
                             return `
                                 <button class="upload-button" onclick="handleFileButtonClick(${personalId}, ${asistenciaId})">Subir PDF</button>
                                 <input type="file" id="upload-${asistenciaId}" style="display:none" accept="application/pdf" />
@@ -32,7 +44,16 @@ const HistorialAsistencia = () => {
                         return justificativo || '';
                     } }
                 ],
-                layout: "fitColumns", // Ajusta el diseño de la tabla
+                layout: "fitColumns",
+                responsiveLayout: "collapse",
+                pagination: true,
+                paginationSize: 6,
+                selectableRows: 1, // Usar selectableRows en lugar de selectable
+                rowClick: (e, row) => {
+                    const data = row.getData();
+                    console.log("Fila seleccionada (rowClick):", data);
+                    setSelectedHistorial(data);
+                }
             });
         }
     }, [historial]);
@@ -57,6 +78,14 @@ const HistorialAsistencia = () => {
             {error && <p style={{ color: 'red' }}>Error: {error}</p>}  {/* Mostrar error si ocurre */}
 
             <div id="historial-table"></div> {/* Aquí se renderiza la tabla Tabulator */}
+
+            {selectedHistorial && (
+                <>
+                    <p>Datos seleccionados:</p>
+                    <pre>{JSON.stringify(selectedHistorial, null, 2)}</pre> {/* Mostrar datos seleccionados */}
+                    <AttendanceTable data={selectedHistorial.personal} /> {/* Mostrar tabla de asistencia */}
+                </>
+            )}
         </div>
     );
 };

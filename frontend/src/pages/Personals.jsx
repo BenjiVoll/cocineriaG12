@@ -13,6 +13,7 @@ import useEditPersonal from '@hooks/personals/useEditPersonal';
 import useDeletePersonal from '@hooks/personals/useDeletePersonal';
 import useAddPersonal from '@hooks/personals/useAddPersonal';
 import AttendanceChart from '@components/AttendanceChart';
+import AttendanceTable from '@components/AttendanceTable'
 
 const Personals = () => {
     const { personals, fetchPersonals } = usePersonals();
