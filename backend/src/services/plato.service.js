@@ -80,12 +80,6 @@ export async function getPlatoService() {
 
 export async function updatePlatoService(platoId, data) {
   try {
-    // Validar los datos de entrada
-    const { error } = platoUpdateValidation.validate(data);
-    if (error) {
-      return [null, error.details[0].message];
-    }
-
     const platoRepository = AppDataSource.getRepository(Plato);
     const ingredienteRepository = AppDataSource.getRepository(Ingrediente);
 
@@ -99,17 +93,30 @@ export async function updatePlatoService(platoId, data) {
     }
 
     // Actualizar solo los datos proporcionados
-    Object.assign(plato, data);
+    if (data.nombre) plato.nombre = data.nombre;
+    if (data.descripcion) plato.descripcion = data.descripcion;
+    if (data.precio) plato.precio = data.precio;
+    if (data.disponible != null) plato.disponible = data.disponible;
 
-    // Si se proporcionan nuevos IDs de ingredientes, combinar con los existentes
+    // Si se proporcionan nuevos IDs de ingredientes, actualizar la relación
     if (data.ingredientesIds) {
-      const existingIngredients = plato.ingredientes.map(ing => ing.id);
-      const combinedIngredientsIds = [...new Set([...existingIngredients, ...data.ingredientesIds])];
-      const ingredientes = await ingredienteRepository.findBy({ id: In(combinedIngredientsIds) });
-      if (ingredientes.length !== combinedIngredientsIds.length) {
+      const ingredientes = await ingredienteRepository.find({
+        where: { id: In(data.ingredientesIds) }
+      });
+      if (ingredientes.length !== data.ingredientesIds.length) {
         return [null, "Algunos ingredientes no fueron encontrados"];
       }
-      plato.ingredientes = ingredientes;
+
+      // Crear un conjunto de IDs de ingredientes actuales
+      const ingredientesActualesIds = new Set(plato.ingredientes.map(ingrediente => ingrediente.id));
+
+      // Filtrar los ingredientes que ya están asociados al plato
+      const nuevosIngredientes = ingredientes.filter(
+        ingrediente => !ingredientesActualesIds.has(ingrediente.id)
+      );
+
+      // Agregar los nuevos ingredientes al plato
+      plato.ingredientes = [...plato.ingredientes, ...nuevosIngredientes];
     }
 
     await platoRepository.save(plato);
