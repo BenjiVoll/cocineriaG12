@@ -7,7 +7,6 @@ const useGetPlatos = () => {
     const fetchPlatos = async () => {
         try {
             const response = await getPlatos();
-            console.log("Platos recibidos:", response);
     
             const formattedData = response.map(plato => ({
                 id: plato.id,

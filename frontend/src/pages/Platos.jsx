@@ -49,15 +49,7 @@ const Platos = () => {
         { title: "Precio", field: "precio", width: 150, responsive: 2 }, 
         { title: "Disponible", field: "disponible", width: 150, responsive: 2 }, 
         { title: "Creado", field: "createdAt", width: 200, responsive: 2 }, 
-        {
-            title: "Ingredientes", 
-            field: "ingredientes", 
-            width: 300, 
-            responsive: 3,
-            render: (rowData) => {
-                return rowData.ingredientes ? rowData.ingredientes.map(ingrediente => ingrediente.nombre).join(", ") : "Sin ingredientes";
-            }
-        }
+        { title: "Ingredientes", field: "ingredientes", width: 200, responsive: 2 },
     ];
     
 
