@@ -22,10 +22,6 @@ const useEditPlato = (setPlatos) => {
                 const formattedPlato = formatPlatoData(updatedPlato);
 
                 setPlatos(prevPlatos => prevPlatos.map(plato => {
-                    console.log("Plato actual:", plato);
-                    if (plato.id === formattedPlato.id) {
-                        console.log("Reemplazando con:", formattedPlato);
-                    }
                     return plato.id === formattedPlato.id ? formattedPlato : plato;
                 }));
 

@@ -17,7 +17,6 @@ const useAddPlato = (setPlatos) => {
 
     const handleAddPlato = async (data) => {
         try {
-            console.log('Datos del plato antes de agregar:', data); // Agrega este log
             const newPlato = await addPlato(data);
             showSuccessAlert('¡Creado!', 'El plato ha sido creado correctamente.');
             setIsAddPopupOpen(false);
