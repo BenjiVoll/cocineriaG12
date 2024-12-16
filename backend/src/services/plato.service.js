@@ -53,26 +53,24 @@ export async function getPlatoService() {
   try {
     const platoRepository = AppDataSource.getRepository(Plato);
 
-    // Usamos `find` para obtener los platos con la relación de ingredientes
     const platos = await platoRepository.find({
-      relations: ["ingredientes"], // Esto incluye la relación de los ingredientes
+      relations: ["ingredientes"],
     });
 
-    // Mapeamos los platos para devolver solo las propiedades necesarias, incluidas solo los nombres de los ingredientes
     const platosFormateados = platos.map(plato => ({
       id: plato.id,
       nombre: plato.nombre,
       descripcion: plato.descripcion,
       precio: plato.precio,
       disponible: plato.disponible ? 'Sí' : 'No',
-      ingredientes: plato.ingredientes.map(ingrediente => ingrediente.nombre), // Extraemos solo el nombre del ingrediente
+      ingredientes: plato.ingredientes.map(ingrediente => ingrediente.nombre),
       createdAt: plato.createdAt
     }));
 
-    return [platosFormateados, null]; // Devuelve los platos formateados correctamente
+    return [platosFormateados, null];
   } catch (error) {
     console.error("Error al obtener platos:", error);
-    return [null, error]; // Si ocurre un error, lo manejamos aquí
+    return [null, error];
   }
 }
 
@@ -91,14 +89,13 @@ export async function updatePlatoService(platoId, data) {
     if (!plato) {
       return [null, "Plato no encontrado"];
     }
-
-    // Actualizar solo los datos proporcionados
+    
     if (data.nombre) plato.nombre = data.nombre;
     if (data.descripcion) plato.descripcion = data.descripcion;
     if (data.precio) plato.precio = data.precio;
     if (data.disponible != null) plato.disponible = data.disponible;
 
-    // Si se proporcionan nuevos IDs de ingredientes, actualizar la relación
+    
     if (data.ingredientesIds) {
       const ingredientes = await ingredienteRepository.find({
         where: { id: In(data.ingredientesIds) }
@@ -107,10 +104,10 @@ export async function updatePlatoService(platoId, data) {
         return [null, "Algunos ingredientes no fueron encontrados"];
       }
 
-      // Crear un conjunto de IDs de ingredientes actuales
+      
       const ingredientesActualesIds = new Set(plato.ingredientes.map(ingrediente => ingrediente.id));
 
-      // Filtrar los ingredientes que ya están asociados al plato
+      
       const nuevosIngredientes = ingredientes.filter(
         ingrediente => !ingredientesActualesIds.has(ingrediente.id)
       );
