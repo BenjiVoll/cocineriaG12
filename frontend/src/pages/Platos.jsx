@@ -43,13 +43,23 @@ const Platos = () => {
         setDataPlato(selectedPlatos);
     }, [setDataPlato]);
 
-    const columns = [
-        { title: "Nombre", field: "nombre", width: 350, responsive: 0 },
-        { title: "Descripción", field: "descripcion", width: 300, responsive: 3 },
-        { title: "Precio", field: "precio", width: 150, responsive: 2 },
-        { title: "Disponible", field: "disponible", width: 150, responsive: 2 },
-        { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
+    const columns = [ 
+        { title: "Nombre", field: "nombre", width: 350, responsive: 0 }, 
+        { title: "Descripción", field: "descripcion", width: 300, responsive: 3 }, 
+        { title: "Precio", field: "precio", width: 150, responsive: 2 }, 
+        { title: "Disponible", field: "disponible", width: 150, responsive: 2 }, 
+        { title: "Creado", field: "createdAt", width: 200, responsive: 2 }, 
+        {
+            title: "Ingredientes", 
+            field: "ingredientes", 
+            width: 300, 
+            responsive: 3,
+            render: (rowData) => {
+                return rowData.ingredientes ? rowData.ingredientes.map(ingrediente => ingrediente.nombre).join(", ") : "Sin ingredientes";
+            }
+        }
     ];
+    
 
     return (
         <div className='main-container'>

@@ -7,17 +7,22 @@ const useGetPlatos = () => {
     const fetchPlatos = async () => {
         try {
             const response = await getPlatos();
+            console.log("Platos recibidos:", response);
+    
             const formattedData = response.map(plato => ({
                 id: plato.id,
                 nombre: plato.nombre,
                 descripcion: plato.descripcion,
                 precio: plato.precio,
                 disponible: plato.disponible ? 'Sí' : 'No',
-                createdAt: plato.createdAt
+                ingredientes: plato.ingredientes ? plato.ingredientes.join(", ") // Unimos los ingredientes como una cadena de texto
+                    : "Sin ingredientes", // Si no hay ingredientes, mostramos "Sin ingredientes"
+                createdAt: plato.createdAt,
             }));
+    
             setPlatos(formattedData);
         } catch (error) {
-            console.error("Error: ", error);
+            console.error("Error al obtener los platos:", error);
         }
     };
 

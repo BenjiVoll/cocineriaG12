@@ -48,18 +48,35 @@ export async function getPlatosService(platoId) {
   }
 }
 
+
 export async function getPlatoService() {
   try {
     const platoRepository = AppDataSource.getRepository(Plato);
 
-    const platos = await platoRepository.find({ relations: ["ingredientes"] });
+    // Usamos `find` para obtener los platos con la relación de ingredientes
+    const platos = await platoRepository.find({
+      relations: ["ingredientes"], // Esto incluye la relación de los ingredientes
+    });
 
-    return [platos, null];
+    // Mapeamos los platos para devolver solo las propiedades necesarias, incluidas solo los nombres de los ingredientes
+    const platosFormateados = platos.map(plato => ({
+      id: plato.id,
+      nombre: plato.nombre,
+      descripcion: plato.descripcion,
+      precio: plato.precio,
+      disponible: plato.disponible ? 'Sí' : 'No',
+      ingredientes: plato.ingredientes.map(ingrediente => ingrediente.nombre), // Extraemos solo el nombre del ingrediente
+      createdAt: plato.createdAt
+    }));
+
+    return [platosFormateados, null]; // Devuelve los platos formateados correctamente
   } catch (error) {
-    console.error("Error al obtener los platos:", error);
-    return [null, "Error interno del servidor"];
+    console.error("Error al obtener platos:", error);
+    return [null, error]; // Si ocurre un error, lo manejamos aquí
   }
 }
+
+
 
 export async function updatePlatoService(platoId, data) {
   try {

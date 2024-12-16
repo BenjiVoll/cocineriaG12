@@ -18,7 +18,6 @@ const IngredienteSchema = new EntitySchema({
     cantidad: {
       type: "int",
       nullable: false,
-      default: 0,
     },
     createdAt: {
       type: "timestamp with time zone",
@@ -32,29 +31,22 @@ const IngredienteSchema = new EntitySchema({
       nullable: false,
     },
   },
-  indices: [
-    {
-      name: "IDX_INGREDIENTE",
-      columns: ["id"],
-      unique: true,
-    },
-    {
-      name: "IDX_INGREDIENTE_NOMBRE",
-      columns: ["nombre"],
-      unique: true,
-    },
-    {
-      name: "IDX_INGREDIENTE_CANTIDAD",
-      columns: ["cantidad"],
-      unique: false,
-    }
-  ],
   relations: {
     platos: {
       target: "Plato",
       type: "many-to-many",
       inverseSide: "ingredientes",
-      joinTable: false,
+      joinTable: {
+        name: "plato_ingrediente",
+        joinColumn: {
+          name: "ingrediente_id",
+          referencedColumnName: "id",
+        },
+        inverseJoinColumn: {
+          name: "plato_id",
+          referencedColumnName: "id",
+        },
+      },
     },
   },
 });
