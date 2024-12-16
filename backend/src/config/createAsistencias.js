@@ -14,7 +14,7 @@ async function createAsistencias() {
       {
         id: 1,
         estado: "Presente", 
-        justificativo: Null,
+        justificativo: "Sin Justificativo",
         fecha: new Date("2024-01-20"),
         personal_id: 2,
         
@@ -22,7 +22,7 @@ async function createAsistencias() {
       {
         id: 1,
         estado: "Ausente", 
-        justificativo: Null,
+        justificativo: "Sin Justificativo",
         personal_id: 2,
         fecha: new Date("2024-05-11"),
       },
@@ -35,9 +35,9 @@ async function createAsistencias() {
       return asistenciaRepository.save(asistencia);
     }));
 
-    console.log("* => Pedidos creados exitosamente");
+    console.log("* => Asistencia registrada exitosamente");
   } catch (error) {
-    console.error("Error al crear pedidos:", error);
+    console.error("Error al registrar su Asistencia:", error);
   }
 }
 
