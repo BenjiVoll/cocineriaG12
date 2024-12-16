@@ -8,10 +8,10 @@ const OrderSchema = new EntitySchema({
     id: {
       type: "int",
       primary: true,
-      generated: true,
+      generated: "increment",
     },
     productos: {
-      type: "json",
+      type: "varchar",
       nullable: false,
       comment: "Lista de productos y cantidades en formato JSON",
     },
