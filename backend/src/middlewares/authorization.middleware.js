@@ -84,7 +84,7 @@ export async function esMesero(req, res, next) {
       // Verificar si el rol del usuario es "mesero"
       const rolUser = userFound.rol;
   
-      if (rolUser !== "mesero") {
+      if (rolUser !== "mesero" && rolUser !== "administrador" && rolUser !== "cocinero" ) {
         return handleErrorClient(
           res,
           403,
