@@ -40,15 +40,6 @@ export default function OrderPopup({ show, setShow, action }) {
                                     defaultValue: "",
                                 },
                                 {
-                                    label: "Fecha de Entrega",
-                                    name: "fechaEntrega",
-                                    defaultValue: "",
-                                    placeholder: 'DD-MM-YYYY',
-                                    fieldType: 'input',
-                                    type: "date",
-                                    required: true,
-                                },
-                                {
                                     label: "Precio Total",
                                     name: "precioTotal",
                                     fieldType: 'input',
