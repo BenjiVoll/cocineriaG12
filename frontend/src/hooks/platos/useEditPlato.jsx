@@ -24,7 +24,7 @@ const useEditPlato = (setPlatos) => {
                 setPlatos(prevPlatos => prevPlatos.map(plato => {
                     return plato.id === formattedPlato.id ? formattedPlato : plato;
                 }));
-
+                
                 setDataPlato([]);
             } catch (error) {
                 console.error('Error al actualizar el plato:', error);

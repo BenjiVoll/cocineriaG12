@@ -24,7 +24,7 @@ const Platos = () => {
         setIsPopupEditOpen,
         dataPlato,
         setDataPlato,
-    } = useEditPlato(setPlatos);
+    } = useEditPlato(fetchPlatos, setPlatos);
 
     const { handleDelete } = useDeletePlato(fetchPlatos, setDataPlato);
 
@@ -33,7 +33,7 @@ const Platos = () => {
         setIsAddPopupOpen,
         handleAddPlato,
         handleClickAdd
-    } = useAddPlato(setPlatos);
+    } = useAddPlato(fetchPlatos, setPlatos);
 
     const handleNombreFilterChange = (e) => {
         setFilterNombre(e.target.value);
