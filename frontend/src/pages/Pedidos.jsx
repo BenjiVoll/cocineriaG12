@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react';
 import Table from '@components/TableOrder';
 import useOrders from '@hooks/orders/useGetOrders';
 import Search from '../components/Search';
-import PopupEdit from '../components/PopupOrder';
-import PopupAdd from '../components/PopupAddOrder';
+import PopupOrder from '../components/PopupOrder';
+import OrderAddPopup from '../components/PopupAddOrder';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import AddIcon from '../assets/addIcon.svg';
@@ -62,7 +62,7 @@ const Orders = () => {
         <div className='top-table'>
           <h1 className='title-table'>Pedidos</h1>
           <div className='filter-actions'>
-            <Search value={filterOrderId} onChange={handleOrderIdFilterChange} placeholder={'Filtrar por ID de Pedido'} />
+            <Search value={filterOrderId} onChange={handleOrderIdFilterChange} placeholder={'Filtrar por Nombre de Pedido'} />
             <button onClick={handleAddOrder}>
               <img src={AddIcon} alt="add" width="20px"/>
             </button>
@@ -86,17 +86,17 @@ const Orders = () => {
           data={orders}
           columns={columns}
           filter={filterOrderId}
-          dataToFilter={'id'}
+          dataToFilter={'productos'}
           onSelectionChange={handleSelectionChange}
         />
       </div>
-      <PopupEdit 
+      <PopupOrder 
         show={isPopupOpen} 
         setShow={setIsPopupOpen} 
         data={dataOrder} 
         action={handleUpdate} 
       />
-      <PopupAdd 
+      <OrderAddPopup 
         show={isAddPopupOpen} 
         setShow={setIsAddPopupOpen} 
         data={newOrderData} 
