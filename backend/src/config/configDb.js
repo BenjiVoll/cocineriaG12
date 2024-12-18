@@ -4,8 +4,8 @@ import { DATABASE, DB_USERNAME, HOST, PASSWORD } from "./configEnv.js";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: `${HOST}`,
-  port: 5432,
+  host: `${HOST}`,  // Cambié localhost por la variable de entorno HOST
+  port: 5432,  // El puerto de PostgreSQL es 5432 por defecto
   username: `${DB_USERNAME}`,
   password: `${PASSWORD}`,
   database: `${DATABASE}`,

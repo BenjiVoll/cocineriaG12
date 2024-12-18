@@ -19,10 +19,8 @@ function useTablePersonal({
 
   useEffect(() => {
     if (tableRef.current) {
-      
-      const validSortField = initialSortName || columns[0]?.field || "nombreCompleto"; 
+      const validSortField = initialSortName || columns[0]?.field || "nombreCompleto";
 
-    
       const updatedColumns = [
         {
           formatter: "rowSelection",
@@ -34,29 +32,8 @@ function useTablePersonal({
           },
         },
         ...columns,
-        {
-          title: "Acciones",
-          hozAlign: "center",
-          formatter: (cell) => {
-            const id = cell.getRow().getData().id; 
-            return ` 
-              <button class="btn-edit" data-id="${id}">Editar</button>
-              <button class="btn-delete" data-id="${id}">Eliminar</button>
-            `;
-          },
-          cellClick: function (e, cell) {
-            const id = cell.getRow().getData().id;
-            if (e.target.classList.contains("btn-edit")) {
-              onEdit && onEdit(id); 
-            } else if (e.target.classList.contains("btn-delete")) {
-              onDelete && onDelete(id); 
-            }
-          },
-          width: 150,
-        },
       ];
 
-      
       const tabulatorTable = new Tabulator(tableRef.current, {
         data: [],
         columns: updatedColumns,
@@ -64,7 +41,7 @@ function useTablePersonal({
         responsiveLayout: "collapse",
         pagination: true,
         paginationSize: 6,
-        selectableRows: 1, 
+        selectableRows: 1,
         rowHeight: 46,
         langs: {
           default: {
@@ -79,33 +56,28 @@ function useTablePersonal({
         initialSort: [{ column: validSortField, dir: "asc" }],
       });
 
-      
       tabulatorTable.on("rowSelectionChanged", function (selectedData) {
         if (onSelectionChange) {
-          console.log("Datos seleccionados:", selectedData);
-          onSelectionChange(selectedData); 
+          onSelectionChange(selectedData);
         }
       });
 
-      
       tabulatorTable.on("tableBuilt", function () {
         setIsTableBuilt(true);
       });
 
       setTable(tabulatorTable);
 
-      
       return () => {
         tabulatorTable.destroy();
         setIsTableBuilt(false);
         setTable(null);
       };
     }
-  }, [columns, dataToFilter, initialSortName, onSelectionChange, onEdit, onDelete]); 
+  }, [columns, dataToFilter, initialSortName, onSelectionChange, onEdit, onDelete]);
 
   useEffect(() => {
     if (table && isTableBuilt) {
-      
       table.replaceData(data);
     }
   }, [data, table, isTableBuilt]);

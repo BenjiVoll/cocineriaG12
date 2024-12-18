@@ -1,7 +1,7 @@
-import Table from '@components/Table';
+import Table from '@components/TableMenu';
 import usePlatos from '@hooks/platos/useGetPlatos.jsx';
 import Search from '../components/Search';
-import { PopupAddPlato, PopupEditPlato } from '@components/popupPlato'; // Importa los popups desde popupPlato.jsx
+import { PopupAddPlato, PopupEditPlato } from '@components/PopupPlato'; // Importa los popups desde popupPlato.jsx
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import AddIcon from '../assets/addIcon.svg';
@@ -24,7 +24,7 @@ const Platos = () => {
         setIsPopupEditOpen,
         dataPlato,
         setDataPlato,
-    } = useEditPlato(setPlatos);
+    } = useEditPlato(fetchPlatos, setPlatos);
 
     const { handleDelete } = useDeletePlato(fetchPlatos, setDataPlato);
 
@@ -33,7 +33,7 @@ const Platos = () => {
         setIsAddPopupOpen,
         handleAddPlato,
         handleClickAdd
-    } = useAddPlato(setPlatos);
+    } = useAddPlato(fetchPlatos, setPlatos);
 
     const handleNombreFilterChange = (e) => {
         setFilterNombre(e.target.value);
@@ -49,15 +49,7 @@ const Platos = () => {
         { title: "Precio", field: "precio", width: 150, responsive: 2 }, 
         { title: "Disponible", field: "disponible", width: 150, responsive: 2 }, 
         { title: "Creado", field: "createdAt", width: 200, responsive: 2 }, 
-        {
-            title: "Ingredientes", 
-            field: "ingredientes", 
-            width: 300, 
-            responsive: 3,
-            render: (rowData) => {
-                return rowData.ingredientes ? rowData.ingredientes.map(ingrediente => ingrediente.nombre).join(", ") : "Sin ingredientes";
-            }
-        }
+        { title: "Ingredientes", field: "ingredientes", width: 200, responsive: 2 },
     ];
     
 

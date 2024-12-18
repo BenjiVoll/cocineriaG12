@@ -82,3 +82,4 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
     return { tableRef };
 }
 export default useTable;
+
