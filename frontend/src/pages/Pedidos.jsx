@@ -51,7 +51,6 @@ const Orders = () => {
   const columns = [
     { title: "Producto", field: "productos", width: 200, responsive: 2 },
     { title: "Estado", field: "estado", width: 200, responsive: 2 },
-    { title: "Entrega Pedido", field: "fechaEntrega", width: 200, responsive: 2 },
     { title: "Método de Pago", field: "metodoPago", width: 200, responsive: 2 },
     { title: "Total", field: "precioTotal", width: 150, responsive: 2 },
   ];
