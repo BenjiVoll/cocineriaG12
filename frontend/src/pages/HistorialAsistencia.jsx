@@ -55,14 +55,16 @@ const HistorialAsistencia = () => {
                     setSelectedHistorial(selectedData);
                 },
                 rowSelected: (row) => {
-                    console.log("Fila seleccionada (rowSelected):", row.getData());
+                    
                 }
             });
 
+           
             console.log("Tabla Tabulator inicializada:", table);
         }
     }, [historial]);
 
+  
     window.handleFileButtonClick = (personalId, asistenciaId) => {
         const inputElement = document.getElementById(`upload-${asistenciaId}`);
         inputElement.onchange = () => handleFileUpload(personalId, asistenciaId, inputElement.files[0]);
@@ -79,16 +81,16 @@ const HistorialAsistencia = () => {
         <div className="historial-container">
             <h1 className="title-historial">Historial de Asistencia</h1>
 
-            {loading && <p>Cargando historial...</p>} 
-            {error && <p style={{ color: 'red' }}>Error: {error}</p>} 
+            {loading && <p>Cargando historial...</p>}  {}
+            {error && <p style={{ color: 'red' }}>Error: {error}</p>}  {}
 
-            <div id="historial-table"></div> 
+            <div id="historial-table"></div> {}
 
             {selectedHistorial && (
                 <>
                     <p>Datos seleccionados:</p>
-                    <pre>{JSON.stringify(selectedHistorial, null, 2)}</pre> 
-                    <AttendanceTable data={selectedHistorial.personal} /> 
+                    <pre>{JSON.stringify(selectedHistorial, null, 2)}</pre> {}
+                    <AttendanceTable data={selectedHistorial.personal} /> {}
                 </>
             )}
         </div>

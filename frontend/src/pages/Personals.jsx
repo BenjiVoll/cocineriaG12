@@ -12,12 +12,10 @@ import '@styles/personals.css';
 import useEditPersonal from '@hooks/personals/useEditPersonal';
 import useDeletePersonal from '@hooks/personals/useDeletePersonal';
 import useAddPersonal from '@hooks/personals/useAddPersonal';
-import AttendanceChart from '@components/AttendanceChart';
-import AttendanceTable from '@components/AttendanceTable';
 
 const Personals = () => {
     const { personals, fetchPersonals } = usePersonals();
-    const [filterPersonalId, setFilterPersonalId] = useState('');
+    const [filterPersonalName, setFilterPersonalName] = useState('');
     const [selectedPersonal, setSelectedPersonal] = useState(null);
 
     const { handleEditPersonal, isPopupOpen, setIsPopupOpen, isLoading: isEditing, error: editError } = useEditPersonal(fetchPersonals);
@@ -32,8 +30,8 @@ const Personals = () => {
         error: addError,
     } = useAddPersonal(fetchPersonals);
 
-    const handlePersonalIdFilterChange = (e) => {
-        setFilterPersonalId(e.target.value);
+    const handlePersonalNameFilterChange = (e) => {
+        setFilterPersonalName(e.target.value);
     };
 
     const handleSelectionChange = useCallback((selectedPersonals) => {
@@ -61,6 +59,10 @@ const Personals = () => {
         });
     };
 
+    const filteredPersonals = personals.filter(personal =>
+        personal.nombreCompleto.toLowerCase().includes(filterPersonalName.toLowerCase())
+    );
+
     const columns = [
         { title: 'Nombre completo', field: 'nombreCompleto', width: 200 },
         { title: 'Teléfono', field: 'telefono', width: 200 },
@@ -75,28 +77,26 @@ const Personals = () => {
                     <h1 className="title-table">Personal</h1>
                     <div className="filter-actions">
                         <Search
-                            value={filterPersonalId}
-                            onChange={handlePersonalIdFilterChange}
-                            placeholder="Filtrar por ID de Personal"
+                            value={filterPersonalName}
+                            onChange={handlePersonalNameFilterChange}
+                            placeholder="Filtrar por nombre"
                         />
-                        <button onClick={handleAddButtonClick}>Agregar</button>
+                        <button onClick={handleAddButtonClick}>
+                            <img src={AddIcon} alt="Agregar" />
+                        </button>
                         <button onClick={handleEditButtonClick} disabled={!selectedPersonal}>
-                            Editar
+                            <img src={selectedPersonal ? UpdateIcon : UpdateIconDisable} alt="Editar" />
                         </button>
                         <button
                             onClick={() => handleDelete([selectedPersonal])}
                             disabled={!selectedPersonal || isDeleting}
                         >
-                            {selectedPersonal ? (
-                                <img src={DeleteIcon} alt="delete" />
-                            ) : (
-                                <img src={DeleteIconDisable} alt="delete-disabled" />
-                            )}
+                            <img src={selectedPersonal ? DeleteIcon : DeleteIconDisable} alt="Eliminar" />
                         </button>
                     </div>
                 </div>
                 <Table
-                    data={personals}
+                    data={filteredPersonals}
                     columns={columns}
                     onSelectionChange={handleSelectionChange}
                 />

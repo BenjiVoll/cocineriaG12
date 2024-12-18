@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import '@styles/popup.css';
+
 
 const PopupPersonal = ({ show, setShow, data, action, isEdit }) => {
     const [formData, setFormData] = useState({

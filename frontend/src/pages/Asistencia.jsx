@@ -7,7 +7,7 @@ import '@styles/asistencias.css';
 
 const Asistencias = () => {
     const { personals, fetchPersonals } = usePersonals();
-    const [filterAsistenciaId, setFilterAsistenciaId] = useState('');
+    const [filterName, setFilterName] = useState(''); // Estado para el filtro de nombre
     const [selectedPersonal, setSelectedPersonal] = useState(null);
     const [personalsWithStatus, setPersonalsWithStatus] = useState([]);
 
@@ -55,7 +55,6 @@ const Asistencias = () => {
     };
 
     const columns = [
-        
         { title: 'Nombre completo', field: 'nombreCompleto', width: 200 },
         { title: 'Teléfono', field: 'telefono', width: 200 },
         { title: 'Fecha', field: 'fechaIncorporacion', width: 200 },
@@ -86,9 +85,13 @@ const Asistencias = () => {
         }
     ];
 
-    const handleAsistenciaIdFilterChange = (e) => {
-        setFilterAsistenciaId(e.target.value);
+    const handleNameFilterChange = (e) => {
+        setFilterName(e.target.value);
     };
+
+    const filteredPersonals = personalsWithStatus.filter(personal =>
+        personal.nombreCompleto.toLowerCase().includes(filterName.toLowerCase())
+    );
 
     return (
         <div className="main-container">
@@ -97,14 +100,14 @@ const Asistencias = () => {
                     <h1 className="title-table">Control de Asistencia</h1>
                     <div className="filter-actions">
                         <Search
-                            value={filterAsistenciaId}
-                            onChange={handleAsistenciaIdFilterChange}
-                            placeholder="Filtrar por ID de Personal"
+                            value={filterName}
+                            onChange={handleNameFilterChange}
+                            placeholder="Filtrar por nombre"
                         />
                     </div>
                 </div>
                 <Table
-                    data={personalsWithStatus}
+                    data={filteredPersonals}
                     columns={columns}
                     onSelectionChange={handleSelectionChange}
                 />

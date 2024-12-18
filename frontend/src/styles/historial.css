@@ -1,3 +1,29 @@
+.historial-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  overflow-x: auto; /* Permitir el desplazamiento horizontal */
+}
+
+.title-historial {
+  margin-bottom: 20px;
+  color: #003366;
+  font-size: 1.5em;
+}
+
+.upload-button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.upload-button:hover {
+  background-color: #0056b3;
+}
 
 .attendance-button {
   padding: 8px 12px;
@@ -9,11 +35,6 @@
 .attendance-button.active {
   background-color: blue;
   color: white;
-}
-
-.attendance-button:disabled {
-  background-color: grey;
-  cursor: not-allowed;
 }
 
 .main-container {
@@ -90,32 +111,4 @@
   .top-table {
       width: 80%;
   }
-}
-
-/* Historial Styles */
-.historial-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  overflow-x: auto; /* Permitir el desplazamiento horizontal */
-}
-
-.title-historial {
-  margin-bottom: 20px;
-  color: #003366;
-  font-size: 1.5em;
-}
-
-.upload-button {
-  padding: 8px 12px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.upload-button:hover {
-  background-color: #0056b3;
 }
