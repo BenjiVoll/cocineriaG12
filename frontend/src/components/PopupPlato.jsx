@@ -119,7 +119,7 @@ export function PopupEditPlato({ show, setShow, data, action }) {
                                 required: true,
                                 minLength: 10,
                                 maxLength: 255,
-                                pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/,
+                                pattern: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ,]+$/,
                                 patternMessage: "La descripción solo puede contener letras, números, espacios y acentos",
                             },
                             {
