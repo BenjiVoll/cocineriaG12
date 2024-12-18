@@ -14,12 +14,10 @@ const useDeletePersonal = (fetchPersonals) => {
 
         try {
             for (const personal of selectedPersonals) {
-                console.log("Eliminando personal con ID:", personal.id); 
                 await deletePersonalService(personal.id);
             }
             await fetchPersonals(); 
         } catch (err) {
-            console.error("Error al eliminar personal:", err); 
             setError(err.message || 'Error desconocido');
         } finally {
             setIsDeleting(false);

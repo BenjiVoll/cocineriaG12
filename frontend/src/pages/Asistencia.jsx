@@ -55,7 +55,7 @@ const Asistencias = () => {
     };
 
     const columns = [
-        { title: 'ID', field: 'id', width: 100 },
+        
         { title: 'Nombre completo', field: 'nombreCompleto', width: 200 },
         { title: 'Teléfono', field: 'telefono', width: 200 },
         { title: 'Fecha', field: 'fechaIncorporacion', width: 200 },

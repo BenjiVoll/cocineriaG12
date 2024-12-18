@@ -7,25 +7,19 @@ const useHistorialAsistencia = () => {
 
     const fetchHistorial = async () => {
         setLoading(true); 
-        console.log('Iniciando la solicitud de historial...');
         try {
-            
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/asistencia`);
-            console.log('Respuesta recibida:', response);
 
             if (!response.ok) {
                 throw new Error(`Error HTTP: ${response.status}`);
             }
 
             const data = await response.json();
-            console.log('Datos recibidos del servidor:', data);
             setHistorial(data); 
         } catch (error) {
-            console.error('Error al obtener historial:', error);
             setError(error.message); 
         } finally {
             setLoading(false); 
-            console.log('Solicitud de historial completada.');
         }
     };
 
@@ -39,7 +33,6 @@ const useHistorialAsistencia = () => {
         formData.append('justificativo', file);
 
         try {
-           
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/historial/${personalId}/asistencia/${asistenciaId}/justificativo`, {
                 method: 'POST',
                 body: formData
@@ -51,7 +44,6 @@ const useHistorialAsistencia = () => {
 
             await fetchHistorial(); 
         } catch (error) {
-            console.error('Error al subir justificativo:', error);
             setError(error.message);
         }
     };

@@ -90,4 +90,6 @@
         width: 80%;
     }
   }
-  
+  .ocultar-id {
+    display: none;
+}

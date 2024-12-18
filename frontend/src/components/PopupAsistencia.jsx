@@ -6,10 +6,10 @@ export default function AsistenciaPopup({ show, setShow, data, action }) {
    
     const asistenciaData = data && data.length > 0 ? data[0] : {};
 
-    // Maneja el envío del formulario y ejecuta la función `action` pasando `formData`
+   
     const handleSubmit = (formData) => {
-        action(formData); // Llama la acción (por ejemplo, actualizar o agregar pedido)
-        setShow(false);   // Cierra el popup después de guardar
+        action(formData); 
+        setShow(false);   
     };
 
     return (

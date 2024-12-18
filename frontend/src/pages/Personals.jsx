@@ -13,7 +13,7 @@ import useEditPersonal from '@hooks/personals/useEditPersonal';
 import useDeletePersonal from '@hooks/personals/useDeletePersonal';
 import useAddPersonal from '@hooks/personals/useAddPersonal';
 import AttendanceChart from '@components/AttendanceChart';
-import AttendanceTable from '@components/AttendanceTable'
+import AttendanceTable from '@components/AttendanceTable';
 
 const Personals = () => {
     const { personals, fetchPersonals } = usePersonals();
@@ -38,7 +38,6 @@ const Personals = () => {
 
     const handleSelectionChange = useCallback((selectedPersonals) => {
         const selected = selectedPersonals.length > 0 ? selectedPersonals[0] : null;
-        console.log("Datos seleccionados (handleSelectionChange):", selected);
         setSelectedPersonal(selected);
     }, []);
 
@@ -63,7 +62,6 @@ const Personals = () => {
     };
 
     const columns = [
-        { title: 'ID', field: 'id', width: 100 },
         { title: 'Nombre completo', field: 'nombreCompleto', width: 200 },
         { title: 'Teléfono', field: 'telefono', width: 200 },
         { title: 'Fecha', field: 'fechaIncorporacion', width: 200 },
