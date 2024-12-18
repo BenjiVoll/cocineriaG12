@@ -8,7 +8,6 @@ const useAddOrder = (setOrders) => {
       estado: '',
       precioTotal: '',
       metodoPago: '',
-      fechaEntrega: '',
   });
 
 
@@ -28,7 +27,7 @@ const useAddOrder = (setOrders) => {
 
   const handleSubmitNewOrder = async () => {
     try {
-      const response = await axios.post('/api/order', newOrderData);
+      const response = await axios.post('/api/order/', newOrderData);
       setOrders((prevOrders) => [...prevOrders, response.data]);
       setIsAddPopupOpen(false);
       setNewOrderData({
@@ -36,7 +35,6 @@ const useAddOrder = (setOrders) => {
 	      estado: '',
         precioTotal: '',
 	      metodoPago: '',
-        fechaEntrega: '',
       });
     } catch (error) {
       console.error('Error al añadir el pedido:', error);

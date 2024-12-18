@@ -15,7 +15,7 @@ export const platoBodyValidation = Joi.object({
       "any.required": "El nombre es obligatorio.",
     }),
   descripcion: Joi.string()
-    .pattern(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/)
+    .pattern(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ,]+$/)
     .min(10)
     .max(255)
     .optional()
@@ -60,7 +60,7 @@ export const platoUpdateValidation = Joi.object({
       "string.max": "El nombre debe tener como máximo 50 caracteres.",
     }),
   descripcion: Joi.string()
-    .pattern(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/)
+    .pattern(/^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ,]+$/)
     .min(10)
     .max(255)
     .optional()

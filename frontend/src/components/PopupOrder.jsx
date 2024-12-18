@@ -2,7 +2,7 @@ import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
-export default function OrderPopup({ show, setShow, data, action }) {
+export default function PopupOrder({ show, setShow, data, action }) {
     const orderData = data && data.length > 0 ? data[0] : {};
 
     const handleSubmit = (formData) => {
@@ -22,18 +22,18 @@ export default function OrderPopup({ show, setShow, data, action }) {
                             title="Editar Pedido"
                             fields={[
                                 {
-                                    label: "ID del Pedido",
+                                    label: "",
                                     name: "id",
                                     fieldType: 'input',
+                                    type: 'hidden',
                                     defaultValue: orderData.id || "",
                                     required: false,
-                                    disabled: true,  // Deshabilitado ya que el ID no se debe modificar
                                 },
                                 {
                                     label: "Productos",
                                     name: "productos",
                                     fieldType: 'textarea',
-                                    defaultValue: orderData.productos ? orderData.productos.join(", ") : "",
+                                    defaultValue: orderData.productos || "",
                                     required: true,
                                 },
                                 {
@@ -48,15 +48,6 @@ export default function OrderPopup({ show, setShow, data, action }) {
                                     ],
                                     required: true,
                                     defaultValue: orderData.estado || "",
-                                },
-                                {
-                                    label: "Fecha de Entrega",
-                                    name: "fechaEntrega",
-                                    defaultValue: orderData.fechaEntrega || "",
-                                    placeholder: 'DD-MM-YYYY',
-                                    fieldType: 'input',
-                                    type: "date",
-                                    required: true,
                                 },
                                 {
                                     label: "Precio Total",

@@ -35,11 +35,6 @@ const OrderSchema = new EntitySchema({
       nullable: true,
       comment: "Método de pago utilizado por el cliente",
     },
-    fechaEntrega: {
-      type: "timestamp with time zone",
-      nullable: true,
-      comment: "Fecha de entrega estimada o confirmada",
-    },
     createdAt: {
       type: "timestamp with time zone",
       default: () => "CURRENT_TIMESTAMP",
