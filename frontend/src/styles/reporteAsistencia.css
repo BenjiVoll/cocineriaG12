@@ -1,0 +1,44 @@
+.report-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
+.report-title {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #003366;
+}
+
+.report-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.report-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.report-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.report-button:not(:disabled):hover {
+    background-color: #0056b3;
+}

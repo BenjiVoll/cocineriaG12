@@ -3,13 +3,27 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  overflow-x: auto; /* Permitir el desplazamiento horizontal */
+  overflow-x: auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .title-historial {
   margin-bottom: 20px;
   color: #003366;
-  font-size: 1.5em;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+.filter-input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  width: 100%;
+  max-width: 400px;
 }
 
 .upload-button {
@@ -25,90 +39,32 @@
   background-color: #0056b3;
 }
 
-.attendance-button {
-  padding: 8px 12px;
-  margin: 4px;
-  border: none;
-  cursor: pointer;
-}
-
-.attendance-button.active {
-  background-color: blue;
-  color: white;
-}
-
-.main-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100vh;
-  max-height: 90%;
-  width: 100%;
-  padding-top: 50px;
-}
-
-.table-container {
-  width: 100%;
-  max-width: 70vw;
+#historial-table {
   margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  border-collapse: collapse;
 }
 
-.top-table {
-  display: flex;
-  position: relative;
-  justify-content: space-between;
-  align-items: center;
-  width: 70%;
+.tabulator-header {
+  background-color: #007bff;
+  color: white;
+  font-size: 1em;
+}
+
+.tabulator-row {
+  font-size: 0.9em;
+  border-bottom: 1px solid #ccc;
+}
+
+.tabulator-cell {
   padding: 10px;
-  margin-bottom: 5px;
 }
 
-.title-table {
-  color: #003366;
-  margin-left: 20px;
-  font-size: 1.5em;
+.tabulator-row:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-.filter-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.filter-actions button {
-  background: rgba(255, 255, 255, 0.87);
-  border: #fff;
-  cursor: pointer;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
-.delete-user-button {
-  margin-right: 20px;
-}
-
-@media (max-width: 767px) {
-  .title-table {
-      margin: 0;
-      font-size: 1.2em;
-  }
-  .top-table {
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-  }
-
-  .table-container {
-      margin: 0;
-      width: 352px;
-      height: 500px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .title-table {
-      margin-left: 15px;
-  }
-  .top-table {
-      width: 80%;
-  }
+.tabulator-row:hover {
+  background-color: #e6e6e6;
 }
