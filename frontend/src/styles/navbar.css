@@ -31,7 +31,7 @@
 .nav-menu ul li {
     display: flex;
     align-items: center;
-    padding: 0 60px;
+    padding: 0 35px;
     position: relative;
     height: 100%;
 }
