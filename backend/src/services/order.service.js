@@ -1,6 +1,7 @@
 "use strict";
 import Order from "../entity/order.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { orderBodyValidation } from "../validations/order.validation.js";
 
 export async function getOrderService(id) {
   try {
@@ -34,12 +35,16 @@ export async function getOrdersService() {
   }
 }
 
-export async function addOrderService(orderData) {
+export async function addOrderService(data) {
   try {
-    console.log("Datos recibidos para agregar el pedido:", orderData);
+    const { error } = orderBodyValidation.validate(data);
+    if (error) {
+      return [null, error.details[0].message];
+    }
+
     const orderRepository = AppDataSource.getRepository(Order);
 
-    const newOrder = orderRepository.create(orderData);
+    const newOrder = orderRepository.create(data);
 
     await orderRepository.save(newOrder);
 

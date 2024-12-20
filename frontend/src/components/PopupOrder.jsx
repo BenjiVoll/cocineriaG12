@@ -22,14 +22,6 @@ export default function PopupOrder({ show, setShow, data, action }) {
                             title="Editar Pedido"
                             fields={[
                                 {
-                                    label: "",
-                                    name: "id",
-                                    fieldType: 'input',
-                                    type: 'hidden',
-                                    defaultValue: orderData.id || "",
-                                    required: false,
-                                },
-                                {
                                     label: "Productos",
                                     name: "productos",
                                     fieldType: 'textarea',

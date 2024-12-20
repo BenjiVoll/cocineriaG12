@@ -3,7 +3,7 @@ import Table from '@components/TableOrder';
 import useOrders from '@hooks/orders/useGetOrders';
 import Search from '../components/Search';
 import PopupOrder from '../components/PopupOrder';
-import OrderAddPopup from '../components/PopupAddOrder';
+import PopupAddOrder from '../components/PopupAddOrder';
 import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import AddIcon from '../assets/addIcon.svg';
@@ -25,16 +25,15 @@ const Orders = () => {
     setIsPopupOpen,
     dataOrder,
     setDataOrder,
-  } = useEditOrder(setOrders);
+  } = useEditOrder(fetchOrders, setOrders);
 
   const { handleDelete } = useDeleteOrder(fetchOrders, setDataOrder);
   
   const {
     handleAddOrder,
+    handleClickAdd,
     isAddPopupOpen,
     setIsAddPopupOpen,
-    newOrderData,
-    handleSubmitNewOrder
   } = useAddOrder(setOrders);
 
   const handleOrderIdFilterChange = (e) => {
@@ -50,7 +49,7 @@ const Orders = () => {
 
   const columns = [
     { title: "Producto", field: "productos", width: 200, responsive: 2 },
-    { title: "Estado", field: "estado", width: 200, responsive: 2 },
+    { title: "Estado", field: "estado", width: 100, responsive: 2 },
     { title: "Método de Pago", field: "metodoPago", width: 200, responsive: 2 },
     { title: "Total", field: "precioTotal", width: 150, responsive: 2 },
   ];
@@ -63,7 +62,7 @@ const Orders = () => {
           <h1 className='title-table'>Pedidos</h1>
           <div className='filter-actions'>
             <Search value={filterOrderId} onChange={handleOrderIdFilterChange} placeholder={'Filtrar por Nombre de Pedido'} />
-            <button onClick={handleAddOrder}>
+            <button onClick={handleClickAdd}>
               <img src={AddIcon} alt="add" width="20px"/>
             </button>
             <button onClick={handleClickUpdate} disabled={dataOrder.length === 0}>
@@ -96,11 +95,10 @@ const Orders = () => {
         data={dataOrder} 
         action={handleUpdate} 
       />
-      <OrderAddPopup 
+      <PopupAddOrder 
         show={isAddPopupOpen} 
-        setShow={setIsAddPopupOpen} 
-        data={newOrderData} 
-        action={handleSubmitNewOrder} 
+        setShow={setIsAddPopupOpen}
+        action={handleAddOrder} 
       />
     </div>
   );

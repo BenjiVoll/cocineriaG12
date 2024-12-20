@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { updateOrder } from '@services/order.service.js'; // Asegúrate de tener este servicio
+import { updateOrder } from '@services/order.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
-import { formatPostUpdate } from '@helpers/formatData.js';
+import { formatOrderData } from '@helpers/formatOrderData.js';
 
 const useEditOrder = (setOrders) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -17,18 +17,14 @@ const useEditOrder = (setOrders) => {
         if (updatedOrderData) {
             try {
                 const updatedOrder = await updateOrder(updatedOrderData, dataOrder[0].id);
-                showSuccessAlert('¡Actualizado!', 'El pedido ha sido actualizado correctamente.');
+                showSuccessAlert('¡Actualizado!', 'El Pedido ha sido actualizado correctamente.');
                 setIsPopupOpen(false);
-                const formattedOrder = formatPostUpdate(updatedOrder);
+                const formattedOrder = formatOrderData(updatedOrder);
 
                 setOrders(prevOrders => prevOrders.map(order => {
-                    console.log("Pedido actual:", order);
-                    if (order.id === formattedOrder.id) {
-                        console.log("Reemplazando con:", formattedOrder);
-                    }
                     return order.id === formattedOrder.id ? formattedOrder : order;
                 }));
-
+                
                 setDataOrder([]);
             } catch (error) {
                 console.error('Error al actualizar el pedido:', error);

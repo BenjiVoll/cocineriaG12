@@ -23,11 +23,7 @@ export async function addOrder(newOrderData) {
 
 export async function updateOrder(data, id) {
     try {
-        const response = await axios.patch(`/order/?id=${id}`, data,{
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        const response = await axios.patch(`/order/update/${id}`, data);
         console.log(response);
         return response.data.data;
     } catch (error) {
@@ -38,7 +34,7 @@ export async function updateOrder(data, id) {
 
 export async function deleteOrder(id) {
     try {
-        const response = await axios.delete(`/order/?id=${id}`);
+        const response = await axios.delete(`/order/delete/${id}`);
         return response.data;
     } catch (error) {
         return error.response.data;

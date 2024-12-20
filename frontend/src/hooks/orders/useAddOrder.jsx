@@ -1,54 +1,58 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { addOrder } from '@services/order.service.js';
+import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 
-const useAddOrder = (setOrders) => {
+const useAddOrder = (fetchOrders, setOrders) => {
   const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
-  const [newOrderData, setNewOrderData] = useState({
+  const [orderData, setOrderData] = useState({
       productos: '',
       estado: '',
       precioTotal: '',
       metodoPago: '',
   });
-
-
-  const handleAddOrder = () => {
+  const handleClickAdd = () => {
     setIsAddPopupOpen(true);
   };
 
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewOrderData({
-      ...newOrderData,
+    setOrderData({
+      ...orderData,
       [name]: value,
     });
   };
 
 
-  const handleSubmitNewOrder = async () => {
+  const handleAddOrder = async (data) => {
     try {
-      const response = await axios.post('/api/order/', newOrderData);
-      setOrders((prevOrders) => [...prevOrders, response.data]);
+      const newOrder = await addOrder(data);
+      showSuccessAlert('¡Creado!', 'El Pedido se ha registrado correctamente.');
       setIsAddPopupOpen(false);
-      setNewOrderData({
+      setOrders(prevOrders => [...prevOrders, newOrder]);
+
+
+      setOrderData({
         productos: '',
 	      estado: '',
         precioTotal: '',
 	      metodoPago: '',
       });
+      await fetchOrders();
+
     } catch (error) {
       console.error('Error al añadir el pedido:', error);
+      showErrorAlert('Error', error);
     }
   };
 
   return {
     isAddPopupOpen,
     setIsAddPopupOpen,
-    newOrderData,
-    setNewOrderData,
+    orderData,
+    setOrderData,
     handleAddOrder,
     handleInputChange,
-    handleSubmitNewOrder,
+    handleClickAdd,
   };
 };
 

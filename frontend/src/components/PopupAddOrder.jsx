@@ -1,17 +1,12 @@
-import React from 'react';
 import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
 
-export default function OrderAddPopup({ show, setShow, action }) {
+export default function PopupAddOrder({ show, setShow, action }) {
 
     const handleSubmit = (formData) => {
-        const parsedFormData = {
-            ...formData,
-            precioTotal: parseFloat(formData.precioTotal),
-        };
-        action(parsedFormData);
-        setShow(false); // Cerrar el popup después de enviar
+        action(formData);
+        setShow(false);
     };
 
     return (

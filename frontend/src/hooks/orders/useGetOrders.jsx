@@ -13,7 +13,6 @@ const useGetOrders = () => {
                 estado: order.estado,
                 precioTotal: order.precioTotal,
                 metodoPago: order.metodoPago,
-                fechaEntrega: order.fechaEntrega
             }));
             setOrders(formattedData);
         } catch (error) {
