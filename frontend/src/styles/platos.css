@@ -1,9 +1,8 @@
 .main-container {
-    padding-top: 0.5vh ; /* Ajusta según la altura de tu navbar */
+    padding-top: 5vh ;
     margin: 0 auto ;
-    max-width: 1200px ; /* Ajusta según el ancho máximo deseado */
-    overflow-x: hidden ; /* Evitar scroll horizontal innecesario */
-    background-color: #f5f5f5; /* Ejemplo de fondo */
+    max-width: 1200px ;
+    overflow-x: hidden ;
 }
 
 
