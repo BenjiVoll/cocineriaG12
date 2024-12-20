@@ -51,13 +51,7 @@ export const orderQueryValidation = Joi.object({
       .messages({
         "string.base": "El método de pago debe ser de tipo string.",
         "string.max": "El método de pago no debe exceder los 50 caracteres.",
-      }),
-    fechaEntrega: Joi.date()
-      .iso()
-      .allow(null)
-      .messages({
-        "date.base": "La fecha de entrega debe ser una fecha válida en formato ISO.",
-      }),
+      })
   })
     .unknown(true)
     .messages({
