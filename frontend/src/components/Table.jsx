@@ -1,90 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
-import { TabulatorFull as Tabulator } from 'tabulator-tables';
-import "tabulator-tables/dist/css/tabulator.min.css";
-import '@styles/table.css';
+import useTable from '@hooks/table/useTable.jsx';
 
-function useTable({ data, columns, filter, dataToFilter, initialSortName, onSelectionChange }) {
-    const tableRef = useRef(null);
-    const [table, setTable] = useState(null);
-    const [isTableBuilt, setIsTableBuilt] = useState(false);
+export default function Table({ data, columns, filter, dataToFilter, initialSortName, onSelectionChange }) {
+  const { tableRef } = useTable({ data, columns, filter, dataToFilter, initialSortName, onSelectionChange });
 
-    useEffect(() => {
-        if (tableRef.current) {
-            const updatedColumns = [
-                { 
-                    formatter: "rowSelection", 
-                    titleFormatter: "rowSelection",
-                    hozAlign: "center", 
-                    headerSort: false, 
-                    cellClick: function (e, cell) {
-                        cell.getRow().toggleSelect();
-                    } 
-                },
-                ...columns
-            ];
-            const tabulatorTable = new Tabulator(tableRef.current, {
-                data: [],
-                columns: updatedColumns,
-                layout: "fitColumns",
-                responsiveLayout: "collapse",
-                pagination: true,
-                paginationSize: 6,
-                selectable: 1,
-                rowHeight: 46,
-                langs: {
-                    "default": {
-                        "pagination": {
-                            "first": "Primero",
-                            "prev": "Anterior",
-                            "next": "Siguiente",
-                            "last": "Último",
-                        }
-                    }
-                },
-                initialSort: [
-                    { column: initialSortName, dir: "asc" }
-                ],
-            });
-
-            tabulatorTable.on("rowClick", function(e, row) {
-                row.toggleSelect();
-            });
-
-            tabulatorTable.on("rowSelectionChanged", function(selectedData) {
-                if (onSelectionChange) {
-                    onSelectionChange(selectedData);
-                }
-            });
-            tabulatorTable.on("tableBuilt", function() {
-                setIsTableBuilt(true);
-            });
-            setTable(tabulatorTable);
-            return () => {
-                tabulatorTable.destroy();
-                setIsTableBuilt(false);
-                setTable(null);
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (table && isTableBuilt) {
-            table.replaceData(data);
-        }
-    }, [data, table, isTableBuilt]);
-
-    useEffect(() => {
-        if (table && isTableBuilt) {
-            if (filter) {
-                table.setFilter(dataToFilter, "like", filter);
-            } else {
-                table.clearFilter();
-            }
-            table.redraw();
-        }
-    }, [filter, table, dataToFilter, isTableBuilt]);
-
-    return { tableRef };
+  return (
+    <div className='table-container'>
+      <div ref={tableRef}></div>
+    </div>
+  );
 }
-
-export default useTable;
